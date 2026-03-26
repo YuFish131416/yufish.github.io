@@ -18,14 +18,40 @@
      Router
      ============================================================ */
 
-  /* Configure marked to emit language classes for Prism */
+  /* Configure marked for code + math rendering */
   if (typeof marked !== 'undefined') {
-    marked.setOptions({
-      highlight: function (code, lang) {
-        return code; // Let Prism handle highlighting after DOM insertion
-      },
-      langPrefix: 'language-'
-    });
+    marked.setOptions({ langPrefix: 'language-' });
+
+    /* KaTeX math extension: $$...$$ (block) and $...$ (inline) */
+    if (typeof katex !== 'undefined') {
+      marked.use({
+        extensions: [{
+          name: 'mathBlock',
+          level: 'block',
+          start: function (src) { var m = src.match(/\$\$/); return m ? m.index : undefined; },
+          tokenizer: function (src) {
+            var m = src.match(/^\$\$([\s\S]+?)\$\$/);
+            if (m) return { type: 'mathBlock', raw: m[0], text: m[1].trim() };
+          },
+          renderer: function (token) {
+            try { return '<div class="math-display">' + katex.renderToString(token.text, { displayMode: true, throwOnError: false }) + '</div>'; }
+            catch (e) { return '<div class="math-display"><code>' + esc(token.text) + '</code></div>'; }
+          }
+        }, {
+          name: 'mathInline',
+          level: 'inline',
+          start: function (src) { var m = src.match(/\$[^\$\s]/); return m ? m.index : undefined; },
+          tokenizer: function (src) {
+            var m = src.match(/^\$([^\$\n]+?)\$/);
+            if (m) return { type: 'mathInline', raw: m[0], text: m[1].trim() };
+          },
+          renderer: function (token) {
+            try { return katex.renderToString(token.text, { displayMode: false, throwOnError: false }); }
+            catch (e) { return '<code>' + esc(token.text) + '</code>'; }
+          }
+        }]
+      });
+    }
   }
 
   function parseHash() {
@@ -122,6 +148,7 @@
       '</div>';
 
     setContent(html);
+    setupHomeSnap();
   }
 
   function renderArticleCard(a, idx) {
@@ -271,8 +298,9 @@
 
       if (typeof Prism !== 'undefined') {
         Prism.highlightAllUnder(app);
-        // Re-highlight after autoloader fetches grammars
-        setTimeout(function () { Prism.highlightAllUnder(app); }, 200);
+        // Re-highlight after autoloader fetches grammars (staggered for slow connections)
+        setTimeout(function () { Prism.highlightAllUnder(app); }, 300);
+        setTimeout(function () { Prism.highlightAllUnder(app); }, 800);
       }
       bindReadingProgress();
 
@@ -636,6 +664,59 @@
       clearTimeout(t);
       t = setTimeout(function () { fn.apply(self, args); }, ms);
     };
+  }
+
+  /* ── Home section snap (hero ↔ articles) ── */
+  function setupHomeSnap() {
+    var hero = document.querySelector('.home-hero-fullscreen');
+    if (!hero) return;
+
+    var style = getComputedStyle(document.documentElement);
+    var navH = parseInt(style.getPropertyValue('--nav-height')) || 64;
+    var timer = null;
+    var snapping = false;
+    var anchor = 'hero';           // which section user is "at"
+
+    function snapTarget() {
+      var el = hero.nextElementSibling; // .container with articles
+      return el ? el.offsetTop - navH : 0;
+    }
+
+    function checkSnap() {
+      if (snapping) return;
+      var y = window.scrollY;
+      var target = snapTarget();
+      if (target <= 0) return;
+
+      // Already resting at an anchor
+      if (y <= 0) { anchor = 'hero'; return; }
+      if (y >= target) { anchor = 'articles'; return; }
+
+      // In the transition zone
+      snapping = true;
+      var dest;
+      if (anchor === 'hero') {
+        dest = y > 60 ? target : 0;          // scroll ↓ 60 px → snap forward
+      } else {
+        dest = y < target - 60 ? 0 : target; // scroll ↑ 60 px → snap back
+      }
+      anchor = dest === 0 ? 'hero' : 'articles';
+      window.scrollTo({ top: dest, behavior: 'smooth' });
+      setTimeout(function () { snapping = false; }, 800);
+    }
+
+    function onScroll() {
+      if (snapping) return;
+      clearTimeout(timer);
+      timer = setTimeout(checkSnap, 100);
+    }
+
+    window.addEventListener('scroll', onScroll, { passive: true });
+    window.addEventListener('hashchange', function cleanup() {
+      window.removeEventListener('scroll', onScroll);
+      window.removeEventListener('hashchange', cleanup);
+      clearTimeout(timer);
+    });
   }
 
   /* ============================================================
