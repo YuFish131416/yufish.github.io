@@ -1,0 +1,1519 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CS5188 VR · 期中简答题考点整理</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;700&family=JetBrains+Mono:wght@400;500;600&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0f1014;
+    --surface: #17191f;
+    --surface2: #1e2028;
+    --surface3: #252832;
+    --border: #2a2d38;
+    --border2: #363a47;
+    --m1: #4f9eff;
+    --m2: #3ecf6e;
+    --m3: #f5a623;
+    --m4: #b06aff;
+    --m5: #ff6b6b;
+    --text: #e8eaf0;
+    --text-muted: #8a8fa8;
+    --text-dim: #4a4f62;
+    --answer-bg: #13151a;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Outfit', 'Noto Serif SC', sans-serif;
+    font-size: 15px;
+    line-height: 1.75;
+  }
+
+  /* ── HEADER ── */
+  .header {
+    background: var(--surface);
+    border-bottom: 1px solid var(--border);
+    padding: 24px 44px 0;
+    position: sticky;
+    top: 0;
+    z-index: 200;
+  }
+
+  .hd-top { display: flex; align-items: baseline; gap: 16px; margin-bottom: 16px; }
+  .hd-top .course { font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--text-dim); letter-spacing: 3px; text-transform: uppercase; }
+  .hd-top h1 { font-family: 'Noto Serif SC', serif; font-size: 20px; font-weight: 700; color: var(--text); }
+
+  .tab-bar { display: flex; gap: 2px; }
+  .tab-bar button {
+    background: none;
+    border: none;
+    padding: 10px 22px;
+    font-family: 'Outfit', sans-serif;
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--text-muted);
+    cursor: pointer;
+    border-bottom: 2px solid transparent;
+    transition: all 0.2s;
+    white-space: nowrap;
+  }
+  .tab-bar button:hover { color: var(--text); }
+  .tab-bar button.t1.active { color: var(--m1); border-bottom-color: var(--m1); }
+  .tab-bar button.t2.active { color: var(--m2); border-bottom-color: var(--m2); }
+  .tab-bar button.t3.active { color: var(--m3); border-bottom-color: var(--m3); }
+  .tab-bar button.t4.active { color: var(--m4); border-bottom-color: var(--m4); }
+  .tab-bar button.t5.active { color: var(--m5); border-bottom-color: var(--m5); }
+  .tab-bar button.tall.active { color: var(--text); border-bottom-color: var(--text-muted); }
+
+  /* ── LAYOUT ── */
+  .container { max-width: 1020px; margin: 0 auto; padding: 36px 44px 80px; }
+
+  .module-panel { display: none; }
+  .module-panel.active { display: block; }
+
+  /* ── MODULE HEADER ── */
+  .mod-header {
+    display: flex;
+    align-items: flex-start;
+    gap: 20px;
+    margin-bottom: 32px;
+    padding-bottom: 24px;
+    border-bottom: 1px solid var(--border);
+  }
+  .mod-badge {
+    width: 52px; height: 52px;
+    border-radius: 12px;
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 13px; font-weight: 600;
+    flex-shrink: 0;
+  }
+  .mod-header h2 { font-family: 'Noto Serif SC', serif; font-size: 18px; font-weight: 700; margin-bottom: 6px; }
+  .mod-header p { color: var(--text-muted); font-size: 13.5px; line-height: 1.6; }
+
+  .badge-m1 { background: rgba(79,158,255,0.12); color: var(--m1); border: 1px solid rgba(79,158,255,0.25); }
+  .badge-m2 { background: rgba(62,207,110,0.12); color: var(--m2); border: 1px solid rgba(62,207,110,0.25); }
+  .badge-m3 { background: rgba(245,166,35,0.12); color: var(--m3); border: 1px solid rgba(245,166,35,0.25); }
+  .badge-m4 { background: rgba(176,106,255,0.12); color: var(--m4); border: 1px solid rgba(176,106,255,0.25); }
+  .badge-m5 { background: rgba(255,107,107,0.12); color: var(--m5); border: 1px solid rgba(255,107,107,0.25); }
+
+  /* ── STATS BAR ── */
+  .stats-bar {
+    display: flex; gap: 10px; margin-bottom: 28px; flex-wrap: wrap;
+  }
+  .stat-pill {
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    padding: 5px 14px;
+    font-size: 12px;
+    color: var(--text-muted);
+    font-family: 'JetBrains Mono', monospace;
+  }
+  .stat-pill span { color: var(--text); font-weight: 600; }
+
+  /* ── CATEGORY LABEL ── */
+  .cat-label {
+    display: flex; align-items: center; gap: 10px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px; letter-spacing: 3px; text-transform: uppercase;
+    color: var(--text-dim);
+    margin: 28px 0 14px;
+  }
+  .cat-label::after {
+    content: ''; flex: 1; height: 1px; background: var(--border);
+  }
+
+  /* ── Q&A CARD ── */
+  .qa-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    margin-bottom: 12px;
+    overflow: hidden;
+    transition: border-color 0.2s;
+  }
+  .qa-card:hover { border-color: var(--border2); }
+
+  .qa-q {
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+    padding: 18px 20px;
+    cursor: pointer;
+    user-select: none;
+  }
+
+  .q-num {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    color: var(--text-dim);
+    flex-shrink: 0;
+    margin-top: 3px;
+    min-width: 28px;
+  }
+
+  .q-text {
+    flex: 1;
+    font-size: 14.5px;
+    font-weight: 500;
+    color: var(--text);
+    line-height: 1.6;
+  }
+
+  .q-tags { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 7px; }
+  .q-tag {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    padding: 2px 7px;
+    border-radius: 4px;
+    font-weight: 500;
+  }
+  .tag-core { background: rgba(255,200,60,0.12); color: #ffc83c; border: 1px solid rgba(255,200,60,0.2); }
+  .tag-calc { background: rgba(79,158,255,0.12); color: var(--m1); border: 1px solid rgba(79,158,255,0.2); }
+  .tag-compare { background: rgba(62,207,110,0.12); color: var(--m2); border: 1px solid rgba(62,207,110,0.2); }
+  .tag-explain { background: rgba(176,106,255,0.12); color: var(--m4); border: 1px solid rgba(176,106,255,0.2); }
+  .tag-list { background: rgba(245,166,35,0.12); color: var(--m3); border: 1px solid rgba(245,166,35,0.2); }
+  .tag-principle { background: rgba(255,107,107,0.12); color: var(--m5); border: 1px solid rgba(255,107,107,0.2); }
+
+  .q-chevron {
+    color: var(--text-dim);
+    font-size: 14px;
+    flex-shrink: 0;
+    margin-top: 3px;
+    transition: transform 0.25s;
+  }
+  .qa-card.open .q-chevron { transform: rotate(90deg); }
+
+  /* Answer area */
+  .qa-a {
+    display: none;
+    background: var(--answer-bg);
+    border-top: 1px solid var(--border);
+    padding: 20px 20px 20px 62px;
+  }
+  .qa-card.open .qa-a { display: block; }
+
+  .answer-body { font-size: 14px; color: var(--text-muted); line-height: 1.85; }
+  .answer-body p { margin-bottom: 10px; }
+  .answer-body p:last-child { margin-bottom: 0; }
+
+  .answer-body strong { color: var(--text); font-weight: 600; }
+  .answer-body em { color: #ffc83c; font-style: normal; font-weight: 500; }
+  .answer-body code {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12.5px;
+    background: var(--surface3);
+    border: 1px solid var(--border2);
+    border-radius: 4px;
+    padding: 1px 6px;
+    color: var(--m1);
+  }
+
+  .answer-list { list-style: none; padding: 0; margin: 8px 0; }
+  .answer-list li {
+    display: flex; gap: 10px; align-items: flex-start;
+    padding: 4px 0;
+    font-size: 14px; color: var(--text-muted); line-height: 1.7;
+  }
+  .answer-list li::before {
+    content: '▸';
+    color: var(--text-dim);
+    flex-shrink: 0;
+    margin-top: 2px;
+    font-size: 10px;
+  }
+  .answer-list li strong { color: var(--text); }
+
+  .answer-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 12px 0;
+    font-size: 13px;
+  }
+  .answer-table th {
+    background: var(--surface2);
+    color: var(--text-muted);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    padding: 8px 12px;
+    text-align: left;
+    border: 1px solid var(--border);
+    font-weight: 600;
+  }
+  .answer-table td {
+    padding: 8px 12px;
+    border: 1px solid var(--border);
+    color: var(--text-muted);
+    vertical-align: top;
+    line-height: 1.6;
+  }
+  .answer-table td strong { color: var(--text); }
+
+  .key-box {
+    background: rgba(255,200,60,0.06);
+    border: 1px solid rgba(255,200,60,0.2);
+    border-left: 3px solid #ffc83c;
+    border-radius: 0 6px 6px 0;
+    padding: 10px 14px;
+    margin: 12px 0;
+    font-size: 13.5px;
+    color: var(--text-muted);
+  }
+  .key-box strong { color: #ffc83c; }
+
+  .formula-box {
+    background: var(--surface2);
+    border: 1px solid var(--border2);
+    border-radius: 8px;
+    padding: 12px 16px;
+    margin: 10px 0;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 13px;
+    color: var(--m1);
+    line-height: 1.8;
+  }
+
+  /* ALL panel */
+  .all-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  .all-mod-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 18px 20px;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .all-mod-card:hover { border-color: var(--border2); background: var(--surface2); }
+  .all-mod-card h3 { font-size: 14px; font-weight: 600; margin-bottom: 6px; }
+  .all-mod-card p { font-size: 12.5px; color: var(--text-muted); line-height: 1.5; }
+  .all-mod-card .q-count { font-family: 'JetBrains Mono', monospace; font-size: 22px; font-weight: 700; margin-bottom: 8px; }
+
+  @media (max-width: 700px) {
+    .header { padding: 18px 16px 0; }
+    .container { padding: 24px 16px 60px; }
+    .tab-bar button { padding: 10px 12px; font-size: 12px; }
+    .all-grid { grid-template-columns: 1fr; }
+    .qa-a { padding-left: 20px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="hd-top">
+    <span class="course">CS5188 · VR</span>
+    <h1>期中简答题考点整理</h1>
+  </div>
+  <div class="tab-bar">
+    <button class="tall active" onclick="showModule('all', this)">总览</button>
+    <button class="t1" onclick="showModule('m1', this)">M1 · Introduction</button>
+    <button class="t2" onclick="showModule('m2', this)">M2 · Input Devices</button>
+    <button class="t3" onclick="showModule('m3', this)">M3 · Graphical Displays</button>
+    <button class="t4" onclick="showModule('m4', this)">M4 · Sound & Haptics</button>
+    <button class="t5" onclick="showModule('m5', this)">M5 · Computing</button>
+  </div>
+</div>
+
+<div class="container">
+
+<!-- ═══════ ALL PANEL ═══════ -->
+<div class="module-panel active" id="panel-all">
+  <div style="margin-bottom:28px">
+    <div style="font-family:'Noto Serif SC',serif;font-size:17px;font-weight:700;margin-bottom:8px;">五模块简答题全景</div>
+    <div style="color:var(--text-muted);font-size:13.5px;">点击任意模块进入对应题目，或使用顶部标签页切换。共整理 <strong style="color:var(--text)">49</strong> 道高频考点简答题。</div>
+  </div>
+  <div class="all-grid">
+    <div class="all-mod-card" onclick="showModule('m1', document.querySelector('.t1'))">
+      <div class="q-count" style="color:var(--m1)">10</div>
+      <h3 style="color:var(--m1)">M1 · Introduction</h3>
+      <p>VR 定义与层级、HCI 框架、硬件发展史里程碑、VR 系统分类、延迟来源与影响</p>
+    </div>
+    <div class="all-mod-card" onclick="showModule('m2', document.querySelector('.t2'))">
+      <div class="q-count" style="color:var(--m2)">10</div>
+      <h3 style="color:var(--m2)">M2 · Input Devices</h3>
+      <p>追踪性能四指标、坐标变换矩阵、六类追踪器原理对比、手势设备传感技术</p>
+    </div>
+    <div class="all-mod-card" onclick="showModule('m3', document.querySelector('.t3'))">
+      <div class="q-count" style="color:var(--m3)">10</div>
+      <h3 style="color:var(--m3)">M3 · Graphical Displays</h3>
+      <p>人类视觉系统、深度线索、HMD 光学公式、自动立体显示、LCD vs DLP、CAVE/球幕</p>
+    </div>
+    <div class="all-mod-card" onclick="showModule('m4', document.querySelector('.t4'))">
+      <div class="q-count" style="color:var(--m4)">9</div>
+      <h3 style="color:var(--m4)">M4 · Sound & Haptics</h3>
+      <p>3D 声音定位线索、HRTF 原理、皮肤感受器分类、触觉 vs 力反馈、PHANToM/CyberGrasp</p>
+    </div>
+    <div class="all-mod-card" onclick="showModule('m5', document.querySelector('.t5'))">
+      <div class="q-count" style="color:var(--m5)">10</div>
+      <h3 style="color:var(--m5)">M5 · Computing</h3>
+      <p>图形管线三阶段、Phong 光照、瓶颈识别与优化、GPU vs CPU、多管线同步、PC 集群</p>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════ M1 ═══════ -->
+<div class="module-panel" id="panel-m1">
+  <div class="mod-header">
+    <div class="mod-badge badge-m1">M1</div>
+    <div>
+      <h2>Module 1 · Introduction to VR</h2>
+      <p>概念定义、历史脉络、系统分类与基础工程问题，是考试最常出现"定义题"和"比较题"的模块。</p>
+    </div>
+  </div>
+  <div class="stats-bar">
+    <div class="stat-pill">共 <span>10</span> 题</div>
+    <div class="stat-pill">核心考点 <span>4</span></div>
+    <div class="stat-pill">比较题 <span>3</span></div>
+  </div>
+
+  <div class="cat-label">定义与概念</div>
+
+  <div class="qa-card" onclick="toggle(this)">
+    <div class="qa-q">
+      <span class="q-num">Q1</span>
+      <div style="flex:1">
+        <div class="q-text">给出 VR 的定义，并说明其两个核心要素分别指什么。</div>
+        <div class="q-tags"><span class="q-tag tag-core">核心定义</span></div>
+      </div>
+      <span class="q-chevron">›</span>
+    </div>
+    <div class="qa-a"><div class="answer-body">
+      <p>VR 是一种<strong>人机交互界面（Human-Computer Interface）</strong>，包含两个核心要素：</p>
+      <ul class="answer-list">
+        <li><strong>实时仿真（Real-time Simulation）</strong>：计算机以足够快的速度持续生成虚拟场景，使用户感知到连续的、即时响应的反馈，而非预录内容。</li>
+        <li><strong>多感官通道的交互（Multi-sensory Interaction）</strong>：系统通过视觉、听觉、触觉、嗅觉等多个感知通道同时与用户进行信息交换，不局限于单一感官。</li>
+      </ul>
+      <div class="key-box"><strong>考点提示：</strong>两个要素缺一不可；仅有视频播放（无交互）不是 VR，仅有交互但非实时也不是 VR。</div>
+    </div></div>
+  </div>
+
+  <div class="qa-card" onclick="toggle(this)">
+    <div class="qa-q">
+      <span class="q-num">Q2</span>
+      <div style="flex:1">
+        <div class="q-text">列举并解释 VR 的四个层级，指出本课程主要关注哪些层级。</div>
+        <div class="q-tags"><span class="q-tag tag-list">列举题</span></div>
+      </div>
+      <span class="q-chevron">›</span>
+    </div>
+    <div class="qa-a"><div class="answer-body">
+      <table class="answer-table">
+        <tr><th>层级</th><th>名称</th><th>特征</th></tr>
+        <tr><td>1</td><td><strong>被动型（Passive）</strong></td><td>用户无控制权，内容固定，如观看 VR 电影、阅读</td></tr>
+        <tr><td>2</td><td><strong>探索型（Exploratory）</strong></td><td>可在虚拟世界中移动探索，但不能修改内容</td></tr>
+        <tr><td>3</td><td><strong>交互型（Interactive）</strong></td><td>可与虚拟物体交互（抓取、移动、触发事件）</td></tr>
+        <tr><td>4</td><td><strong>协作型（Collaborative）</strong></td><td>多用户在同一虚拟世界中协同完成任务</td></tr>
+      </table>
+      <p>本课程主要关注<em>第 2、3、4 层级</em>（探索型、交互型、协作型）。</p>
+    </div></div>
+  </div>
+
+  <div class="qa-card" onclick="toggle(this)">
+    <div class="qa-q">
+      <span class="q-num">Q3</span>
+      <div style="flex:1">
+        <div class="q-text">什么是系统延迟（System Latency）？说明它的主要来源及对用户的影响。</div>
+        <div class="q-tags"><span class="q-tag tag-core">核心考点</span><span class="q-tag tag-explain">原因分析</span></div>
+      </div>
+      <span class="q-chevron">›</span>
+    </div>
+    <div class="qa-a"><div class="answer-body">
+      <p><strong>定义：</strong>从用户头部发生移动，到屏幕上画面更新为对应视角所经历的<strong>总时间差</strong>，是各阶段延迟的累加值。</p>
+      <p><strong>来源（按管线顺序）：</strong></p>
+      <ul class="answer-list">
+        <li>传感器信号生成延迟</li>
+        <li>追踪系统处理信号、计算新位姿的延迟</li>
+        <li>计算机接收信息并更新数据库的延迟</li>
+        <li>图像生成器使用新数据渲染帧的延迟</li>
+      </ul>
+      <p><strong>影响：</strong>视觉感知与大脑预期之间产生不一致（Discrepancy），导致用户产生不适感，严重时引发<strong>晕动症（Simulation Sickness）</strong>，症状包括头痛、恶心、眩晕。</p>
+    </div></div>
+  </div>
+
+  <div class="cat-label">系统分类与比较</div>
+
+  <div class="qa-card" onclick="toggle(this)">
+    <div class="qa-q">
+      <span class="q-num">Q4</span>
+      <div style="flex:1">
+        <div class="q-text">列举 VR 的四大系统类型，简述每种类型的核心特征及典型应用场景。</div>
+        <div class="q-tags"><span class="q-tag tag-list">列举题</span><span class="q-tag tag-compare">比较</span></div>
+      </div>
+      <span class="q-chevron">›</span>
+    </div>
+    <div class="qa-a"><div class="answer-body">
+      <table class="answer-table">
+        <tr><th>类型</th><th>核心特征</th><th>典型场景</th></tr>
+        <tr><td><strong>沉浸式 VR</strong></td><td>HMD + 头部追踪，提供 360° 虚拟视野，完全遮蔽真实环境</td><td>游戏、训练模拟、虚拟展览</td></tr>
+        <tr><td><strong>非沉浸式 VR</strong></td><td>普通显示器，可添加立体眼镜；仅在看屏幕时"身处"虚拟世界</td><td>桌面 3D 设计软件、CAD</td></tr>
+        <tr><td><strong>增强现实（AR）</strong></td><td>透明眼镜将数字信息叠加于真实世界，用户同时看到两者</td><td>工业维修引导、HoloLens 应用</td></tr>
+        <tr><td><strong>远程呈现</strong></td><td>用户通过 HMD 控制远端机器人，双向传感与运动同步</td><td>太空探索、远程手术、核事故处理</td></tr>
+      </table>
+    </div></div>
+  </div>
+
+  <div class="qa-card" onclick="toggle(this)">
+    <div class="qa-q">
+      <span class="q-num">Q5</span>
+      <div style="flex:1">
+        <div class="q-text">比较沉浸式 VR 与非沉浸式 VR，指出二者在硬件需求和用户体验上的核心差异。</div>
+        <div class="q-tags"><span class="q-tag tag-compare">比较</span></div>
+      </div>
+      <span class="q-chevron">›</span>
+    </div>
+    <div class="qa-a"><div class="answer-body">
+      <table class="answer-table">
+        <tr><th></th><th>沉浸式 VR</th><th>非沉浸式 VR</th></tr>
+        <tr><td><strong>核心硬件</strong></td><td>HMD + 头部追踪系统</td><td>普通电脑显示器（可选立体眼镜）</td></tr>
+        <tr><td><strong>视野</strong></td><td>360°，完全遮蔽真实环境</td><td>有限视野（屏幕范围内）</td></tr>
+        <tr><td><strong>沉浸感</strong></td><td>高，用户感觉"置身其中"</td><td>低，用户始终意识到屏幕边界</td></tr>
+        <tr><td><strong>成本</strong></td><td>较高</td><td>低（使用传统显示器）</td></tr>
+        <tr><td><strong>"身处"条件</strong></td><td>持续沉浸</td><td>只有看屏幕时才"身处"虚拟世界</td></tr>
+      </table>
+    </div></div>
+  </div>
+
+  <div class="cat-label">硬件发展史</div>
+
+  <div class="qa-card" onclick="toggle(this)">
+    <div class="qa-q">
+      <span class="q-num">Q6</span>
+      <div style="flex:1">
+        <div class="q-text">Sensorama（1962）被认为是"首款 VR 视频机器"，说明其提供了哪些感知体验。</div>
+        <div class="q-tags"><span class="q-tag tag-list">列举题</span></div>
+      </div>
+      <span class="q-chevron">›</span>
+    </div>
+    <div class="qa-a"><div class="answer-body">
+      <p>由 Morton Heilig 设计的 Sensorama 提供了以下多感官体验：</p>
+      <ul class="answer-list">
+        <li><strong>3D 立体视频</strong>（双目视差）</li>
+        <li><strong>运动感</strong>（座椅震动模拟路面颠簸）</li>
+        <li><strong>立体声音</strong></li>
+        <li><strong>气味</strong>（如餐厅气味）</li>
+        <li><strong>风效</strong>（风扇模拟骑行迎风）</li>
+      </ul>
+      <p>经典体验内容为骑摩托车穿越纽约，是历史上首次将多感官整合进单一 VR 设备的尝试。</p>
+    </div></div>
+  </div>
+
+  <div class="qa-card" onclick="toggle(this)">
+    <div class="qa-q">
+      <span class="q-num">Q7</span>
+      <div style="flex:1">
+        <div class="q-text">Sutherland 的"Ultimate Display"（1968）在 VR 发展史上有何重要意义？其存在什么局限性？</div>
+        <div class="q-tags"><span class="q-tag tag-explain">意义分析</span></div>
+      </div>
+      <span class="q-chevron">›</span>
+    </div>
+    <div class="qa-a"><div class="answer-body">
+      <p><strong>重要意义：</strong>首款使用<strong>计算机实时生成场景</strong>（而非预录视频）的 HMD，开创了"实时渲染驱动 VR"的技术路线，是现代 VR 的真正起点。</p>
+      <p><strong>局限性：</strong></p>
+      <ul class="answer-list">
+        <li>使用 CRT 显像管，<strong>重量过大</strong>，无法由人头部支撑，需要天花板机械臂悬挂</li>
+        <li>当时计算机仅能渲染 <strong>200–400 个多边形</strong>，图像极为简陋</li>
+        <li>刷新率仅 <strong>20 Hz</strong>，流畅度不足</li>
+      </ul>
+    </div></div>
+  </div>
+
+  <div class="qa-card" onclick="toggle(this)">
+    <div class="qa-q">
+      <span class="q-num">Q8</span>
+      <div style="flex:1">
+        <div class="q-text">2012–2018 年间 VR 为何能够复兴？列举推动复兴的主要技术驱动因素。</div>
+        <div class="q-tags"><span class="q-tag tag-list">列举题</span></div>
+      </div>
+      <span class="q-chevron">›</span>
+    </div>
+    <div class="qa-a"><div class="answer-body">
+      <p>早期 VR 系统因<strong>高成本、低分辨率、渲染质量差</strong>而市场萎缩。2012 年后复兴的主要驱动因素：</p>
+      <ul class="answer-list">
+        <li><strong>PC 与图形硬件进步</strong>：GPU 性能大幅提升，实时渲染质量显著改善</li>
+        <li><strong>HMD 技术进步</strong>：高分辨率、轻量化、低成本化（借助智能手机屏幕技术）</li>
+        <li><strong>传感器与设备技术进步</strong>：IMU、摄像头等传感器小型化且廉价</li>
+        <li><strong>开放游戏引擎支持</strong>：Unreal Engine、Unity 等提供了 VR 开发生态</li>
+      </ul>
+      <p>代表产品包括 <strong>Oculus Rift、HTC Vive、PlayStation VR、Microsoft HoloLens</strong> 等。</p>
+    </div></div>
+  </div>
+
+  <div class="cat-label">追踪基础</div>
+
+  <div class="qa-card" onclick="toggle(this)">
+    <div class="qa-q">
+      <span class="q-num">Q9</span>
+      <div style="flex:1">
+        <div class="q-text">比较四种位置传感方式（2D鼠标、机械、超声波、磁场追踪器）的优缺点。</div>
+        <div class="q-tags"><span class="q-tag tag-compare">比较</span></div>
+      </div>
+      <span class="q-chevron">›</span>
+    </div>
+    <div class="qa-a"><div class="answer-body">
+      <table class="answer-table">
+        <tr><th>方式</th><th>优点</th><th>缺点</th></tr>
+        <tr><td><strong>2D 鼠标</strong></td><td>廉价、易用</td><td>仅返回相对位移，难用于 3D 环境</td></tr>
+        <tr><td><strong>机械追踪器</strong></td><td>快速、精确</td><td>运动范围受机械臂长度限制</td></tr>
+        <tr><td><strong>超声波追踪器</strong></td><td>廉价</td><td>分辨率低，易受噪声干扰</td></tr>
+        <tr><td><strong>磁场追踪器</strong></td><td>精度较高，使用最广泛</td><td>受磁场干扰和大金属物体影响</td></tr>
+      </table>
+    </div></div>
+  </div>
+
+  <div class="qa-card" onclick="toggle(this)">
+    <div class="qa-q">
+      <span class="q-num">Q10</span>
+      <div style="flex:1">
+        <div class="q-text">触觉输入输出设备被认为具有"侵入性"（Intrusive），这意味着什么？为何其他类型的追踪器不存在此问题？</div>
+        <div class="q-tags"><span class="q-tag tag-explain">概念辨析</span></div>
+      </div>
+      <span class="q-chevron">›</span>
+    </div>
+    <div class="qa-a"><div class="answer-body">
+      <p><strong>侵入性的含义：</strong>即使设备处于不工作状态，用户也能<strong>感受到它的物理存在</strong>，设备会干扰用户的自然动作，降低操作的流畅感和沉浸感。例如，佩戴触觉手套时，手套本身的重量和束缚感会持续影响手部运动。</p>
+      <p><strong>为何其他追踪器没有此问题：</strong>磁场、超声波、光学、惯性传感器等属于<strong>非接触式追踪（Non-contact Tracking）</strong>，传感器虽然佩戴在身上，但不会主动对用户施加物理约束力，因此不影响自然运动。</p>
+    </div></div>
+  </div>
+</div>
+
+<!-- ═══════ M2 ═══════ -->
+<div class="module-panel" id="panel-m2">
+  <div class="mod-header">
+    <div class="mod-badge badge-m2">M2</div>
+    <div>
+      <h2>Module 2 · Input Devices</h2>
+      <p>追踪性能指标定义、六类追踪器原理对比与手势设备传感技术，是计算题和原理辨析的高频区域。</p>
+    </div>
+  </div>
+  <div class="stats-bar">
+    <div class="stat-pill">共 <span>10</span> 题</div>
+    <div class="stat-pill">核心考点 <span>5</span></div>
+    <div class="stat-pill">原理题 <span>4</span></div>
+  </div>
+
+  <div class="cat-label">追踪基础与性能指标</div>
+
+  <div class="qa-card" onclick="toggle(this)">
+    <div class="qa-q">
+      <span class="q-num">Q1</span>
+      <div style="flex:1">
+        <div class="q-text">定义并区分追踪器的四大性能指标：Accuracy、Jitter、Drift、Latency。</div>
+        <div class="q-tags"><span class="q-tag tag-core">核心考点</span><span class="q-tag tag-compare">辨析</span></div>
+      </div>
+      <span class="q-chevron">›</span>
+    </div>
+    <div class="qa-a"><div class="answer-body">
+      <table class="answer-table">
+        <tr><th>指标</th><th>定义</th><th>关键特点</th></tr>
+        <tr><td><strong>Accuracy（精度）</strong></td><td>物体实际位置与追踪器测量值的接近程度</td><td>随与参考坐标系原点距离增大而降低；定义追踪器的工作范围</td></tr>
+        <tr><td><strong>Jitter（抖动）</strong></td><td>被追踪物体静止时，追踪器输出的随机波动</td><td>在真实值附近随机变化，不随时间单方向积累</td></tr>
+        <tr><td><strong>Drift（漂移）</strong></td><td>追踪误差随时间持续单向积累增大</td><td>常见于惯性传感器，需借助另一类型追踪器定期重置</td></tr>
+        <tr><td><strong>Latency（延迟）</strong></td><td>动作发生到信号被计算机接收之间的时间延迟</td><td>过大导致 Simulation Sickness（晕动症）</td></tr>
+      </table>
+      <div class="key-box"><strong>辨析重点：</strong>Jitter 是随机、无方向的波动；Drift 是有方向、随时间积累的单向误差。二者来源和处理方式不同。</div>
+    </div></div>
+  </div>
+
+  <div class="qa-card" onclick="toggle(this)">
+    <div class="qa-q">
+      <span class="q-num">Q2</span>
+      <div style="flex:1">
+        <div class="q-text">写出 VR 中将 3D 物体点投影到 2D 图像的坐标变换公式，并解释每个矩阵的作用。</div>
+        <div class="q-tags"><span class="q-tag tag-calc">公式</span><span class="q-tag tag-core">核心考点</span></div>
+      </div>
+      <span class="q-chevron">›</span>
+    </div>
+    <div class="qa-a"><div class="answer-body">
+      <div class="formula-box">v2D = M<sub>proj</sub> × M<sub>view</sub> × M<sub>world</sub> × v3D</div>
+      <ul class="answer-list">
+        <li><strong>Mworld（模型矩阵）</strong>：将点从模型局部坐标系变换到世界坐标系，描述物体在世界中的位置和朝向。</li>
+        <li><strong>Mview（视图矩阵）</strong>：将点从世界坐标系变换到用户视角坐标系，由头部追踪器测量的头部位置和朝向推导得到：<code>Mview = R(−θroll, −θpitch, −θyaw) × T(−eye)</code></li>
+        <li><strong>Mproj（投影矩阵）</strong>：将 3D 点投影到 2D 图像平面，实现透视效果。</li>
+      </ul>
+      <p>变换从右向左依次应用，矩阵乘法顺序不可颠倒。</p>
+    </div></div>
+  </div>
+
+  <div class="cat-label">追踪器类型原理</div>
+
+  <div class="qa-card" onclick="toggle(this)">
+    <div class="qa-q">
+      <span class="q-num">Q3</span>
+      <div style="flex:1">
+        <div class="q-text">AC 磁场追踪器存在什么核心问题？DC 磁场追踪器如何改进？DC 追踪器自身又有哪些局限？</div>
+        <div class="q-tags"><span class="q-tag tag-core">核心考点</span><span class="q-tag tag-explain">原理分析</span></div>
+      </div>
+      <span class="q-chevron">›</span>
+    </div>
+    <div class="qa-a"><div class="answer-body">
+      <p><strong>AC 的核心问题——涡流（Eddy Currents）：</strong>变化的交流磁场在周围导体中感应出循环电流，这些涡流会产生新磁场来抵消原磁场，导致接收器感知到<strong>扭曲的磁场</strong>，精度下降。</p>
+      <p><strong>DC 的改进方案：</strong>使用脉冲直流磁场，每次激励之间留有<strong>短暂时延</strong>，使涡流在时延内充分消散，再进行测量，从而避免涡流干扰。测量流程分四个时间段（X/Y/Z 轴磁场轮流开启），并减去地球本底磁场。</p>
+      <p><strong>DC 的自身局限：</strong></p>
+      <ul class="answer-list">
+        <li><strong>环境误差</strong>：磁场强度随距离的三次方衰减，位置误差公式为 <code>Error = K × d⁴</code></li>
+        <li><strong>铜干扰</strong>：铜的高导电性使涡流持续时间超过 DC 时延，因此 DC 追踪器同样受铜干扰</li>
+        <li>铁磁金属（钢、铁氧体）对 AC 和 DC 均有干扰</li>
+      </ul>
+    </div></div>
+  </div>
+
+  <div class="qa-card" onclick="toggle(this)">
+    <div class="qa-q">
+      <span class="q-num">Q4</span>
+      <div style="flex:1">
+        <div class="q-text">超声波追踪器的更新率为什么比磁场追踪器低？其工作原理是什么？</div>
+        <div class="q-tags"><span class="q-tag tag-explain">原理分析</span></div>
+      </div>
+      <span class="q-chevron">›</span>
+    </div>
+    <div class="qa-a"><div class="answer-body">
+      <p><strong>工作原理：</strong>固定发射器（3 个超声波扬声器，间距约 30cm）和移动接收器（3 个超声波麦克风）之间，利用<strong>飞行时间法（Time of Flight）</strong>——已知温度下声速恒定，通过测量声波传播时间计算距离。每个扬声器循环激活，共产生 9 个距离值，确定接收器的 6 DOF 位姿。</p>
+      <p><strong>更新率低的原因：</strong>每次测量完成后，需要等待 <strong>5–100 ms</strong> 让环境中的回声（墙壁反射等）充分消散，才能开始下一次测量，以防混响干扰当前读数。因此更新率约为 50 次/秒，低于磁场追踪器的 120 次/秒。</p>
+      <p>此外，声速受<strong>温度、气压、湿度</strong>影响，是另一精度误差来源。</p>
+    </div></div>
+  </div>
+
+  <div class="qa-card" onclick="toggle(this)">
+    <div class="qa-q">
+      <span class="q-num">Q5</span>
+      <div style="flex:1">
+        <div class="q-text">光学追踪分为"外部观察型"和"内部观察型"，二者有何区别？各自的主要优缺点是什么？</div>
+        <div class="q-tags"><span class="q-tag tag-compare">比较</span></div>
+      </div>
+      <span class="q-chevron">›</span>
+    </div>
+    <div class="qa-a"><div class="answer-body">
+      <table class="answer-table">
+        <tr><th></th><th>外部观察型（Outside Looking In）</th><th>内部观察型（Inside Looking Out）</th></tr>
+        <tr><td><strong>摄像头位置</strong></td><td>固定在环境中（如天花板、架子）</td><td>附着在被追踪物体/用户上</td></tr>
+        <tr><td><strong>标记点位置</strong></td><td>佩戴在用户身上</td><td>放置在墙壁/环境中</td></tr>
+        <tr><td><strong>工作范围</strong></td><td>受摄像头覆盖范围限制</td><td>理论上可扩展至无限大</td></tr>
+        <tr><td><strong>主要优点</strong></td><td>精度高，行业标准算法成熟</td><td>工作空间大，对朝向变化最敏感</td></tr>
+        <tr><td><strong>主要缺点</strong></td><td>遮挡问题（Occlusion）严重，身体部位互相遮挡时无法恢复被遮标记点</td><td>标记点需覆盖整个工作空间，成本较高</td></tr>
+      </table>
+      <p>光学动作捕捉五步流程：<em>校准 → 捕捉 → 3D 重建 → 骨架拟合 → 后处理</em>。3D 重建要求每个标记点至少被 <strong>2 个摄像头</strong>同时看到。</p>
+    </div></div>
+  </div>
+
+  <div class="qa-card" onclick="toggle(this)">
+    <div class="qa-q">
+      <span class="q-num">Q6</span>
+      <div style="flex:1">
+        <div class="q-text">陀螺仪和加速度计在惯性追踪中各自的优缺点是什么？它们如何形成互补？漂移误差如何随时间增长？</div>
+        <div class="q-tags"><span class="q-tag tag-core">核心考点</span><span class="q-tag tag-compare">比较</span></div>
+      </div>
+      <span class="q-chevron">›</span>
+    </div>
+    <div class="qa-a"><div class="answer-body">
+      <table class="answer-table">
+        <tr><th></th><th>陀螺仪（角速度）</th><th>加速度计（线性加速度）</th></tr>
+        <tr><td><strong>优点</strong></td><td>短期精度高，响应快</td><td>长期稳定，可提供绝对参考</td></tr>
+        <tr><td><strong>缺点</strong></td><td>长期漂移（Drift），受温度影响</td><td>短期噪声大，积分误差快速累积</td></tr>
+        <tr><td><strong>测量量</strong></td><td>角速度 → 积分得朝向</td><td>线性加速度 → 二次积分得位置</td></tr>
+      </table>
+      <p><strong>互补机制：</strong>短期依赖陀螺仪提供精确快速响应，长期用加速度计校正漂移。实际系统（如 IMU）将二者融合（如卡尔曼滤波）。</p>
+      <p><strong>漂移误差增长规律（重要考点）：</strong></p>
+      <ul class="answer-list">
+        <li>陀螺仪偏置误差 → 朝向误差 ∝ <em>时间（t）</em></li>
+        <li>加速度计偏置误差 → 位置误差 ∝ <em>时间的平方（t²）</em>（因为经过两次积分）</li>
+      </ul>
+    </div></div>
+  </div>
+
+  <div class="cat-label">手势设备传感原理</div>
+
+  <div class="qa-card" onclick="toggle(this)">
+    <div class="qa-q">
+      <span class="q-num">Q7</span>
+      <div style="flex:1">
+        <div class="q-text">比较 5DT Data Gloves、Didjigloves 和 CyberGloves 在传感原理上的区别。</div>
+        <div class="q-tags"><span class="q-tag tag-compare">比较</span><span class="q-tag tag-principle">传感原理</span></div>
+      </div>
+      <span class="q-chevron">›</span>
+    </div>
+    <div class="qa-a"><div class="answer-body">
+      <table class="answer-table">
+        <tr><th>设备</th><th>传感原理</th><th>核心机制</th></tr>
+        <tr><td><strong>5DT Data Gloves</strong></td><td>光纤弯曲传感</td><td>手指弯曲时光从光纤壁逸出 → 接收光强降低 → 间接测量弯曲角度；8位A/D，256级分辨率</td></tr>
+        <tr><td><strong>Didjigloves</strong></td><td>电容弯曲传感</td><td>两层导电聚合物夹介电层，弯曲时极板重叠面积变化 → 电容变化 → 测量弯曲角度</td></tr>
+        <tr><td><strong>CyberGloves</strong></td><td>应变片（差分电压）</td><td>手指运动时一侧应变片压缩、另一侧拉伸 → 两者电阻差产生差分电压 → 放大后 A/D 转换；18或22个传感器</td></tr>
+      </table>
+      <p>Pinch Gloves（捏合手套）则更简单，仅通过导电纤维电极检测接触的建立与断开，不能测量连续角度。</p>
+    </div></div>
+  </div>
+
+  <div class="qa-card" onclick="toggle(this)">
+    <div class="qa-q">
+      <span class="q-num">Q8</span>
+      <div style="flex:1">
+        <div class="q-text">机械追踪器被称为"侵入性"设备，详细解释其原因及主要缺点，并说明其最主要的优点。</div>
+        <div class="q-tags"><span class="q-tag tag-explain">概念辨析</span></div>
+      </div>
+      <span class="q-chevron">›</span>
+    </div>
+    <div class="qa-a"><div class="answer-body">
+      <p><strong>侵入性的具体原因：</strong>机械追踪器由物理连杆和关节组成，需要直接固定在用户身体上或与身体接触，连杆本身的质量和惯性会<strong>干扰用户的自然动作</strong>，即使不工作时也能被感知。这与磁场、光学等非接触式追踪完全不同。</p>
+      <p><strong>主要缺点：</strong></p>
+      <ul class="answer-list">
+        <li>运动范围受机械结构物理长度限制</li>
+        <li>连杆质量导致惯性振荡，影响测量平滑性</li>
+        <li>设备沉重，长时间使用导致用户疲劳，降低沉浸感</li>
+      </ul>
+      <p><strong>主要优点：</strong>精确度高（最高可达 0.08°）、延迟极小、无需直接视线（对比光学和超声波）、可长时间录制且漂移小。</p>
+    </div></div>
+  </div>
+
+  <div class="qa-card" onclick="toggle(this)">
+    <div class="qa-q">
+      <span class="q-num">Q9</span>
+      <div style="flex:1">
+        <div class="q-text">5DT Data Glove 的归一化公式是什么？说明其用途和标定过程。</div>
+        <div class="q-tags"><span class="q-tag tag-calc">公式</span></div>
+      </div>
+      <span class="q-chevron">›</span>
+    </div>
+    <div class="qa-a"><div class="answer-body">
+      <div class="formula-box">out = (rawval − rawmin) / (rawmax − rawmin) × 256</div>
+      <p><strong>用途：</strong>将传感器的原始 ADC 读数归一化到 0–255 的统一范围，消除不同用户手指大小和传感器差异带来的偏差，使输出值直接对应手指弯曲程度（0=平展，255=握拳）。</p>
+      <p><strong>标定过程：</strong>让用户反复弯曲和伸展手指，系统记录每个传感器输出的<strong>动态范围</strong>（最大值 rawmax 和最小值 rawmin），生成<strong>查找表（Look-up Table）</strong>，后续每次测量通过查表将原始值映射为标准化手势角度。</p>
+    </div></div>
+  </div>
+
+  <div class="qa-card" onclick="toggle(this)">
+    <div class="qa-q">
+      <span class="q-num">Q10</span>
+      <div style="flex:1">
+        <div class="q-text">综合比较五类追踪器（机械、磁场、超声波、光学、惯性）在精度、视线要求、工作范围和干扰因素上的异同。</div>
+        <div class="q-tags"><span class="q-tag tag-compare">综合比较</span></div>
+      </div>
+      <span class="q-chevron">›</span>
+    </div>
+    <div class="qa-a"><div class="answer-body">
+      <table class="answer-table">
+        <tr><th>类型</th><th>精度</th><th>视线要求</th><th>工作范围</th><th>主要干扰</th><th>侵入性</th></tr>
+        <tr><td><strong>机械</strong></td><td>最高</td><td>无</td><td>受结构限制</td><td>无（机械本身影响运动）</td><td><em>有</em></td></tr>
+        <tr><td><strong>磁场（AC/DC）</strong></td><td>较高</td><td>无</td><td>中等（~几米）</td><td>金属（AC 更严重）</td><td>无</td></tr>
+        <tr><td><strong>超声波</strong></td><td>中</td><td><em>需要</em></td><td>~1.5m</td><td>温度、墙壁反射</td><td>无</td></tr>
+        <tr><td><strong>光学</strong></td><td>最高</td><td><em>需要</em></td><td>可扩展（Inside-out 无限）</td><td>遮挡</td><td>无</td></tr>
+        <tr><td><strong>惯性</strong></td><td>短期好/长期差</td><td>无</td><td><em>无限</em></td><td>漂移（需重置）</td><td>无</td></tr>
+      </table>
+    </div></div>
+  </div>
+</div>
+
+<!-- ═══════ M3 ═══════ -->
+<div class="module-panel" id="panel-m3">
+  <div class="mod-header">
+    <div class="mod-badge badge-m3">M3</div>
+    <div>
+      <h2>Module 3 · Output Devices — Graphical Displays</h2>
+      <p>人类视觉系统的生理约束决定了 VR 显示设备的设计目标，是理解所有显示技术的底层逻辑。</p>
+    </div>
+  </div>
+  <div class="stats-bar">
+    <div class="stat-pill">共 <span>10</span> 题</div>
+    <div class="stat-pill">公式题 <span>2</span></div>
+    <div class="stat-pill">原理比较 <span>5</span></div>
+  </div>
+
+  <div class="cat-label">人类视觉系统</div>
+
+  <div class="qa-card" onclick="toggle(this)">
+    <div class="qa-q">
+      <span class="q-num">Q1</span>
+      <div style="flex:1">
+        <div class="q-text">说明中央凹（Fovea）的功能，列举三种视锥细胞及其对应的敏感颜色，人眼对哪种颜色最敏感？</div>
+        <div class="q-tags"><span class="q-tag tag-list">列举题</span></div>
+      </div>
+      <span class="q-chevron">›</span>
+    </div>
+    <div class="qa-a"><div class="answer-body">
+      <p><strong>中央凹（Fovea）：</strong>视网膜中央的高分辨率、彩色感知区域，是眼睛真正"聚焦"的地方，视锥细胞高度密集；中央凹以外的周边区域则由视杆细胞主导，负责运动感知和夜间视觉，分辨率较低。</p>
+      <table class="answer-table">
+        <tr><th>视锥细胞类型</th><th>最敏感颜色</th></tr>
+        <tr><td><strong>L-cone（长波锥）</strong></td><td>红色</td></tr>
+        <tr><td><strong>M-cone（中波锥）</strong></td><td>绿色</td></tr>
+        <tr><td><strong>S-cone（短波锥）</strong></td><td>蓝色</td></tr>
+      </table>
+      <p>人眼对<em>绿色</em>最为敏感，因为绿色对应可见光谱的中间波段，M-cone 在该波段的响应最强，且 L-cone 对绿色也有较强响应。</p>
+    </div></div>
+  </div>
+
+  <div class="qa-card" onclick="toggle(this)">
+    <div class="qa-q">
+      <span class="q-num">Q2</span>
+      <div style="flex:1">
+        <div class="q-text">列举近距离和远距离深度感知的线索各四种，并简要说明每种线索的机制。</div>
+        <div class="q-tags"><span class="q-tag tag-list">列举题</span><span class="q-tag tag-core">核心考点</span></div>
+      </div>
+      <span class="q-chevron">›</span>
+    </div>
+    <div class="qa-a"><div class="answer-body">
+      <p><strong>近距离线索（0–30m）：</strong></p>
+      <table class="answer-table">
+        <tr><th>线索</th><th>机制</th></tr>
+        <tr><td><strong>会聚（Convergence）</strong></td><td>双眼向近处物体旋转聚焦，聚焦角度反映距离</td></tr>
+        <tr><td><strong>调节（Accommodation）</strong></td><td>睫状肌改变晶状体曲率以对焦，肌肉张力反映距离</td></tr>
+        <tr><td><strong>视差（Disparity）</strong></td><td>同一物体在左右眼的水平位置差，大脑计算深度</td></tr>
+        <tr><td><strong>运动视差（Parallax）</strong></td><td>观察者横向移动时，近物移动快、远物慢</td></tr>
+      </table>
+      <p><strong>远距离线索（>30m）：</strong></p>
+      <table class="answer-table">
+        <tr><th>线索</th><th>机制</th></tr>
+        <tr><td><strong>遮挡（Occlusion）</strong></td><td>近处物体遮挡远处物体，被遮挡者在后</td></tr>
+        <tr><td><strong>透视（Perspective）</strong></td><td>远处物体在视网膜上成像更小</td></tr>
+        <tr><td><strong>雾霾（Haze）</strong></td><td>远处物体颜色偏灰，对比度降低</td></tr>
+        <tr><td><strong>表面纹理（Surface Texture）</strong></td><td>类似透视，远处纹理密度更高（看起来更密集）</td></tr>
+      </table>
+    </div></div>
+  </div>
+
+  <div class="qa-card" onclick="toggle(this)">
+    <div class="qa-q">
+      <span class="q-num">Q3</span>
+      <div style="flex:1">
+        <div class="q-text">什么是会聚-调节冲突（Convergence-Accommodation Conflict）？为什么 HMD 中会产生这一冲突？有何影响？</div>
+        <div class="q-tags"><span class="q-tag tag-core">核心考点</span><span class="q-tag tag-explain">原因分析</span></div>
+      </div>
+      <span class="q-chevron">›</span>
+    </div>
+    <div class="qa-a"><div class="answer-body">
+      <p><strong>真实场景中：</strong>会聚（双眼旋转角度）与调节（晶状体曲率）同步指向同一物理距离，二者高度一致。</p>
+      <p><strong>HMD 中产生冲突的原因：</strong></p>
+      <ul class="answer-list">
+        <li><strong>会聚</strong>：根据虚拟物体在场景中的深度，双眼正确地向该距离旋转聚焦（如 2 米处的虚拟桌子）</li>
+        <li><strong>调节</strong>：眼睛距离 HMD 屏幕只有几厘米，晶状体被迫对准屏幕这一固定物理平面（无论虚拟物体在哪里）</li>
+      </ul>
+      <p><strong>结果：</strong>会聚指向 2 米，调节指向几厘米，二者不一致 →<strong>视疲劳（Eye Strain）</strong>，长时间使用会引起头痛和不适，是 VR HMD 设计的核心挑战之一。</p>
+    </div></div>
+  </div>
+
+  <div class="qa-card" onclick="toggle(this)">
+    <div class="qa-q">
+      <span class="q-num">Q4</span>
+      <div style="flex:1">
+        <div class="q-text">写出高斯薄透镜公式和 HMD 放大倍数公式，并解释各符号含义。</div>
+        <div class="q-tags"><span class="q-tag tag-calc">公式</span></div>
+      </div>
+      <span class="q-chevron">›</span>
+    </div>
+    <div class="qa-a"><div class="answer-body">
+      <div class="formula-box">
+        1/d + 1/d' = 1/f &nbsp;&nbsp;&nbsp; ⟺ &nbsp;&nbsp;&nbsp; d = f·d' / (d' − f)<br><br>
+        M = h / h' = f / (d' − f)
+      </div>
+      <table class="answer-table">
+        <tr><th>符号</th><th>含义</th></tr>
+        <tr><td><code>d'</code></td><td>屏幕（实物）到镜头的距离</td></tr>
+        <tr><td><code>d</code></td><td>镜头到虚拟图像的距离（用户感知到图像在前方多远处）</td></tr>
+        <tr><td><code>f</code></td><td>镜头焦距</td></tr>
+        <tr><td><code>h'</code></td><td>实际屏幕（物体）高度</td></tr>
+        <tr><td><code>h</code></td><td>虚拟图像高度（用户感知到的放大后高度）</td></tr>
+        <tr><td><code>M</code></td><td>放大倍数（&gt;1 表示放大）</td></tr>
+      </table>
+      <div class="key-box"><strong>记忆提示：</strong>d' 越接近 f，放大倍数越大，虚拟图像越远（接近无穷远）；这正是 HMD 镜头的工作状态——屏幕放置在略大于焦距处。</div>
+    </div></div>
+  </div>
+
+  <div class="cat-label">显示技术原理</div>
+
+  <div class="qa-card" onclick="toggle(this)">
+    <div class="qa-q">
+      <span class="q-num">Q5</span>
+      <div style="flex:1">
+        <div class="q-text">自动立体显示器（Autostereoscopic Display）无需眼镜即可呈现立体效果，但有何代价？被动式和主动式有何区别？</div>
+        <div class="q-tags"><span class="q-tag tag-compare">比较</span><span class="q-tag tag-explain">原理</span></div>
+      </div>
+      <span class="q-chevron">›</span>
+    </div>
+    <div class="qa-a"><div class="answer-body">
+      <p><strong>工作原理：</strong>使用<strong>列交错图像格式</strong>——奇数列显示左眼图像，偶数列显示右眼图像，配合视差屏障或棱镜使左右眼分别只接收对应图像。</p>
+      <p><strong>代价：</strong>水平分辨率减半（一半列给左眼，另一半给右眼）。</p>
+      <table class="answer-table">
+        <tr><th></th><th>被动式（Passive）</th><th>主动式（Active）</th></tr>
+        <tr><td><strong>头部追踪</strong></td><td>无</td><td>有（摄像头追踪头部运动）</td></tr>
+        <tr><td><strong>视区</strong></td><td>固定，用户必须在预定位置</td><td>动态更新，随头部位置改变</td></tr>
+        <tr><td><strong>复杂度</strong></td><td>低</td><td>高（含步进电机等机械部件，有噪声和损坏风险）</td></tr>
+      </table>
+    </div></div>
+  </div>
+
+  <div class="qa-card" onclick="toggle(this)">
+    <div class="qa-q">
+      <span class="q-num">Q6</span>
+      <div style="flex:1">
+        <div class="q-text">比较 LCD 投影仪和 DLP 投影仪的工作原理及优缺点。DLP 的核心器件 DMD 是如何工作的？</div>
+        <div class="q-tags"><span class="q-tag tag-compare">比较</span><span class="q-tag tag-principle">工作原理</span></div>
+      </div>
+      <span class="q-chevron">›</span>
+    </div>
+    <div class="qa-a"><div class="answer-body">
+      <table class="answer-table">
+        <tr><th></th><th>LCD 投影仪</th><th>DLP 投影仪</th></tr>
+        <tr><td><strong>原理</strong></td><td>3 个独立 RGB 液晶面板分别控制透光量，三路合并为彩色图像</td><td>DMD 芯片微镜偏转反射光；旋转滤色轮产生颜色</td></tr>
+        <tr><td><strong>优点</strong></td><td>光效率高、图像清晰锐利</td><td>图像更平滑（像素颗粒感少）、对比度更高</td></tr>
+        <tr><td><strong>缺点</strong></td><td>像素颗粒感明显、体积较大、可能有坏点</td><td>—</td></tr>
+      </table>
+      <p><strong>DMD 工作原理：</strong>芯片上排列大量微小铝镜，每个像素对应一面微镜。施加 <strong>5V 电位</strong>使微镜偏转 <strong>±10°</strong>：偏转向光源方向时反射光线到屏幕（亮），偏转另一方向时将光线导向吸光材料（暗）。通过控制每面微镜的开/关时间比例（占空比）来控制灰度。</p>
+    </div></div>
+  </div>
+
+  <div class="qa-card" onclick="toggle(this)">
+    <div class="qa-q">
+      <span class="q-num">Q7</span>
+      <div style="flex:1">
+        <div class="q-text">快门眼镜立体系统为何需要 120–140 Hz 的刷新率？该系统有何主要缺点？</div>
+        <div class="q-tags"><span class="q-tag tag-explain">原因分析</span></div>
+      </div>
+      <span class="q-chevron">›</span>
+    </div>
+    <div class="qa-a"><div class="answer-body">
+      <p><strong>需要高刷新率的原因：</strong>立体显示器需要<strong>交替</strong>向左眼和右眼各发送一帧图像，即总帧率被两只眼睛分摊。若每只眼睛要获得流畅的 60 fps 体验，显示器就必须以 <strong>120 fps（60×2）</strong>运行。若达到更平滑的 70 fps/眼，则需 140 Hz。</p>
+      <p><strong>工作流程：</strong>显示器顶部的 IR 发射器将帧同步信号发送给快门眼镜，眼镜内控制器交替遮挡左/右镜片，配合显示器的左右帧交替，使大脑分别接收两眼图像并融合为立体感。</p>
+      <p><strong>主要缺点：</strong></p>
+      <ul class="answer-list">
+        <li>快门镜片过滤部分光线 → 画面比普通屏幕<strong>更暗</strong></li>
+        <li>需要 IR 发射器与眼镜接收器之间保持<strong>直接视线（Line-of-Sight）</strong>，遮挡会导致同步失败</li>
+      </ul>
+    </div></div>
+  </div>
+
+  <div class="qa-card" onclick="toggle(this)">
+    <div class="qa-q">
+      <span class="q-num">Q8</span>
+      <div style="flex:1">
+        <div class="q-text">PanoWall 多投影仪拼接系统中，相邻图像重叠区域如何处理？为什么需要这种处理？</div>
+        <div class="q-tags"><span class="q-tag tag-principle">工作原理</span></div>
+      </div>
+      <span class="q-chevron">›</span>
+    </div>
+    <div class="qa-a"><div class="answer-body">
+      <p><strong>为何需要重叠：</strong>多台投影仪拼接时，在拼缝处若图像直接相邻会出现明显亮度不均（边缘更亮或更暗），影响视觉连续性。因此相邻图像需<strong>约 25% 的重叠区域</strong>来过渡。</p>
+      <p><strong>处理方法——无缝矩阵混合（Seamless Matrix Blending）：</strong>在重叠区域内，使用<strong>二维查找表（2D Look-up Table）</strong>对每个重叠像素的亮度进行单独调整，使重叠区域的亮度从一侧投影仪的图像平滑过渡到另一侧，消除拼缝。</p>
+      <p>PanoWall 具体参数：3 台 1280×1024 投影仪，合成分辨率 <strong>3200×1024</strong>。</p>
+    </div></div>
+  </div>
+
+  <div class="qa-card" onclick="toggle(this)">
+    <div class="qa-q">
+      <span class="q-num">Q9</span>
+      <div style="flex:1">
+        <div class="q-text">体积显示（Volumetric Display）的基本工作原理是什么？它与普通立体显示器有何根本区别？</div>
+        <div class="q-tags"><span class="q-tag tag-compare">比较</span><span class="q-tag tag-principle">原理</span></div>
+      </div>
+      <span class="q-chevron">›</span>
+    </div>
+    <div class="qa-a"><div class="answer-body">
+      <p><strong>体积显示工作原理（以 Perspecta 为例）：</strong></p>
+      <ul class="answer-list">
+        <li>2D 投影引擎（TI DMD 芯片）以 <strong>5000 帧/秒</strong>的速度高速投射一系列时序图像</li>
+        <li>半透明屏幕以 <strong>730 弧度/分钟</strong>高速旋转</li>
+        <li>每个旋转角度位置对应一帧不同视角的截面图像，多帧叠加在人眼视觉残留时间内合成为三维立体图像</li>
+      </ul>
+      <p><strong>与普通立体显示器的根本区别：</strong></p>
+      <ul class="answer-list">
+        <li>普通立体显示器（含 HMD、快门眼镜）利用<strong>视差欺骗大脑</strong>产生深度感，图像仍在平面上，且必须从特定角度观看</li>
+        <li>体积显示是在真实的三维空间中构建图像，用户可从<strong>任意角度 360°</strong>观察，无需眼镜，不存在会聚-调节冲突</li>
+      </ul>
+    </div></div>
+  </div>
+
+  <div class="qa-card" onclick="toggle(this)">
+    <div class="qa-q">
+      <span class="q-num">Q10</span>
+      <div style="flex:1">
+        <div class="q-text">VR 沉浸感的三大关键因素是什么？若要产生与人眼视觉锐度匹配的显示，每眼需要多少分辨率？</div>
+        <div class="q-tags"><span class="q-tag tag-core">核心考点</span><span class="q-tag tag-calc">计算推导</span></div>
+      </div>
+      <span class="q-chevron">›</span>
+    </div>
+    <div class="qa-a"><div class="answer-body">
+      <p><strong>VR 沉浸感三大关键因素：</strong></p>
+      <ul class="answer-list">
+        <li><strong>深度感知</strong>：立体显示提供双目视差，配合其他深度线索</li>
+        <li><strong>大视野（FOV）</strong>：尽可能覆盖人眼的自然视野范围</li>
+        <li><strong>高分辨率图像</strong>：图像细节足以匹配人眼分辨能力</li>
+      </ul>
+      <p><strong>分辨率计算：</strong>人眼最高分辨 <strong>1 角分弧（1 arc min = 1/60°）</strong>的细节，即每度 60 个像素。</p>
+      <div class="formula-box">
+        单眼水平：60 px/° × 150° = 9000 像素<br>
+        单眼垂直：60 px/° × 135° = 8100 像素<br>
+        → 每眼需约 <strong>9000 × 8100 像素</strong>
+      </div>
+      <p>目前主流 VR 头显（如 Quest 2，单眼 1832×1920）与此标准仍有较大差距，这也是为什么高端 VR 图像仍有明显的纱窗效应。</p>
+    </div></div>
+  </div>
+</div>
+
+<!-- ═══════ M4 ═══════ -->
+<div class="module-panel" id="panel-m4">
+  <div class="mod-header">
+    <div class="mod-badge badge-m4">M4</div>
+    <div>
+      <h2>Module 4 · Sound & Haptics</h2>
+      <p>声音定位的生理机制（ITD/IID/HRTF）和触觉感受器分类是高频考点，注意概念间的细微辨析。</p>
+    </div>
+  </div>
+  <div class="stats-bar">
+    <div class="stat-pill">共 <span>9</span> 题</div>
+    <div class="stat-pill">定义辨析 <span>4</span></div>
+    <div class="stat-pill">原理题 <span>3</span></div>
+  </div>
+
+  <div class="cat-label">3D 声音与定位</div>
+
+  <div class="qa-card" onclick="toggle(this)">
+    <div class="qa-q">
+      <span class="q-num">Q1</span>
+      <div style="flex:1">
+        <div class="q-text">立体声（Stereo Sound）与 3D 声音有何区别？人类通过哪三类线索确定声源的三维位置？</div>
+        <div class="q-tags"><span class="q-tag tag-compare">比较</span><span class="q-tag tag-list">列举</span></div>
+      </div>
+      <span class="q-chevron">›</span>
+    </div>
+    <div class="qa-a"><div class="answer-body">
+      <p><strong>立体声 vs 3D 声音：</strong>立体声（Stereo）中声音是固定的，不随用户头部运动而改变；<strong>3D 声音</strong>中声音会随用户<em>头部位置和朝向</em>动态更新，始终保持声源在虚拟世界中的正确空间位置。</p>
+      <p><strong>三类空间定位线索：</strong></p>
+      <ul class="answer-list">
+        <li><strong>方位线索（Azimuth Cues）</strong>：确定声源的水平角度，主要依靠 ITD 和 IID</li>
+        <li><strong>仰角线索（Elevation Cues）</strong>：确定声源的垂直角度，依靠耳廓的频率滤波效应</li>
+        <li><strong>距离线索（Distance Cues）</strong>：确定声源距离，依靠先验知识+感知响度+运动视差</li>
+      </ul>
+    </div></div>
+  </div>
+
+  <div class="qa-card" onclick="toggle(this)">
+    <div class="qa-q">
+      <span class="q-num">Q2</span>
+      <div style="flex:1">
+        <div class="q-text">什么是 ITD 和 IID？二者分别对哪种频率的声音更有效？ITD 在什么条件下会失效？</div>
+        <div class="q-tags"><span class="q-tag tag-core">核心考点</span><span class="q-tag tag-compare">辨析</span></div>
+      </div>
+      <span class="q-chevron">›</span>
+    </div>
+    <div class="qa-a"><div class="answer-body">
+      <table class="answer-table">
+        <tr><th></th><th>ITD（耳间时间差）</th><th>IID（耳间强度差）</th></tr>
+        <tr><td><strong>定义</strong></td><td>同一声音到达左右耳的时间差</td><td>同一声音到达左右耳的强度差</td></tr>
+        <tr><td><strong>产生原因</strong></td><td>声音以有限速度传播，近耳先到达</td><td>头影效应（Head-Shadow Effect）：头部对较远耳的遮挡</td></tr>
+        <tr><td><strong>有效频率</strong></td><td><em>低频</em>声音（波长较长，绕过头部）</td><td><em>高频</em>声音（波长短，被头部有效遮挡）</td></tr>
+      </table>
+      <p><strong>ITD 失效条件：</strong>低于 <strong>250 Hz</strong> 时，室内<strong>混响（Reverberation）</strong>对 ITD 产生严重干扰，大脑转而关注声音的<strong>瞬态起始（Transient Onset）</strong>，忽略低频稳态信息。</p>
+    </div></div>
+  </div>
+
+  <div class="qa-card" onclick="toggle(this)">
+    <div class="qa-q">
+      <span class="q-num">Q3</span>
+      <div style="flex:1">
+        <div class="q-text">什么是 HRTF？写出其数学表达式，解释为何 HRTF 具有个体性，使用他人 HRTF 会带来什么后果？</div>
+        <div class="q-tags"><span class="q-tag tag-core">核心考点</span><span class="q-tag tag-calc">公式</span></div>
+      </div>
+      <span class="q-chevron">›</span>
+    </div>
+    <div class="qa-a"><div class="answer-body">
+      <p><strong>HRTF 定义：</strong>头部相关传递函数（Head-Related Transfer Function），是声源发出的声音与到达耳鼓的声音之间关系的<strong>频域表示</strong>，用傅里叶变换描述。包含了耳廓、头部、肩部等几何形状对声音的所有反射、衍射和散射效应。</p>
+      <div class="formula-box">Yᵢ = Hᵢ ⊗ S</div>
+      <p>其中 <code>S</code> 为输入声源，<code>Hᵢ</code> 为用户 i 的 HRTF，<code>⊗</code> 表示<strong>卷积</strong>运算，<code>Yᵢ</code> 为最终到达耳朵的声音（经耳机播放即可让用户感知到正确的空间位置）。</p>
+      <p><strong>个体性来源：</strong>每个人的耳廓形状、头部尺寸和躯干几何形状各异，导致声音反射路径完全不同，因此 HRTF 是<strong>每人唯一的</strong>。</p>
+      <p><strong>使用他人 HRTF 的后果（前后混淆误差率对比）：</strong></p>
+      <ul class="answer-list">
+        <li>使用真实声音：<em>5%</em> 误差率</li>
+        <li>使用自身 HRTF：<em>10%</em> 误差率</li>
+        <li>使用他人 HRTF：<em>30%</em> 误差率（显著上升）</li>
+      </ul>
+    </div></div>
+  </div>
+
+  <div class="qa-card" onclick="toggle(this)">
+    <div class="qa-q">
+      <span class="q-num">Q4</span>
+      <div style="flex:1">
+        <div class="q-text">基于扬声器的 3D 声音系统与耳机系统有何本质区别？写出其计算公式并说明"甜区"的意义。</div>
+        <div class="q-tags"><span class="q-tag tag-explain">原理分析</span></div>
+      </div>
+      <span class="q-chevron">›</span>
+    </div>
+    <div class="qa-a"><div class="answer-body">
+      <p><strong>本质区别：</strong>耳机系统可以为每只耳朵独立提供声音；而扬声器<strong>无法隔离双耳</strong>——每只耳朵同时接收到左右两个扬声器的混合声音（左耳听到左扬声器和右扬声器各自传来的声音）。</p>
+      <div class="formula-box">
+        Y<sub>left</sub>  = H<sub>l,l</sub> ⊗ S<sub>left</sub>  + H<sub>l,r</sub> ⊗ S<sub>right</sub><br>
+        Y<sub>right</sub> = H<sub>r,l</sub> ⊗ S<sub>left</sub>  + H<sub>r,r</sub> ⊗ S<sub>right</sub>
+      </div>
+      <p>已知期望的双耳声音 Y，将 H 矩阵<strong>求逆</strong>乘以 Y，即可求出扬声器应播放的信号 S。</p>
+      <p><strong>甜区（Sweet Spot）：</strong>只有用户头部处于扬声器阵列预设的特定空间位置时，该矩阵求逆的计算结果才成立，才能产生正确的 3D 声音效果。离开此区域效果大幅下降。</p>
+    </div></div>
+  </div>
+
+  <div class="cat-label">触觉感知与设备</div>
+
+  <div class="qa-card" onclick="toggle(this)">
+    <div class="qa-q">
+      <span class="q-num">Q5</span>
+      <div style="flex:1">
+        <div class="q-text">皮肤的四种机械感受器是什么？区分慢适应感受器和快适应感受器各自对应哪些感受器、感知频率范围及功能。</div>
+        <div class="q-tags"><span class="q-tag tag-core">核心考点</span><span class="q-tag tag-compare">分类</span></div>
+      </div>
+      <span class="q-chevron">›</span>
+    </div>
+    <div class="qa-a"><div class="answer-body">
+      <table class="answer-table">
+        <tr><th>感受器</th><th>位置</th><th>适应类型</th><th>频率范围</th><th>感知内容</th></tr>
+        <tr><td><strong>Meissner 小体</strong></td><td>浅层（表面）</td><td>快适应</td><td>50–300 Hz</td><td>接触力的变化</td></tr>
+        <tr><td><strong>Merkel 盘</strong></td><td>浅层（表面）</td><td>慢适应</td><td>0–10 Hz</td><td>边缘、静态力</td></tr>
+        <tr><td><strong>Pacinian 小体</strong></td><td>深层</td><td>快适应</td><td>50–300 Hz</td><td>振动、快速变化</td></tr>
+        <tr><td><strong>Ruffini 小体</strong></td><td>深层</td><td>慢适应</td><td>0–10 Hz</td><td>皮肤拉伸、持续力</td></tr>
+      </table>
+      <div class="key-box"><strong>关键辨析：</strong>慢适应感受器（Merkel + Ruffini）：持续刺激下持续放电，感知准静态状态；快适应感受器（Meissner + Pacinian）：放电率迅速下降，只在刺激<em>变化</em>时响应，对持续不变的力会"麻木"。</div>
+    </div></div>
+  </div>
+
+  <div class="qa-card" onclick="toggle(this)">
+    <div class="qa-q">
+      <span class="q-num">Q6</span>
+      <div style="flex:1">
+        <div class="q-text">触觉反馈（Touch Feedback）与力反馈（Force Feedback）有何区别？分别列举一个代表性设备。</div>
+        <div class="q-tags"><span class="q-tag tag-compare">比较</span></div>
+      </div>
+      <span class="q-chevron">›</span>
+    </div>
+    <div class="qa-a"><div class="answer-body">
+      <table class="answer-table">
+        <tr><th></th><th>触觉反馈（Tactile Feedback）</th><th>力反馈（Force Feedback）</th></tr>
+        <tr><td><strong>传递内容</strong></td><td>接触面几何形状、粗糙度、温度等表面感知信息</td><td>物体重量、惯性、表面阻力等力学信息；可主动阻止手部运动</td></tr>
+        <tr><td><strong>是否施加真实力</strong></td><td>否，仅提供触觉感知信息（如振动）</td><td>是，设备对用户主动施加反作用力</td></tr>
+        <tr><td><strong>代表设备</strong></td><td>CyberTouch（振动执行器）、温度反馈手套</td><td>PHANToM 机械臂、CyberGrasp、Haptic Master</td></tr>
+      </table>
+    </div></div>
+  </div>
+
+  <div class="qa-card" onclick="toggle(this)">
+    <div class="qa-q">
+      <span class="q-num">Q7</span>
+      <div style="flex:1">
+        <div class="q-text">PHANToM 机械臂有 6 个自由度，其中主动和被动 DOF 各有多少？分别的作用是什么？</div>
+        <div class="q-tags"><span class="q-tag tag-explain">概念辨析</span></div>
+      </div>
+      <span class="q-chevron">›</span>
+    </div>
+    <div class="qa-a"><div class="answer-body">
+      <p>PHANToM 共有 <strong>6 个 DOF</strong>，分为：</p>
+      <ul class="answer-list">
+        <li><strong>3 个主动（Active）DOF</strong>：配备电机，可主动对用户施加<strong>平移方向的力反馈</strong>（X/Y/Z 三个线性方向），这是力反馈的核心功能。</li>
+        <li><strong>3 个被动（Passive）DOF</strong>：不产生力矩，仅用于感知用户手腕和工具的<strong>朝向（Orientation）</strong>，为系统提供完整的 6 DOF 位姿信息，但不施加旋转力矩。</li>
+      </ul>
+      <div class="key-box">PHANToM Desktop 峰值力 6.4N，持续力 1.7N；PHANToM 1.5/6.0 可额外产生 170–515 mN·m 的主动力矩。</div>
+    </div></div>
+  </div>
+
+  <div class="qa-card" onclick="toggle(this)">
+    <div class="qa-q">
+      <span class="q-num">Q8</span>
+      <div style="flex:1">
+        <div class="q-text">温度反馈手套中的热电热泵（Thermal Actuator）是如何工作的？</div>
+        <div class="q-tags"><span class="q-tag tag-principle">工作原理</span></div>
+      </div>
+      <span class="q-chevron">›</span>
+    </div>
+    <div class="qa-a"><div class="answer-body">
+      <p><strong>结构：</strong>由 N 型和 P 型半导体夹在两片陶瓷绝缘体之间构成的热电装置（Peltier 效应器件）。</p>
+      <p><strong>工作原理：</strong></p>
+      <ul class="answer-list">
+        <li>施加<strong>直流电流</strong>时，P/N 型半导体中的电荷载流子向同一方向移动</li>
+        <li>一侧（热沉板）温度<strong>升高</strong>，另一侧（热源板）温度<strong>降低</strong></li>
+        <li>电流越大，两板之间的<strong>温差越大</strong></li>
+        <li>通过改变电流方向可以反转冷热面</li>
+      </ul>
+      <p><strong>控制系统：</strong>目标温度 → PID 控制器（比较目标与传感器读数）→ 放大器 → 热泵 → 皮肤接触，实现闭环精确温度控制。</p>
+      <p>这使得 VR 系统能够模拟不同材质（如钢铁的导热冷感）的热学特性。</p>
+    </div></div>
+  </div>
+
+  <div class="qa-card" onclick="toggle(this)">
+    <div class="qa-q">
+      <span class="q-num">Q9</span>
+      <div style="flex:1">
+        <div class="q-text">比较 CyberGrasp 和 CyberForce 的功能差异，CyberForce 解决了 CyberGrasp 的什么局限性？</div>
+        <div class="q-tags"><span class="q-tag tag-compare">比较</span></div>
+      </div>
+      <span class="q-chevron">›</span>
+    </div>
+    <div class="qa-a"><div class="answer-body">
+      <table class="answer-table">
+        <tr><th></th><th>CyberGrasp</th><th>CyberForce</th></tr>
+        <tr><td><strong>功能</strong></td><td>对各手指施加独立力反馈，模拟触摸/抓握虚拟物体</td><td>在 CyberGrasp 基础上，通过连接桌面的机械臂模拟<strong>物体重量和惯性</strong></td></tr>
+        <tr><td><strong>最大力</strong></td><td>16 N（手指）</td><td>8.8 N（腕部）</td></tr>
+        <tr><td><strong>是否产生力矩</strong></td><td>否</td><td>否</td></tr>
+        <tr><td><strong>局限性</strong></td><td>仅能模拟抓握阻力，无法模拟物体重量感</td><td>有机械臂连接，限制手臂运动自由度</td></tr>
+      </table>
+      <p><strong>CyberForce 解决的问题：</strong>CyberGrasp 只能让手指感受到物体的抵抗力（如捏一个硬球），但无法让用户感受到虚拟物体的<strong>重量</strong>（如举起一个重物时手腕和手臂受到的向下拉力）。CyberForce 通过固定于桌面的机械臂对整个手部施加向下的力来解决这一问题。</p>
+    </div></div>
+  </div>
+</div>
+
+<!-- ═══════ M5 ═══════ -->
+<div class="module-panel" id="panel-m5">
+  <div class="mod-header">
+    <div class="mod-badge badge-m5">M5</div>
+    <div>
+      <h2>Module 5 · Computing Architectures for VR</h2>
+      <p>图形管线三阶段、瓶颈识别与优化方法、GPU 特性、多管线同步是本模块的高频考核区域。</p>
+    </div>
+  </div>
+  <div class="stats-bar">
+    <div class="stat-pill">共 <span>10</span> 题</div>
+    <div class="stat-pill">核心考点 <span>5</span></div>
+    <div class="stat-pill">比较分析 <span>3</span></div>
+  </div>
+
+  <div class="cat-label">图形渲染管线</div>
+
+  <div class="qa-card" onclick="toggle(this)">
+    <div class="qa-q">
+      <span class="q-num">Q1</span>
+      <div style="flex:1">
+        <div class="q-text">描述 VR 图形渲染管线的三个阶段，说明每个阶段在哪里运行（CPU/GPU）及其主要任务。</div>
+        <div class="q-tags"><span class="q-tag tag-core">核心考点</span><span class="q-tag tag-list">列举</span></div>
+      </div>
+      <span class="q-chevron">›</span>
+    </div>
+    <div class="qa-a"><div class="answer-body">
+      <table class="answer-table">
+        <tr><th>阶段</th><th>名称</th><th>运行位置</th><th>主要任务</th></tr>
+        <tr><td>1</td><td><strong>应用阶段（Application Stage）</strong></td><td>CPU（软件执行）</td><td>管理几何数据库；获取用户输入（鼠标、追踪器）；更新视角和虚拟世界状态；选择相关几何对象传入下一阶段</td></tr>
+        <tr><td>2</td><td><strong>几何阶段（Geometry Stage）</strong></td><td>GPU（硬件实现）</td><td>模型变换、着色计算（Phong 光照模型）、场景投影、裁剪</td></tr>
+        <tr><td>3</td><td><strong>光栅化阶段（Rasterizer Stage）</strong></td><td>GPU（硬件实现）</td><td>将几何图元分解为像素片段；反锯齿（Antialiasing）；纹理映射</td></tr>
+      </table>
+      <div class="key-box"><strong>记忆口诀：</strong>应用（CPU 管数据库）→ 几何（GPU 做变换着色）→ 光栅化（GPU 变像素）</div>
+    </div></div>
+  </div>
+
+  <div class="qa-card" onclick="toggle(this)">
+    <div class="qa-q">
+      <span class="q-num">Q2</span>
+      <div style="flex:1">
+        <div class="q-text">Phong 光照模型包含哪三个分量？为什么光源数量会成为渲染瓶颈？</div>
+        <div class="q-tags"><span class="q-tag tag-core">核心考点</span><span class="q-tag tag-explain">原因</span></div>
+      </div>
+      <span class="q-chevron">›</span>
+    </div>
+    <div class="qa-a"><div class="answer-body">
+      <p><strong>Phong 光照模型三个分量：</strong></p>
+      <ul class="answer-list">
+        <li><strong>环境光反射（Ambient Reflection）</strong>：模拟场景中到处弥散的间接光，给物体一个基础亮度</li>
+        <li><strong>漫反射（Diffuse Reflection）</strong>：光线照射到粗糙表面时向各方向均匀散射，强度与入射角余弦（cos θ）成正比</li>
+        <li><strong>镜面反射（Specular Reflection）</strong>：光线在光滑表面产生的高光效果，强度与观察角余弦的 n 次方（cosⁿ α）成正比，n 越大高光越集中</li>
+      </ul>
+      <p><strong>光源数量成为瓶颈的原因：</strong>Phong 模型的光照强度公式需要对每个光源单独计算漫反射和镜面反射分量，最终结果是所有光源贡献之和。因此光源数量越多，<strong>几何阶段</strong>的着色计算量越大（计算量与光源数量成正比），该阶段越可能成为 Transform-limited 瓶颈。部分 GPU 因此限制最大光源数量。</p>
+    </div></div>
+  </div>
+
+  <div class="qa-card" onclick="toggle(this)">
+    <div class="qa-q">
+      <span class="q-num">Q3</span>
+      <div style="flex:1">
+        <div class="q-text">比较三种多边形着色模型（Flat、Gouraud、Phong Shading）的原理、计算代价和渲染质量。</div>
+        <div class="q-tags"><span class="q-tag tag-compare">比较</span></div>
+      </div>
+      <span class="q-chevron">›</span>
+    </div>
+    <div class="qa-a"><div class="answer-body">
+      <table class="answer-table">
+        <tr><th>模型</th><th>原理</th><th>计算代价</th><th>渲染质量</th></tr>
+        <tr><td><strong>Flat Shading</strong></td><td>每个多边形使用单一颜色（通常取中心点颜色），多边形内所有像素颜色相同</td><td>最低</td><td>最低，多边形边界明显</td></tr>
+        <tr><td><strong>Gouraud Shading</strong></td><td>计算每个顶点的光照颜色，然后对多边形内部进行<strong>颜色插值</strong></td><td>中等</td><td>中等，高光效果较差</td></tr>
+        <tr><td><strong>Phong Shading</strong></td><td>对顶点<strong>法线</strong>进行插值，然后对每个像素单独计算光照强度</td><td>最高（逐像素计算）</td><td>最高，高光真实细腻</td></tr>
+      </table>
+      <div class="key-box"><strong>质量排序：</strong>Flat &lt; Gouraud &lt; Phong Shading；注意 Phong Shading 与 Phong 光照模型是两个不同概念。</div>
+    </div></div>
+  </div>
+
+  <div class="qa-card" onclick="toggle(this)">
+    <div class="qa-q">
+      <span class="q-num">Q4</span>
+      <div style="flex:1">
+        <div class="q-text">如何识别图形渲染管线的三类瓶颈（CPU-limited、Transform-limited、Fill-limited）？每类瓶颈对应的优化方法是什么？</div>
+        <div class="q-tags"><span class="q-tag tag-core">核心考点</span><span class="q-tag tag-explain">方法论</span></div>
+      </div>
+      <span class="q-chevron">›</span>
+    </div>
+    <div class="qa-a"><div class="answer-body">
+      <table class="answer-table">
+        <tr><th>瓶颈类型</th><th>识别方法</th><th>所在阶段</th><th>优化方法</th></tr>
+        <tr><td><strong>CPU-limited</strong></td><td>CPU 使用率达 100%</td><td>应用阶段</td><td>更快 CPU / 更多核心；更快 RAM；优化代码（减少除法、降低计算精度）；使用更优化的编译器</td></tr>
+        <tr><td><strong>Transform-limited</strong></td><td>减少光源数或多边形数后性能提升</td><td>几何阶段</td><td>减少场景中的光源数量；减少多边形数（降低场景复杂度）</td></tr>
+        <tr><td><strong>Fill-limited</strong></td><td>降低图像分辨率后性能提升</td><td>光栅化阶段</td><td>降低图像分辨率（减少需处理的像素数）；减少多边形数</td></tr>
+      </table>
+      <div class="key-box"><strong>考点提示：</strong>减少多边形数对几何阶段和光栅化阶段均有效；降低分辨率只对 Fill-limited 有效；减少光源只对 Transform-limited 有效。</div>
+    </div></div>
+  </div>
+
+  <div class="qa-card" onclick="toggle(this)">
+    <div class="qa-q">
+      <span class="q-num">Q5</span>
+      <div style="flex:1">
+        <div class="q-text">什么是反锯齿（Antialiasing）？双缓冲（Double Buffering）解决什么问题？说明二者的工作原理。</div>
+        <div class="q-tags"><span class="q-tag tag-explain">原理</span></div>
+      </div>
+      <span class="q-chevron">›</span>
+    </div>
+    <div class="qa-a"><div class="answer-body">
+      <p><strong>反锯齿（Antialiasing）：</strong></p>
+      <p>问题：几何图形的边缘在光栅化后出现锯齿状（阶梯效应）。</p>
+      <p>原理：将每个像素细分为 n 个<strong>子像素（Subpixels/Sub-samples）</strong>，对每个子像素单独计算颜色，最终该像素颜色取所有子像素的<strong>平均值</strong>。子像素数量越多，边缘越平滑，但计算代价也越大（与 n 成正比）。</p>
+      <p><strong>双缓冲（Double Buffering）：</strong></p>
+      <p>问题：若渲染过程中直接写入显示缓冲区，显示器可能在帧未渲染完成时刷新，看到"撕裂"画面，产生闪烁（Flicker）。</p>
+      <p>原理：维护两个缓冲区：</p>
+      <ul class="answer-list">
+        <li><strong>前缓冲（Front Buffer）</strong>：存储当前正在显示的上一帧完整图像</li>
+        <li><strong>后缓冲（Back Buffer）</strong>：存储当前正在渲染的新帧</li>
+      </ul>
+      <p>新帧渲染完成后，在显示器刷新时刻<strong>交换（Swap）</strong>前后缓冲区，新图像立即完整显示，彻底消除闪烁。</p>
+    </div></div>
+  </div>
+
+  <div class="cat-label">GPU 与触觉管线</div>
+
+  <div class="qa-card" onclick="toggle(this)">
+    <div class="qa-q">
+      <span class="q-num">Q6</span>
+      <div style="flex:1">
+        <div class="q-text">GPU 与 CPU 在设计目标和架构特性上有何本质区别？GPU 的增长速率如何？</div>
+        <div class="q-tags"><span class="q-tag tag-compare">比较</span><span class="q-tag tag-core">核心考点</span></div>
+      </div>
+      <span class="q-chevron">›</span>
+    </div>
+    <div class="qa-a"><div class="answer-body">
+      <table class="answer-table">
+        <tr><th></th><th>CPU</th><th>GPU</th></tr>
+        <tr><td><strong>编程模型</strong></td><td>标量，无原生数据并行</td><td>大规模数据并行</td></tr>
+        <tr><td><strong>擅长领域</strong></td><td>控制密集型任务、分支逻辑</td><td>数据密集型任务、大量简单重复计算</td></tr>
+        <tr><td><strong>优化目标</strong></td><td>低延迟（快速响应单个操作）</td><td>高带宽（每秒处理更多数据）</td></tr>
+        <tr><td><strong>芯片资源</strong></td><td>大量资源用于分支预测、缓存</td><td>大量资源用于<strong>算术单元</strong></td></tr>
+        <tr><td><strong>增长速率</strong></td><td>~1.5× / 年（约 60× / 十年）</td><td>~2.0× / 年（约 1000× / 十年）</td></tr>
+      </table>
+      <p>图形渲染具有大量数据、大量并行计算、简单控制结构的特点，与 GPU 的设计完美契合。GPU 芯片空间大量用于算术单元而非分支控制电路，正是基于此原因。此外，<strong>GPU 不支持直接内存寻址</strong>，仅支持向量寻址（1D/2D/3D），以便高效传输大量数据。</p>
+    </div></div>
+  </div>
+
+  <div class="qa-card" onclick="toggle(this)">
+    <div class="qa-q">
+      <span class="q-num">Q7</span>
+      <div style="flex:1">
+        <div class="q-text">描述触觉渲染管线的三个阶段，为何图形管线和触觉管线必须解耦？二者的工作频率各是多少？</div>
+        <div class="q-tags"><span class="q-tag tag-core">核心考点</span><span class="q-tag tag-explain">原因</span></div>
+      </div>
+      <span class="q-chevron">›</span>
+    </div>
+    <div class="qa-a"><div class="answer-body">
+      <p><strong>触觉渲染管线三阶段：</strong></p>
+      <ul class="answer-list">
+        <li><strong>碰撞检测阶段（Collision Detection Stage）</strong>：加载对象的物理特性（表面光滑度、温度、重量等），执行碰撞检测，判断是否发生接触</li>
+        <li><strong>力计算阶段（Force Computation Stage）</strong>：① Compute：基于物理仿真计算碰撞力；② Smooth：调整力向量方向，避免突变；③ Map：将力投影到特定触觉设备的特性范围内</li>
+        <li><strong>触觉计算阶段（Tactile Computation Stage）</strong>：叠加振动、表面温度等效果到力向量上，发送至触觉显示设备</li>
+      </ul>
+      <p><strong>为何必须解耦：</strong>两个管线的<strong>输出频率差异巨大</strong>：</p>
+      <ul class="answer-list">
+        <li>图形管线：<em>30–60 fps</em></li>
+        <li>触觉管线（如 PHANToM 控制器）：<em>1 KHz（1000 次/秒）</em></li>
+      </ul>
+      <p>触觉频率约为图形频率的 20–30 倍，若耦合运行，图形渲染的计算负担会直接阻塞触觉的高频更新，导致触觉反馈卡顿。解耦后两者独立运行，在<strong>应用阶段</strong>完成同步协调。</p>
+    </div></div>
+  </div>
+
+  <div class="cat-label">分布式 VR 与 PC 集群</div>
+
+  <div class="qa-card" onclick="toggle(this)">
+    <div class="qa-q">
+      <span class="q-num">Q8</span>
+      <div style="flex:1">
+        <div class="q-text">分布式 VR 中有哪三种多管线同步方法？各自的机制和局限性是什么？最佳方案是什么？</div>
+        <div class="q-tags"><span class="q-tag tag-core">核心考点</span><span class="q-tag tag-list">列举</span></div>
+      </div>
+      <span class="q-chevron">›</span>
+    </div>
+    <div class="qa-a"><div class="answer-body">
+      <table class="answer-table">
+        <tr><th>方法</th><th>机制</th><th>局限性</th></tr>
+        <tr><td><strong>软件同步</strong></td><td>同步各管线应用阶段的起始时间，使所有管线同时开始处理新帧</td><td>未考虑各管线负载不对称（不同管线渲染复杂度不同，完成时间可能不一致）</td></tr>
+        <tr><td><strong>帧缓冲同步</strong></td><td>等待显示器刷新信号（VSync）后再统一执行所有管线的缓冲区交换</td><td>水平/垂直刷新信号本身未同步，可能存在时序偏差</td></tr>
+        <tr><td><strong>视频同步</strong></td><td>指定一个显示器为主（Master），其余为从（Slave），从设备的内部视频逻辑电路与主设备的信号同步</td><td>单独使用仍不完整</td></tr>
+      </table>
+      <div class="key-box"><strong>最佳方案：</strong>软件同步 + 帧缓冲同步 + 视频同步<strong>三者结合使用</strong>，才能最大限度保证多管线输出的一致性，减少系统延迟，保持帧率稳定。</div>
+    </div></div>
+  </div>
+
+  <div class="qa-card" onclick="toggle(this)">
+    <div class="qa-q">
+      <span class="q-num">Q9</span>
+      <div style="flex:1">
+        <div class="q-text">PC 集群相比大型专用工作站有何优势？其主要限制因素是什么？WireGL 软件如何提升集群的可扩展性？</div>
+        <div class="q-tags"><span class="q-tag tag-compare">比较</span><span class="q-tag tag-explain">原理</span></div>
+      </div>
+      <span class="q-chevron">›</span>
+    </div>
+    <div class="qa-a"><div class="answer-body">
+      <p><strong>PC 集群优势：</strong>成本显著低于专用大型工作站（如 PanaWall）；图像拼接由软件完成，灵活性高；可通过增加节点扩展。</p>
+      <p><strong>主要限制因素：</strong><strong>LAN（局域网）吞吐量</strong>是集群规模扩展的主要瓶颈——控制服务器需要通过 LAN 将渲染指令和几何数据分发给所有渲染节点，网络带宽固定时，节点越多、分配越慢。</p>
+      <p><strong>WireGL 如何提升可扩展性：</strong></p>
+      <ul class="answer-list">
+        <li>拦截 VR 仿真程序发出的 <strong>OpenGL 命令</strong>，进行编码后分发</li>
+        <li>关键优化：<strong>数据只发送给需要的 PC</strong>——几何数据按屏幕空间排序，每台渲染服务器只接收与其显示区域重叠的几何体，避免广播浪费带宽</li>
+        <li>每台渲染服务器维护独立的网络缓冲区，仅在状态变化时传输数据</li>
+      </ul>
+      <p>结果：相比广播方式，WireGL 在集群规模扩大（投影仪增多）时帧率下降更为平缓，可扩展性显著优于广播方案。</p>
+    </div></div>
+  </div>
+
+  <div class="qa-card" onclick="toggle(this)">
+    <div class="qa-q">
+      <span class="q-num">Q10</span>
+      <div style="flex:1">
+        <div class="q-text">VR 引擎的四大核心任务是什么？为何 VR 系统对计算架构有特殊需求（低延迟 + 快速渲染）？</div>
+        <div class="q-tags"><span class="q-tag tag-list">列举</span><span class="q-tag tag-explain">分析</span></div>
+      </div>
+      <span class="q-chevron">›</span>
+    </div>
+    <div class="qa-a"><div class="answer-body">
+      <p><strong>VR 引擎四大核心任务：</strong></p>
+      <ul class="answer-list">
+        <li><strong>读取输入设备（Read Input Devices）</strong>：从各类传感器获取用户输入（头部追踪、手套、追踪器等）</li>
+        <li><strong>更新虚拟世界状态（Update Virtual World State）</strong>：根据输入更新场景数据库（物体位置、交互状态等）</li>
+        <li><strong>渲染输出（Render Outputs）</strong>：生成图形、触觉等各类感知反馈</li>
+        <li><strong>输出到外设（Feed Output Devices）</strong>：将渲染结果发送至 HMD、触觉设备等</li>
+      </ul>
+      <p><strong>为何有特殊需求：</strong></p>
+      <ul class="answer-list">
+        <li><strong>低延迟</strong>：用户头部移动后画面必须立即更新，延迟过大引发晕动症，VR 对延迟容忍度远低于普通游戏</li>
+        <li><strong>快速图形渲染</strong>：VR 需要为双眼分别渲染一帧，且帧率需达 90fps 以上，计算量约为普通 3D 渲染的两倍</li>
+        <li><strong>触觉渲染</strong>：额外的触觉管线需在 1 KHz 高频运行，与图形管线并行且解耦</li>
+      </ul>
+    </div></div>
+  </div>
+</div>
+
+</div><!-- end container -->
+
+<script>
+function showModule(id, btn) {
+  document.querySelectorAll('.module-panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.tab-bar button').forEach(b => b.classList.remove('active'));
+  document.getElementById('panel-' + id).classList.add('active');
+  if (btn) btn.classList.add('active');
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function toggle(card) {
+  card.classList.toggle('open');
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,146 @@
+{
+  "articles": [
+    {
+      "slug": "ai-cognition-archive",
+      "title": "AI 认知档案：搜索、逻辑、概率与学习",
+      "date": "2026-03-26",
+      "subtitle": "我更喜欢把 AI 看作一条连续光谱，而不是几个彼此割裂的章节标题。",
+      "kind": "resource",
+      "theme": "ai",
+      "label": "AI / Machine Learning",
+      "tags": [
+        "人工智能",
+        "机器学习",
+        "知识图谱",
+        "课程笔记",
+        "CS5491"
+      ],
+      "summary": "人工智能课程多份提纲与知识梳理的整合版，覆盖搜索、逻辑推理、概率模型与机器学习。"
+    },
+    {
+      "slug": "data-engineering-field-notes",
+      "title": "数据工程野外记录：让数据真正流动起来",
+      "date": "2026-03-26",
+      "subtitle": "好的数据工程不是堆砌工具，而是让采集、转换、存储与业务逻辑之间的摩擦尽量变小。",
+      "kind": "resource",
+      "theme": "data",
+      "label": "数据工程",
+      "tags": [
+        "数据工程",
+        "数据管道",
+        "课程笔记",
+        "CS5481"
+      ],
+      "summary": "Data Engineering 期末复习笔记整理版，突出数据管道、复用组件与业务联动。"
+    },
+    {
+      "slug": "digital-value-and-mis-notes",
+      "title": "数字价值地图：把系统、组织与商业连起来",
+      "date": "2026-03-26",
+      "subtitle": "信息系统的意义，往往不在系统本身，而在它如何改变组织流动、价值创造与决策节奏。",
+      "kind": "resource",
+      "theme": "business",
+      "label": "商业与信息系统",
+      "tags": [
+        "管理信息系统",
+        "数字化转型",
+        "AI 应用",
+        "课程笔记",
+        "IS5313"
+      ],
+      "summary": "管理信息系统课程资料整理版，聚焦数字化转型、AI 决策支持与企业价值链。"
+    },
+    {
+      "slug": "hello-world",
+      "title": "你好，世界",
+      "date": "2026-03-26",
+      "tags": [
+        "随笔",
+        "博客"
+      ],
+      "summary": "这是我的第一篇博客文章，分享开博的初衷与未来计划。从技术选型到博客架构，记录构建这个小空间的全过程。"
+    },
+    {
+      "slug": "network-open-book-manual",
+      "title": "网络开卷手册：在协议栈里建立索引",
+      "date": "2026-03-26",
+      "subtitle": "开卷考试真正考的不是记忆，而是你能否在短时间内找到正确的结构入口。",
+      "kind": "resource",
+      "theme": "network",
+      "label": "网络与系统",
+      "tags": [
+        "计算机网络",
+        "开卷资料",
+        "考试策略",
+        "CS5222"
+      ],
+      "summary": "计算机网络课程的开卷参考、查词表与题型总结，已整理为适合查阅和下载的资料库。"
+    },
+    {
+      "slug": "software-engineering-atelier",
+      "title": "软件工程工作台：把方法论落回团队现场",
+      "date": "2026-03-26",
+      "subtitle": "需求、评审、敏捷、技术债，本质上都在回答同一个问题：团队如何稳定地产生好软件。",
+      "kind": "resource",
+      "theme": "engineering",
+      "label": "软件工程",
+      "tags": [
+        "软件工程",
+        "技术债",
+        "代码评审",
+        "课程笔记",
+        "CS5351"
+      ],
+      "summary": "软件工程课程多章节复习资料的重编版，按过程模型、代码评审、需求工程与技术债分类整理。"
+    },
+    {
+      "slug": "tencent-interview-ledger",
+      "title": "面试回声录：把问题打磨成方法",
+      "date": "2026-03-26",
+      "subtitle": "真正有分量的回答，不是背诵技术名词，而是把项目讲成一套可验证的工程判断。",
+      "kind": "resource",
+      "theme": "career",
+      "label": "面试与表达",
+      "tags": [
+        "面经",
+        "后端",
+        "安全",
+        "系统设计",
+        "职业成长"
+      ],
+      "summary": "围绕密码学、安全系统、Redis、微服务与 AI 协作流程的腾讯面试复盘，整理出更可信的表达结构。"
+    },
+    {
+      "slug": "vision-and-image-atlas",
+      "title": "视觉与图像：把像素读成结构",
+      "date": "2026-03-26",
+      "subtitle": "从图像形成到视觉理解，这组笔记更像一册被折叠过的观察学地图。",
+      "kind": "resource",
+      "theme": "vision",
+      "label": "视觉计算",
+      "tags": [
+        "计算机视觉",
+        "图像处理",
+        "课程笔记",
+        "CS5187"
+      ],
+      "summary": "围绕 Vision & Image 课程整理的三部分复习资料，重组为更清晰的知识路径。"
+    },
+    {
+      "slug": "vr-interface-notebook",
+      "title": "沉浸式界面札记：在空间里安放交互",
+      "date": "2026-03-26",
+      "subtitle": "VR 不只是设备参数，更是一整套关于感知、姿态与反馈的空间语言。",
+      "kind": "resource",
+      "theme": "vr",
+      "label": "VR / HCI",
+      "tags": [
+        "VR",
+        "HCI",
+        "课程笔记",
+        "CS5188"
+      ],
+      "summary": "VR 课程模块提纲与 HTML 资料的整理版，适合按模块梳理输入、输出与系统架构。"
+    }
+  ]
+}
