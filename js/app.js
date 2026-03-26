@@ -17,6 +17,17 @@
   /* ============================================================
      Router
      ============================================================ */
+
+  /* Configure marked to emit language classes for Prism */
+  if (typeof marked !== 'undefined') {
+    marked.setOptions({
+      highlight: function (code, lang) {
+        return code; // Let Prism handle highlighting after DOM insertion
+      },
+      langPrefix: 'language-'
+    });
+  }
+
   function parseHash() {
     var hash = location.hash.slice(1) || '/';
     var qIdx = hash.indexOf('?');
@@ -258,7 +269,11 @@
       setContent(html);
       bindSubFileReading(slug);
 
-      if (typeof Prism !== 'undefined') Prism.highlightAllUnder(app);
+      if (typeof Prism !== 'undefined') {
+        Prism.highlightAllUnder(app);
+        // Re-highlight after autoloader fetches grammars
+        setTimeout(function () { Prism.highlightAllUnder(app); }, 200);
+      }
       bindReadingProgress();
 
     } catch (e) {
@@ -314,7 +329,10 @@
           reader.style.display = 'block';
           window.scrollTo(0, 0);
 
-          if (typeof Prism !== 'undefined') Prism.highlightAllUnder(readerContent);
+          if (typeof Prism !== 'undefined') {
+            Prism.highlightAllUnder(readerContent);
+            setTimeout(function () { Prism.highlightAllUnder(readerContent); }, 200);
+          }
           initIcons();
         } catch (err) {
           readerContent.innerHTML = '<p style="color:var(--c-text-3)">无法加载文件：' + esc(filename) + '</p>';

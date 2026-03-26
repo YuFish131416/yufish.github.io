@@ -7,6 +7,7 @@
     <meta name="description" content="拾雪掩碧空的个人技术博客 — 安全系统设计，分布式架构，AI 工程实践">
     <meta name="author" content="拾雪掩碧空">
     <meta name="theme-color" content="#FAFAF8">
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='32' height='32' viewBox='0 0 24 24' fill='none' stroke='%232D5A3D' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='4 17 10 11 4 5'/%3E%3Cline x1='12' x2='20' y1='19' y2='19'/%3E%3C/svg%3E">
     <meta property="og:title" content="拾雪掩碧空 | Full-Stack Notes in Quiet Light">
     <meta property="og:description" content="安全系统、分布式架构与 AI 工程实践的技术笔记">
     <meta property="og:type" content="website">
@@ -77,6 +78,11 @@
     <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/prism.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/plugins/autoloader/prism-autoloader.min.js"></script>
+    <script>
+      if (typeof Prism !== 'undefined' && Prism.plugins && Prism.plugins.autoloader) {
+        Prism.plugins.autoloader.languages_path = 'https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/';
+      }
+    </script>
 
     <!-- App Scripts -->
     <script src="js/articles.js"></script>

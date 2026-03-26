@@ -1,6 +1,21 @@
 {
   "articles": [
     {
+      "slug": "ai-wave-and-engineering-future",
+      "title": "AI 浪潮下的工程判断：程序员定位、产业脉络与 Kimi 论文解读",
+      "date": "2026-03-27",
+      "subtitle": "技术浪潮不会淘汰会编程的人，但会淘汰不愿升级判断框架的人。",
+      "label": "AI / 行业观察",
+      "tags": [
+        "AI",
+        "行业分析",
+        "职业思考",
+        "论文解读",
+        "工程实践"
+      ],
+      "summary": "三合一深度文章：从 SWE-CI 论文数据看 AI 辅助编程的真实边界，从产业视角梳理 2024-2026 AI 发展脉络，从 Kimi k1.5 论文拆解长思维链强化学习的工程突破。"
+    },
+    {
       "slug": "ai-cognition-archive",
       "title": "AI 认知档案：搜索、逻辑、概率与学习",
       "date": "2026-03-26",
@@ -16,6 +31,21 @@
         "CS5491"
       ],
       "summary": "人工智能课程多份提纲与知识梳理的整合版，覆盖搜索、逻辑推理、概率模型与机器学习。"
+    },
+    {
+      "slug": "cs5293-security-lab",
+      "title": "CS5293 软件安全实验：从密码学到缓冲区溢出",
+      "date": "2026-03-26",
+      "subtitle": "两份课程作业的合集——用密码学原语理解加密边界，用栈溢出理解系统信任模型。",
+      "label": "Software Security",
+      "tags": [
+        "安全",
+        "密码学",
+        "缓冲区溢出",
+        "课程笔记",
+        "CS5293"
+      ],
+      "summary": "CS5293 两次 Assignment 全记录：Assignment 1 涵盖频率分析、AES 模式对比与已知明文攻击；Assignment 2 覆盖环境变量提权、缓冲区溢出、Return-to-libc 与格式化字符串漏洞。"
     },
     {
       "slug": "data-engineering-field-notes",
