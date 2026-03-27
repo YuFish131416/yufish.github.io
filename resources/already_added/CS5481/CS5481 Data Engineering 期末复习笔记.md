@@ -185,7 +185,7 @@
     >
     >     *   `^[hc]at` 匹配 "hat" 和 "cat"，但仅在字符串或行的开头。
     >
-    > *   **\[hc]at$ matches "hat" and "cat", but only at the end of the string or line.**
+    > *   **\[hc]at\$ matches "hat" and "cat", but only at the end of the string or line.**
     >
     >     *   `[hc]at$` 匹配 "hat" 和 "cat"，但仅在字符串或行的结尾。
     >

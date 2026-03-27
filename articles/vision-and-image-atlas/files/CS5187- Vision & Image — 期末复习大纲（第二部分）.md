@@ -62,21 +62,21 @@
 
 **LoG（Laplacian of Gaussian）**：高斯的拉普拉斯算子
 
-$$\text{LoG} = \nabla^2 G\_\sigma = \frac{\partial^2 G}{\partial x^2} + \frac{\partial^2 G}{\partial y^2}$$ 
+\$\$\text{LoG} = \nabla^2 G\_\sigma = \frac{\partial^2 G}{\partial x^2} + \frac{\partial^2 G}{\partial y^2}\$\$
 
 **核心作用**：斑点（Blob）检测器，对圆形区域有强响应。
 
-**特征尺度的定义**：LoG 响应取得峰值时对应的 $\sigma$ 即为该斑点的**特征尺度（Characteristic Scale）**。
+**特征尺度的定义**：LoG 响应取得峰值时对应的 \$\sigma\$ 即为该斑点的**特征尺度（Characteristic Scale）**。
 
-**DoG（Difference of Gaussians）**： $$\text{DoG} = G\_{\sigma\_1} - G\_{\sigma\_2} \approx \text{LoG}$$
+**DoG（Difference of Gaussians）**： \$\$\text{DoG} = G\_{\sigma\_1} - G\_{\sigma\_2} \approx \text{LoG}\$\$
 
-两个不同 $\sigma$ 的高斯之差近似等于 LoG，计算效率更高（SIFT 使用的方法）。
+两个不同 \$\sigma\$ 的高斯之差近似等于 LoG，计算效率更高（SIFT 使用的方法）。
 
 **检测流程**：
 
-1.  在多尺度（多层 $\sigma$）下计算 LoG（或 DoG）响应图
+1.  在多尺度（多层 \$\sigma\$）下计算 LoG（或 DoG）响应图
 2.  在**三维（x, y, scale）空间**中寻找局部极大/极小值
-3.  输出每个斑点的位置 $(x, y)$ 和特征尺度 $s$
+3.  输出每个斑点的位置 \$(x, y)\$ 和特征尺度 \$s\$
 
 | 比较项  | Harris     | LoG/DoG  |
 | ---- | ---------- | -------- |
@@ -163,15 +163,15 @@ Detection（检测）→ Description（描述）→ Matching（匹配）
 
 #### ① L2 距离（简单方法）
 
-$$d(f\_1, f\_2) = | f\_1 - f\_2 |$$
+\$\$d(f\_1, f\_2) = | f\_1 - f\_2 |\$\$
 
 *   缺点：可能给模糊匹配赋予较小距离值。
 
 #### ② 比率距离（Ratio Distance）⭐推荐方法
 
-$$\text{ratio} = \frac{| f\_1 - f\_2 |}{| f\_1 - f\_2' |}$$
+\$\$\text{ratio} = \frac{| f\_1 - f\_2 |}{| f\_1 - f\_2' |}\$\$
 
-*   $f_2$：最佳匹配，$f_2'$：第二佳匹配
+*   \$f\_2\$：最佳匹配，\$f\_2'\$：第二佳匹配
 *   **效果**：正确匹配比值小（远优于第二佳）；错误匹配比值接近1（两个候选差不多）
 *   **不改变最佳匹配**，但改变距离值与排序，便于阈值筛选
 
@@ -213,7 +213,7 @@ $$\text{ratio} = \frac{| f\_1 - f\_2 |}{| f\_1 - f\_2' |}$$
 
 ### 3.2 线性变换（2×2 矩阵）
 
-$$\begin{bmatrix}x'\y'\end{bmatrix} = \begin{bmatrix}a\&b\c\&d\end{bmatrix}\begin{bmatrix}x\y\end{bmatrix}$$
+\$\$\begin{bmatrix}x'\y'\end{bmatrix} = \begin{bmatrix}a\&b\c\&d\end{bmatrix}\begin{bmatrix}x\y\end{bmatrix}\$\$
 
 **可表示的变换**：缩放（Scale）、旋转（Rotation）、剪切（Shear）、镜像（Mirror）
 
@@ -241,19 +241,19 @@ $$\begin{bmatrix}x'\y'\end{bmatrix} = \begin{bmatrix}a\&b\c\&d\end{bmatrix}\begi
 
 **为什么需要齐次坐标**：为了用统一的矩阵乘法表示**平移**。
 
-**表示方式**：2D 点 $(x, y)$ → 齐次坐标 $(x, y, 1)$，即在末尾追加 $w=1$。
+**表示方式**：2D 点 \$(x, y)\$ → 齐次坐标 \$(x, y, 1)\$，即在末尾追加 \$w=1\$。
 
-**从齐次坐标恢复**：$(x, y, w) \to (x/w, y/w)$
+**从齐次坐标恢复**：\$(x, y, w) \to (x/w, y/w)\$
 
-**平移的齐次表示（3×3矩阵）**： $$\begin{bmatrix}x'\y'\1\end{bmatrix} = \begin{bmatrix}1&0\&t\_x\0&1\&t\_y\0&0&1\end{bmatrix}\begin{bmatrix}x\y\1\end{bmatrix}$$
+**平移的齐次表示（3×3矩阵）**： \$\$\begin{bmatrix}x'\y'\1\end{bmatrix} = \begin{bmatrix}1&0\&t\_x\0&1\&t\_y\0&0&1\end{bmatrix}\begin{bmatrix}x\y\1\end{bmatrix}\$\$
 
 ***
 
 ### 3.4 仿射变换（Affine Transformation）⭐重点
 
-**定义**：最后一行为 $\[0\ 0\ 1]$ 的 3×3 矩阵所表示的变换。
+**定义**：最后一行为 $\[0\ 0\ 1]\$ 的 3×3 矩阵所表示的变换。
 
-$$\begin{bmatrix}x'\y'\1\end{bmatrix} = \begin{bmatrix}a\_{11}\&a\_{12}\&t\_x\a\_{21}\&a\_{22}\&t\_y\0&0&1\end{bmatrix}\begin{bmatrix}x\y\1\end{bmatrix}$$
+\$\$\begin{bmatrix}x'\y'\1\end{bmatrix} = \begin{bmatrix}a\_{11}\&a\_{12}\&t\_x\a\_{21}\&a\_{22}\&t\_y\0&0&1\end{bmatrix}\begin{bmatrix}x\y\1\end{bmatrix}\$\$
 
 **仿射变换 = 线性变换 + 平移**，包含：平移、旋转、缩放、剪切（6个自由度）。
 
@@ -268,15 +268,15 @@ $$\begin{bmatrix}x'\y'\1\end{bmatrix} = \begin{bmatrix}a\_{11}\&a\_{12}\&t\_x\a\
 
 ### 3.5 投影变换（Projective Transformation）/ 单应性（Homography）⭐重点
 
-**定义**：3×3 矩阵，**最后一行不再为** $\[0\ 0\ 1]$，因此分母可以不为1。
+**定义**：3×3 矩阵，**最后一行不再为** $\[0\ 0\ 1]\$，因此分母可以不为1。
 
-$$\begin{bmatrix}wx'\wy'\w\end{bmatrix} = \begin{bmatrix}h\_{00}\&h\_{01}\&h\_{02}\h\_{10}\&h\_{11}\&h\_{12}\h\_{20}\&h\_{21}\&h\_{22}\end{bmatrix}\begin{bmatrix}x\y\1\end{bmatrix}$$
+\$\$\begin{bmatrix}wx'\wy'\w\end{bmatrix} = \begin{bmatrix}h\_{00}\&h\_{01}\&h\_{02}\h\_{10}\&h\_{11}\&h\_{12}\h\_{20}\&h\_{21}\&h\_{22}\end{bmatrix}\begin{bmatrix}x\y\1\end{bmatrix}\$\$
 
-$$x' = \frac{h\_{00}x + h\_{01}y + h\_{02}}{h\_{20}x + h\_{21}y + h\_{22}}, \quad y' = \frac{h\_{10}x + h\_{11}y + h\_{12}}{h\_{20}x + h\_{21}y + h\_{22}}$$
+\$\$x' = \frac{h\_{00}x + h\_{01}y + h\_{02}}{h\_{20}x + h\_{21}y + h\_{22}}, \quad y' = \frac{h\_{10}x + h\_{11}y + h\_{12}}{h\_{20}x + h\_{21}y + h\_{22}}\$\$
 
 **关键性质**：
 
-*   $H$ 和 $2H$ 等价（只定义到尺度因子，有 **8 个自由度**）
+*   \$H\$ 和 \$2H\$ 等价（只定义到尺度因子，有 **8 个自由度**）
 *   直线映射到直线
 *   **平行线不一定保持平行** ← 关键区别于仿射
 *   比例关系不保持
@@ -296,12 +296,12 @@ $$x' = \frac{h\_{00}x + h\_{01}y + h\_{02}}{h\_{20}x + h\_{21}y + h\_{22}}, \qua
 
 #### 正向变形（Forward Warping）
 
-*   将每个源像素 $(x,y)$ 映射到目标位置 $(x',y')$
+*   将每个源像素 \$(x,y)\$ 映射到目标位置 \$(x',y')\$
 *   问题：像素可能落在非整数位置，可能产生**空洞（holes）**
 
 #### 逆向变形（Inverse Warping）⭐推荐
 
-*   对目标图像每个像素 $(x',y')$，反查变换 $T^{-1}(x',y')$ 得到源坐标
+*   对目标图像每个像素 \$(x',y')\$，反查变换 \$T^{-1}(x',y')\$ 得到源坐标
 *   通过**插值**（最近邻/双线性/双三次）获取源像素值
 *   不会产生空洞，实践中更常用
 
@@ -319,13 +319,13 @@ Step 3: 用最小二乘法计算从 A 到 B 的变换 T
 
 ### 4.2 最小二乘法（Least Squares）⭐重点
 
-**问题设置**：给定 $n$ 个点对 $(p\_i, p\_i')$，求最优变换 $T$。
+**问题设置**：给定 \$n\$ 个点对 \$(p\_i, p\_i')\$，求最优变换 \$T\$。
 
-**残差（Residual）**： $$r\_i = p\_i' - T(p\_i)$$
+**残差（Residual）**： \$\$r\_i = p\_i' - T(p\_i)\$\$
 
-**目标函数（最小化残差平方和）**： $$\min\_T \sum\_{i=1}^{n} r\_i^2 = \min\_T | A\mathbf{t} - \mathbf{b} |^2$$
+**目标函数（最小化残差平方和）**： \$\$\min\_T \sum\_{i=1}^{n} r\_i^2 = \min\_T | A\mathbf{t} - \mathbf{b} |^2\$\$
 
-**正则方程（Normal Equations）**： $$A^T A \mathbf{t} = A^T \mathbf{b}$$ $$\mathbf{t} = (A^T A)^{-1} A^T \mathbf{b}$$
+**正则方程（Normal Equations）**： \$\$A^T A \mathbf{t} = A^T \mathbf{b}\$\$ \$\$\mathbf{t} = (A^T A)^{-1} A^T \mathbf{b}\$\$
 
 **特例**：对平移变换，最小二乘解 = **所有位移向量的均值**。
 
@@ -340,14 +340,14 @@ Step 3: 用最小二乘法计算从 A 到 B 的变换 T
 
 #### 仿射变换（6 个未知数）
 
-$$\begin{bmatrix}x'\y'\end{bmatrix} = \begin{bmatrix}a\&b\&c\d\&e\&f\end{bmatrix}\begin{bmatrix}x\y\1\end{bmatrix}$$
+\$\$\begin{bmatrix}x'\y'\end{bmatrix} = \begin{bmatrix}a\&b\&c\d\&e\&f\end{bmatrix}\begin{bmatrix}x\y\1\end{bmatrix}\$\$
 
 *   每个点对提供 **2 个方程**
 *   最少需要 **3 对点**；实际超定用最小二乘
 
-矩阵形式（$2n \times 6$）：
+矩阵形式（\$2n \times 6\$）：
 
-$$\mathbf{Ap} = \mathbf{b}, \quad A \in \mathbb{R}^{2n \times 6}, \quad \mathbf{p} \in \mathbb{R}^6$$
+\$\$\mathbf{Ap} = \mathbf{b}, \quad A \in \mathbb{R}^{2n \times 6}, \quad \mathbf{p} \in \mathbb{R}^6\$\$
 
 #### 单应性（Homography，8 个自由度）
 
@@ -356,9 +356,9 @@ $$\mathbf{Ap} = \mathbf{b}, \quad A \in \mathbb{R}^{2n \times 6}, \quad \mathbf{
 
 **求解方法**：
 
-1.  将约束改写为线性方程组 $A\mathbf{h} = \mathbf{0}$（$2n \times 9$ 矩阵）
-2.  由于 $H$ 只定义到尺度，求单位向量解
-3.  **解 = $A^T A$（或 $A$）最小特征值对应的特征向量**（SVD 分解）
+1.  将约束改写为线性方程组 \$A\mathbf{h} = \mathbf{0}\$（\$2n \times 9\$ 矩阵）
+2.  由于 \$H\$ 只定义到尺度，求单位向量解
+3.  **解 = \$A^T A\$（或 \$A\$）最小特征值对应的特征向量**（SVD 分解）
 
 ***
 
@@ -400,9 +400,9 @@ $$\mathbf{Ap} = \mathbf{b}, \quad A \in \mathbb{R}^{2n \times 6}, \quad \mathbf{
 
 **参数说明**：
 
-*   $s$：最小样本集大小（由模型自由度决定）
-*   $\varepsilon$（epsilon）：inlier 判定阈值（通常设为噪声标准差的 2\~3 倍）
-*   $N$：迭代轮数（由 outlier 比例和所需成功概率决定）
+*   \$s\$：最小样本集大小（由模型自由度决定）
+*   \$\varepsilon\$（epsilon）：inlier 判定阈值（通常设为噪声标准差的 2\~3 倍）
+*   \$N\$：迭代轮数（由 outlier 比例和所需成功概率决定）
 
 ***
 
@@ -410,15 +410,15 @@ $$\mathbf{Ap} = \mathbf{b}, \quad A \in \mathbb{R}^{2n \times 6}, \quad \mathbf{
 
 **推导**：
 
-*   设 outlier 比例为 $e$（$0 < e < 1$）
-*   每次随机取 $s$ 个点，全部为 inlier 的概率：$(1-e)^s$
-*   $N$ 次中至少一次全是 inlier 的概率 $\geq p$：
+*   设 outlier 比例为 \$e\$（\$0 < e < 1\$）
+*   每次随机取 \$s\$ 个点，全部为 inlier 的概率：\$(1-e)^s\$
+*   \$N\$ 次中至少一次全是 inlier 的概率 \$\geq p\$：
 
-$$1 - (1-(1-e)^s)^N \geq p$$
+\$\$1 - (1-(1-e)^s)^N \geq p\$\$
 
-$$N \geq \frac{\log(1-p)}{\log(1-(1-e)^s)}$$
+\$\$N \geq \frac{\log(1-p)}{\log(1-(1-e)^s)}\$\$
 
-**查表（$p = 0.99$）**：
+**查表（\$p = 0.99\$）**：
 
 | $s$（样本数） | outlier 20% | outlier 30% | outlier 40% | outlier 50% |
 | -------- | ----------- | ----------- | ----------- | ----------- |
@@ -427,11 +427,11 @@ $$N \geq \frac{\log(1-p)}{\log(1-(1-e)^s)}$$
 | 8        | 26          | 78          | 272         | 1177        |
 
 
-> 关键结论：$s$ 越大、outlier 比例越高，所需轮数 $N$ 急剧增加。
+> 关键结论：\$s\$ 越大、outlier 比例越高，所需轮数 \$N\$ 急剧增加。
 
 ***
 
-### 5.4 各模型的最小样本数 $s$
+### 5.4 各模型的最小样本数 \$s\$
 
 | 模型                  | 自由度   | 最小样本数 $s$ |
 | ------------------- | ----- | --------- |
@@ -531,7 +531,7 @@ Step 6: 合并图像
 
 **仿射变换 vs 单应性**：
 
-*   仿射：最后行固定为 $\[0\ 0\ 1]$，6自由度，**保平行线**
+*   仿射：最后行固定为 $\[0\ 0\ 1]\$，6自由度，**保平行线**
 *   单应性：最后行任意，8自由度，**不保平行线**，可表示透视变形
 
 **LoG vs DoG**：

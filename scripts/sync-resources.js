@@ -61,7 +61,7 @@ function destFilename(filename) {
 function cleanDisplayName(filename, folder) {
   return filename
     .replace(/\.[^.]+$/, '')
-    .replace(new RegExp('^' + folder.replace(/[.*+?^${}()|[\]\\]/g, '\$&') + '\\s*'), '')
+    .replace(new RegExp('^' + folder.replace(/[.*+?^${}()|[\]\\]/g, '\\$&') + '\\s*'), '')
     .replace(/^[-_·]\s*/, '')
     .trim() || filename;
 }
