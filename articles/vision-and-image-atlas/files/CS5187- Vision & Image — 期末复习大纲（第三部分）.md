@@ -41,26 +41,26 @@
 **坐标系设置**：
 
 *   投影中心（COP / Center of Projection）位于原点
-*   图像平面（Image Plane）在 COP 前方，距离为焦距 \$f\$
-*   相机朝 \$+z\$ 方向看
+*   图像平面（Image Plane）在 COP 前方，距离为焦距 $f$
+*   相机朝 $+z$ 方向看
 
 **透视投影公式**（相似三角形推导）：
 
-\$\$x' = f \cdot \frac{x}{z}, \quad y' = f \cdot \frac{y}{z}\$\$
+$$x' = f \cdot \frac{x}{z}, \quad y' = f \cdot \frac{y}{z}$$
 
 **齐次坐标表示**（矩阵形式）：
 
-\$\$s\begin{bmatrix}x'\y'\1\end{bmatrix} = \begin{bmatrix}f&0&0&0\0\&f&0&0\0&0&1&0\end{bmatrix}\begin{bmatrix}x\y\z\1\end{bmatrix}\$\$
+$$s\begin{bmatrix}x'\y'\1\end{bmatrix} = \begin{bmatrix}f&0&0&0\0\&f&0&0\0&0&1&0\end{bmatrix}\begin{bmatrix}x\y\z\1\end{bmatrix}$$
 
-**注意**：透视投影**不是线性变换**（有除以 \$z\$ 的操作），但在齐次坐标下可以用矩阵乘法表示。
+**注意**：透视投影**不是线性变换**（有除以 $z$ 的操作），但在齐次坐标下可以用矩阵乘法表示。
 
 ***
 
 ### 1.3 正交投影（Orthographic Projection）
 
-*   相机到图像平面的距离 \$\to \infty\$（相当于远心镜头）
-*   投影方程：\$(x, y, z) \to (x, y)\$，直接丢弃 \$z\$
-*   投影矩阵： \$\$\begin{bmatrix}1&0&0&0\0&1&0&0\0&0&0&1\end{bmatrix}\$\$
+*   相机到图像平面的距离 $\to \infty$（相当于远心镜头）
+*   投影方程：$(x, y, z) \to (x, y)$，直接丢弃 $z$
+*   投影矩阵： $$\begin{bmatrix}1&0&0&0\0&1&0&0\0&0&0&1\end{bmatrix}$$
 
 ***
 
@@ -68,7 +68,7 @@
 
 **内参矩阵**（将3D相机坐标系中的射线映射为2D像素坐标）：
 
-\$\$\mathbf{K} = \begin{bmatrix}f & s & c\_x \ 0 & \alpha f & c\_y \ 0 & 0 & 1\end{bmatrix}\$\$
+$$\mathbf{K} = \begin{bmatrix}f & s & c\_x \ 0 & \alpha f & c\_y \ 0 & 0 & 1\end{bmatrix}$$
 
 | 参数           | 含义              | 典型值            |
 | ------------ | --------------- | -------------- |
@@ -78,13 +78,13 @@
 | $s$          | 倾斜系数（像素是否平行四边形） | 0              |
 
 
-**典型简化内参**： \$\$\mathbf{K} = \begin{bmatrix}f&0\&c\_x\0\&f\&c\_y\0&0&1\end{bmatrix}\$\$
+**典型简化内参**： $$\mathbf{K} = \begin{bmatrix}f&0\&c\_x\0\&f\&c\_y\0&0&1\end{bmatrix}$$
 
-**焦距 \$f\$ 的物理意义**：
+**焦距 $f$ 的物理意义**：
 
 *   可理解为"缩放"或"变焦"
-*   \$f\$ 越大 → 视角越小 → 望远效果
-*   \$f\$ 越小 → 视角越大 → 广角效果
+*   $f$ 越大 → 视角越小 → 望远效果
+*   $f$ 越小 → 视角越大 → 广角效果
 
 ***
 
@@ -97,16 +97,16 @@
 
 **从世界坐标到相机坐标的变换**：
 
-1.  **平移**：将坐标系原点移至相机中心 \$-\mathbf{c}\$
-2.  **旋转**：用旋转矩阵 \$R\$ 对齐坐标轴
+1.  **平移**：将坐标系原点移至相机中心 $-\mathbf{c}$
+2.  **旋转**：用旋转矩阵 $R$ 对齐坐标轴
 
-\$\$\begin{bmatrix}\mathbf{x}*{cam}\1\end{bmatrix} = \begin{bmatrix}R & -R\mathbf{c} \ \mathbf{0}^T & 1\end{bmatrix}\begin{bmatrix}\mathbf{X}*{world}\1\end{bmatrix}\$\$
+$$\begin{bmatrix}\mathbf{x}*{cam}\1\end{bmatrix} = \begin{bmatrix}R & -R\mathbf{c} \ \mathbf{0}^T & 1\end{bmatrix}\begin{bmatrix}\mathbf{X}*{world}\1\end{bmatrix}$$
 
 ***
 
 ### 1.6 完整投影矩阵⭐重点
 
-\$\$\mathbf{x} = \mathbf{K} \begin{bmatrix}\mathbf{I} & \mathbf{0}\end{bmatrix} \begin{bmatrix}R & -R\mathbf{c} \ \mathbf{0}^T & 1\end{bmatrix} \mathbf{X}\$\$
+$$\mathbf{x} = \mathbf{K} \begin{bmatrix}\mathbf{I} & \mathbf{0}\end{bmatrix} \begin{bmatrix}R & -R\mathbf{c} \ \mathbf{0}^T & 1\end{bmatrix} \mathbf{X}$$
 
 分解为四个步骤：
 
@@ -151,11 +151,11 @@
 
 **视差（Disparity）**：
 
-\$\$d = x\_L - x\_R\$\$
+$$d = x\_L - x\_R$$
 
-对于**矫正立体对（Rectified Stereo Pair）**（两相机平行、仅水平偏移 baseline \$B\$）：
+对于**矫正立体对（Rectified Stereo Pair）**（两相机平行、仅水平偏移 baseline $B$）：
 
-\$\$Z = \frac{f \cdot B}{d}\$\$
+$$Z = \frac{f \cdot B}{d}$$
 
 即：**视差与深度成反比（Disparity = Inverse Depth）**。
 
@@ -197,16 +197,16 @@
 
 **目标函数**：
 
-\$\$E(d) = \underbrace{\sum\_{(x,y)} C(x, y, d(x,y))}*{\text{匹配代价（data term）}} + \underbrace{\lambda \sum*{(p,q)\in\mathcal{N}} V(d\_p - d\_q)}\_{\text{平滑代价（smoothness term）}}\$\$
+$$E(d) = \underbrace{\sum\_{(x,y)} C(x, y, d(x,y))}*{\text{匹配代价（data term）}} + \underbrace{\lambda \sum*{(p,q)\in\mathcal{N}} V(d\_p - d\_q)}\_{\text{平滑代价（smoothness term）}}$$
 
 *   **匹配代价**：每个像素在当前视差下与对应像素的相似度
 *   **平滑代价**：相邻像素应具有相近的视差（深度连续性）
-*   \$\mathcal{N}\$：邻域像素集合（4连通或8连通）
+*   $\mathcal{N}$：邻域像素集合（4连通或8连通）
 
-**平滑代价 \$V\$ 的选择**：
+**平滑代价 $V$ 的选择**：
 
-*   L1 距离：\$V(d) = |d|\$
-*   Potts 模型：\$V(d) = \mathbf{1}\[d \neq 0]\$（跳跃惩罚）
+*   L1 距离：$V(d) = |d|$
+*   Potts 模型：$V(d) = \mathbf{1}\[d \neq 0]$（跳跃惩罚）
 
 ***
 
@@ -280,8 +280,8 @@ Step 4: 由视差估计深度 Z = f·B/d
 
 **代价体积（Cost Volume）**：
 
-*   三维张量，维度为 \$(\text{height} \times \text{width} \times \text{depth\_hypothesis})\$
-*   每个 \$(x, y, d)\$ 位置存储在深度 \$d\$ 下像素 \$(x,y)\$ 的匹配代价
+*   三维张量，维度为 $(\text{height} \times \text{width} \times \text{depth\_hypothesis})$
+*   每个 $(x, y, d)$ 位置存储在深度 $d$ 下像素 $(x,y)$ 的匹配代价
 
 <!---->
 
@@ -296,7 +296,7 @@ Step 4: 由视差估计深度 Z = f·B/d
 
 **NeRF（Neural Radiance Fields）**：
 
-*   将场景表示为从 \$(x,y,z,\theta,\phi)\$ 到 \$(\text{RGB}, \sigma)\$ 的神经网络函数
+*   将场景表示为从 $(x,y,z,\theta,\phi)$ 到 $(\text{RGB}, \sigma)$ 的神经网络函数
 *   使用体积渲染（Volume Rendering）从任意视角合成图像
 *   给定多张已标定照片，优化网络参数
 *   **输出**：可从任意新视角渲染场景
@@ -317,7 +317,7 @@ Step 4: 由视差估计深度 Z = f·B/d
 
 **参数化方法**：
 
-\$\$f(\mathbf{x}, W, \mathbf{b}) = W\mathbf{x} + \mathbf{b}\$\$
+$$f(\mathbf{x}, W, \mathbf{b}) = W\mathbf{x} + \mathbf{b}$$
 
 | 符号                              | 含义             |
 | ------------------------------- | -------------- |
@@ -329,9 +329,9 @@ Step 4: 由视差估计深度 Z = f·B/d
 
 **三种理解方式**：
 
-1.  **代数**：矩阵乘法 \$W\mathbf{x} + \mathbf{b}\$
+1.  **代数**：矩阵乘法 $W\mathbf{x} + \mathbf{b}$
 2.  **几何**：每个类别对应一个超平面，分数 ∝ 到超平面的距离
-3.  **模板匹配**：\$W\$ 的每行是对应类别的"模板图像"
+3.  **模板匹配**：$W$ 的每行是对应类别的"模板图像"
 
 ***
 
@@ -339,21 +339,21 @@ Step 4: 由视差估计深度 Z = f·B/d
 
 **Softmax 分类器**：将分数转化为概率分布
 
-\$\$P(y = k | \mathbf{x}) = \frac{e^{f\_k}}{\sum\_j e^{f\_j}}\$\$
+$$P(y = k | \mathbf{x}) = \frac{e^{f\_k}}{\sum\_j e^{f\_j}}$$
 
 **交叉熵损失（Cross-Entropy Loss）**：
 
-\$\$L\_i = -\log P(y = y\_i | \mathbf{x}*i) = -\log\left(\frac{e^{f*{y\_i}}}{\sum\_j e^{f\_j}}\right)\$\$
+$$L\_i = -\log P(y = y\_i | \mathbf{x}*i) = -\log\left(\frac{e^{f*{y\_i}}}{\sum\_j e^{f\_j}}\right)$$
 
-**总损失**： \$\$L = \frac{1}{N}\sum\_{i=1}^N L\_i\$\$
+**总损失**： $$L = \frac{1}{N}\sum\_{i=1}^N L\_i$$
 
-**最优情况**：正确类别分数远高于其他类别 → \$P \to 1\$ → \$L \to 0\$
+**最优情况**：正确类别分数远高于其他类别 → $P \to 1$ → $L \to 0$
 
 ***
 
 ### 4.4 梯度下降（Gradient Descent）⭐重点
 
-**目标**：找到最小化损失函数 \$L\$ 的参数 \$W\$。
+**目标**：找到最小化损失函数 $L$ 的参数 $W$。
 
 **算法**：
 
@@ -366,7 +366,7 @@ Step 4: 由视差估计深度 Z = f·B/d
 直到收敛
 ```
 
-**学习率（Learning Rate）\$\alpha\$**：
+**学习率（Learning Rate）$\alpha$**：
 
 *   过大 → 振荡，跳过最小值
 *   过小 → 收敛缓慢
@@ -379,14 +379,14 @@ Step 4: 由视差估计深度 Z = f·B/d
 
 **结构**：多个线性层 + 非线性激活函数（如 ReLU）交替叠加
 
-\$\$f(\mathbf{x}) = W\_2 \cdot \max(0, W\_1\mathbf{x} + \mathbf{b}\_1) + \mathbf{b}\_2\$\$
+$$f(\mathbf{x}) = W\_2 \cdot \max(0, W\_1\mathbf{x} + \mathbf{b}\_1) + \mathbf{b}\_2$$
 
 **为什么需要非线性激活？**
 
 *   多个线性层的复合仍是线性的
-*   非线性（如 ReLU: \$\max(0, x)\$）使网络能拟合复杂函数
+*   非线性（如 ReLU: $\max(0, x)$）使网络能拟合复杂函数
 
-**参数量示例**（两层网络，输入 3072 维，隐层 100，输出 10）： \$\$3072 \times 100 + 100 \times 10 = 308{,}200 \text{ 个参数}\$\$
+**参数量示例**（两层网络，输入 3072 维，隐层 100，输出 10）： $$3072 \times 100 + 100 \times 10 = 308{,}200 \text{ 个参数}$$
 
 ***
 
@@ -396,11 +396,11 @@ Step 4: 由视差估计深度 Z = f·B/d
 
 **用途**：处理序列数据（文本、语音、时间序列）
 
-**核心公式**： \$\$h\_t = f(W\_{hh} h\_{t-1} + W\_{xh} x\_t + b)\$\$
+**核心公式**： $$h\_t = f(W\_{hh} h\_{t-1} + W\_{xh} x\_t + b)$$
 
-*   \$h\_t\$：当前时刻隐状态
-*   \$x\_t\$：当前输入
-*   同一权重矩阵 \$W\$ 在所有时刻**共享**
+*   $h\_t$：当前时刻隐状态
+*   $x\_t$：当前输入
+*   同一权重矩阵 $W$ 在所有时刻**共享**
 
 **类型**：
 
@@ -423,12 +423,12 @@ Step 4: 由视差估计深度 Z = f·B/d
 
 **关键参数**：
 
-*   滤波器大小 \$F\$
-*   步长 \$S\$（stride）
-*   填充 \$P\$（padding）
-*   输出大小：\$\left\lfloor\frac{N - F + 2P}{S}\right\rfloor + 1\$
+*   滤波器大小 $F$
+*   步长 $S$（stride）
+*   填充 $P$（padding）
+*   输出大小：$\left\lfloor\frac{N - F + 2P}{S}\right\rfloor + 1$
 
-**示例**：\$N=7, F=3, S=1\$ → \$(7-3)/1+1 = 5\$
+**示例**：$N=7, F=3, S=1$ → $(7-3)/1+1 = 5$
 
 **与全连接层的区别**：
 
@@ -443,7 +443,7 @@ Step 4: 由视差估计深度 Z = f·B/d
 
 *   作用：降维，减少计算量，提升平移鲁棒性
 *   **最大池化（Max Pooling）**：取局部区域最大值（最常用）
-*   输出大小：\$\lfloor(N-F)/S\rfloor + 1\$
+*   输出大小：$\lfloor(N-F)/S\rfloor + 1$
 
 #### 典型 CNN 架构
 
@@ -459,7 +459,7 @@ Step 4: 由视差估计深度 Z = f·B/d
 
 **注意力的核心思想**：在生成输出时，动态地"关注"输入序列的不同位置，而非仅依赖最后的隐状态。
 
-**注意力权重计算**： \$\$\alpha\_{t,s} = \frac{\exp(\text{score}(h\_t, e\_s))}{\sum\_{s'}\exp(\text{score}(h\_t, e\_{s'}))}\$\$
+**注意力权重计算**： $$\alpha\_{t,s} = \frac{\exp(\text{score}(h\_t, e\_s))}{\sum\_{s'}\exp(\text{score}(h\_t, e\_{s'}))}$$
 
 ***
 
@@ -471,10 +471,10 @@ Step 4: 由视差估计深度 Z = f·B/d
 
 对于序列中每个位置，计算 Query（Q）、Key（K）、Value（V）：
 
-\$\$\text{Attention}(Q, K, V) = \text{softmax}!\left(\frac{QK^T}{\sqrt{d\_k}}\right)V\$\$
+$$\text{Attention}(Q, K, V) = \text{softmax}!\left(\frac{QK^T}{\sqrt{d\_k}}\right)V$$
 
-*   \$Q = XW\_Q\$，\$K = XW\_K\$，\$V = XW\_V\$
-*   \$\sqrt{d\_k}\$：缩放因子，防止点积过大
+*   $Q = XW\_Q$，$K = XW\_K$，$V = XW\_V$
+*   $\sqrt{d\_k}$：缩放因子，防止点积过大
 
 #### 多头注意力（Multi-Head Attention）
 
@@ -579,7 +579,7 @@ Step 4: 由视差估计深度 Z = f·B/d
 **视差（Disparity）vs 深度（Depth）**：
 
 *   视差 = 左图x坐标 - 右图x坐标（像素单位）
-*   深度 = \$Z = f \cdot B / d\$（成反比）；视差越大，物体越近
+*   深度 = $Z = f \cdot B / d$（成反比）；视差越大，物体越近
 
 **SSD（双目匹配）vs SSD（Harris）**：
 
@@ -599,7 +599,7 @@ Step 4: 由视差估计深度 Z = f·B/d
 **Softmax（激活）vs Sigmoid（激活）**：
 
 *   Softmax：多分类，所有类别概率之和为1
-*   Sigmoid：二分类，输出单个概率值 \$\in (0,1)\$
+*   Sigmoid：二分类，输出单个概率值 $\in (0,1)$
 
 ***
 
