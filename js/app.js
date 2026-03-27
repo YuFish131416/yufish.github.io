@@ -255,6 +255,65 @@
   }
 
   /* ============================================================
+     NOTEBOOK RENDERER
+     ============================================================ */
+
+  /** Parse and render a Jupyter Notebook (.ipynb) JSON string */
+  function renderNotebook(raw) {
+    var nb;
+    try { nb = JSON.parse(raw); } catch (e) {
+      return '<pre>' + esc(raw) + '</pre>';
+    }
+    var cells = nb.cells || [];
+    var h = '<div class="nb-container">';
+
+    cells.forEach(function (cell) {
+      var src = (cell.source || []).join('');
+      if (!src.trim()) return;
+
+      if (cell.cell_type === 'markdown') {
+        h += '<div class="nb-cell nb-md-cell">' + marked.parse(src) + '</div>';
+      } else if (cell.cell_type === 'code') {
+        var lang = (nb.metadata && nb.metadata.kernelspec && nb.metadata.kernelspec.language) || 'python';
+        h += '<div class="nb-cell nb-code-cell">';
+        h += '<div class="nb-cell-label">In</div>';
+        h += '<pre class="nb-source"><code class="language-' + lang + '">' + esc(src) + '</code></pre>';
+
+        // Render outputs
+        var outputs = cell.outputs || [];
+        if (outputs.length > 0) {
+          h += '<div class="nb-cell-label nb-out-label">Out</div>';
+          h += '<div class="nb-output">';
+          outputs.forEach(function (out) {
+            if (out.output_type === 'stream') {
+              var text = (out.text || []).join('');
+              h += '<pre class="nb-stream">' + esc(text) + '</pre>';
+            } else if (out.output_type === 'execute_result' || out.output_type === 'display_data') {
+              var data = out.data || {};
+              if (data['text/html']) {
+                h += '<div class="nb-rich">' + (data['text/html'] instanceof Array ? data['text/html'].join('') : data['text/html']) + '</div>';
+              } else if (data['image/png']) {
+                h += '<img class="nb-img" src="data:image/png;base64,' + data['image/png'] + '" alt="output">';
+              } else if (data['text/plain']) {
+                var plain = data['text/plain'] instanceof Array ? data['text/plain'].join('') : data['text/plain'];
+                h += '<pre class="nb-stream">' + esc(plain) + '</pre>';
+              }
+            } else if (out.output_type === 'error') {
+              var tb = (out.traceback || []).join('\n').replace(/\x1b\[[0-9;]*m/g, '');
+              h += '<pre class="nb-error">' + esc(tb) + '</pre>';
+            }
+          });
+          h += '</div>';
+        }
+        h += '</div>';
+      }
+    });
+
+    h += '</div>';
+    return h;
+  }
+
+  /* ============================================================
      ARTICLE DETAIL
      ============================================================ */
 
@@ -318,7 +377,7 @@
       '<div class="resource-file-grid">';
     files.forEach(function (f) {
       var isDL = f.download;
-      var isMdOrHtml = /\.(md|html)$/i.test(f.name);
+      var canRead = /\.(md|html|ipynb)$/i.test(f.name);
       var href = 'articles/' + encodeURIComponent(slug) + '/files/' + encodeURIComponent(f.name);
 
       h += '<article class="resource-file-card' + (isDL ? ' has-download' : '') + '">';
@@ -331,7 +390,7 @@
         ? '<p>这是适合考前快速检索的下载型资料，建议离线保存，用于开卷场景下的高频查阅。</p>'
         : '<p>围绕"' + esc(f.displayName) + '"展开，属于"' + esc(meta.label || '') + '"这条知识线上的一个节点。</p>';
       h += '<div class="resource-file-actions">';
-      if (isMdOrHtml) {
+      if (canRead) {
         h += '<a class="resource-action-link resource-read-link" href="javascript:void(0)" data-file="' + escAttr(f.name) + '">阅读</a>';
       } else {
         h += '<a class="resource-action-link" href="' + href + '" target="_blank" rel="noopener">在线查看</a>';
@@ -437,10 +496,11 @@
           var fileData = await window.ArticleLoader.getSubFile(slug, filename);
           var rendered;
 
-          if (fileData.isMd) {
+          if (fileData.isNotebook) {
+            rendered = renderNotebook(fileData.content);
+          } else if (fileData.isMd) {
             rendered = marked.parse(fileData.content);
           } else if (fileData.isHtml) {
-            // For self-contained HTML files, render in a sandboxed iframe
             rendered = '<iframe class="sub-reader-iframe" srcdoc="' +
               fileData.content
                 .replace(/&/g, '&amp;')

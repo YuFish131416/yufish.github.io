@@ -224,7 +224,7 @@ function buildContentHtml(a) {
     p.push('    <div class="resource-file-grid">');
     files.forEach(function (f) {
         var isDL = f.download;
-        var isMdOrHtml = /\.(md|html)$/i.test(f.name);
+        var canRead = /\.(md|html|ipynb)$/i.test(f.name);
         var href = 'articles/' + encodeURIComponent(slug) + '/files/' + encodeURIComponent(f.name);
         p.push('      <article class="resource-file-card' + (isDL ? ' has-download' : '') + '">');
         p.push('        <div class="resource-file-meta">');
@@ -236,7 +236,7 @@ function buildContentHtml(a) {
             ? '        <p>这是适合考前快速检索的下载型资料，建议离线保存，用于开卷场景下的高频查阅。</p>'
             : '        <p>围绕"' + escHtml(f.displayName) + '"展开，属于"' + escHtml(a.label || '') + '"这条知识线上的一个节点。</p>');
         p.push('        <div class="resource-file-actions">');
-        if (isMdOrHtml) {
+        if (canRead) {
             p.push('          <a class="resource-action-link resource-read-link" href="javascript:void(0)" data-file="' + escHtml(f.name) + '">阅读</a>');
         } else {
             p.push('          <a class="resource-action-link" href="' + href + '" target="_blank" rel="noopener">在线查看</a>');

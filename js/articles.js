@@ -84,7 +84,8 @@
             var content = await resp.text();
             var isMd = /\.md$/i.test(filename);
             var isHtml = /\.html$/i.test(filename);
-            return { content: content, isHtml: isHtml, isMd: isMd, filename: filename };
+            var isNotebook = /\.ipynb$/i.test(filename);
+            return { content: content, isHtml: isHtml, isMd: isMd, isNotebook: isNotebook, filename: filename };
         }
     };
 })();
