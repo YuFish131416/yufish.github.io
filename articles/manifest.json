@@ -12,7 +12,23 @@
         "职业思考",
         "论文解读"
       ],
-      "summary": "本文基于两篇2026年3月发表的前沿论文，结合产业观察与个人求职思考写成。核心论点只有一个：AI时代最稀缺的不是会写代码的人，而是知道该写什么代码的人。"
+      "summary": "本文基于两篇2026年3月发表的前沿论文，结合产业观察与个人求职思考写成。核心论点只有一个：AI时代最稀缺的不是会写代码的人，而是知道该写什么代码的人。",
+      "math": true
+    },
+    {
+      "slug": "cs5293-security-lab",
+      "title": "CS5293 软件安全实验：从密码学到缓冲区溢出",
+      "date": "2026-03-27",
+      "subtitle": "两份课程作业的合集——用密码学原语理解加密边界，用栈溢出理解系统信任模型。",
+      "label": "Software Security",
+      "tags": [
+        "安全",
+        "密码学",
+        "缓冲区溢出",
+        "课程笔记",
+        "CS5293"
+      ],
+      "summary": "CS5293 两次 Assignment 全记录：Assignment 1 涵盖频率分析、AES 模式对比与已知明文攻击；Assignment 2 覆盖环境变量提权、缓冲区溢出、Return-to-libc 与格式化字符串漏洞。"
     },
     {
       "slug": "ai-cognition-archive",
@@ -29,22 +45,32 @@
         "课程笔记",
         "CS5491"
       ],
-      "summary": "人工智能课程多份提纲与知识梳理的整合版，覆盖搜索、逻辑推理、概率模型与机器学习。"
-    },
-    {
-      "slug": "cs5293-security-lab",
-      "title": "CS5293 软件安全实验：从密码学到缓冲区溢出",
-      "date": "2026-03-26",
-      "subtitle": "两份课程作业的合集——用密码学原语理解加密边界，用栈溢出理解系统信任模型。",
-      "label": "Software Security",
-      "tags": [
-        "安全",
-        "密码学",
-        "缓冲区溢出",
-        "课程笔记",
-        "CS5293"
+      "summary": "人工智能课程多份提纲与知识梳理的整合版，覆盖搜索、逻辑推理、概率模型与机器学习。",
+      "focus": [
+        "把搜索、推理、概率与学习放在同一知识弧线上理解。",
+        "适合从算法原理回到更抽象的 AI 建模能力。",
+        "多份资料已经按学习顺序重新排列。"
       ],
-      "summary": "CS5293 两次 Assignment 全记录：Assignment 1 涵盖频率分析、AES 模式对比与已知明文攻击；Assignment 2 覆盖环境变量提权、缓冲区溢出、Return-to-libc 与格式化字符串漏洞。"
+      "files": [
+        {
+          "name": "CS5491 人工智能 期中复习大纲.md",
+          "displayName": "人工智能 期中复习大纲",
+          "type": "Markdown 笔记",
+          "download": false
+        },
+        {
+          "name": "CS5491 人工智能 知识点梳理(前三节课).md",
+          "displayName": "人工智能 知识点梳理(前三节课)",
+          "type": "Markdown 笔记",
+          "download": false
+        },
+        {
+          "name": "CS5491 人工智能 知识点梳理(后四节课).md",
+          "displayName": "人工智能 知识点梳理(后四节课)",
+          "type": "Markdown 笔记",
+          "download": false
+        }
+      ]
     },
     {
       "slug": "data-engineering-field-notes",
@@ -60,7 +86,20 @@
         "课程笔记",
         "CS5481"
       ],
-      "summary": "Data Engineering 期末复习笔记整理版，突出数据管道、复用组件与业务联动。"
+      "summary": "Data Engineering 期末复习笔记整理版，突出数据管道、复用组件与业务联动。",
+      "focus": [
+        "12 讲内容压缩为一份结构化笔记。",
+        "覆盖数据获取、预处理、可视化、查询与推荐。",
+        "适合快速重建数据工程知识体系。"
+      ],
+      "files": [
+        {
+          "name": "CS5481 Data Engineering 期末复习笔记.md",
+          "displayName": "Data Engineering 期末复习笔记",
+          "type": "Markdown 笔记",
+          "download": false
+        }
+      ]
     },
     {
       "slug": "digital-value-and-mis-notes",
@@ -77,7 +116,26 @@
         "课程笔记",
         "IS5313"
       ],
-      "summary": "管理信息系统课程资料整理版，聚焦数字化转型、AI 决策支持与企业价值链。"
+      "summary": "管理信息系统课程资料整理版，聚焦数字化转型、AI 决策支持与企业价值链。",
+      "focus": [
+        "结合 AI 商业化案例理解信息系统价值。",
+        "开卷查词表提供中英术语速查。",
+        "期中知识梳理覆盖 MIS 核心概念与数字战略。"
+      ],
+      "files": [
+        {
+          "name": "IS5313 期中开卷查词表.md",
+          "displayName": "期中开卷查词表",
+          "type": "Markdown 笔记",
+          "download": true
+        },
+        {
+          "name": "IS5313 管理信息系统 期中知识点梳理.md",
+          "displayName": "管理信息系统 期中知识点梳理",
+          "type": "Markdown 笔记",
+          "download": false
+        }
+      ]
     },
     {
       "slug": "hello-world",
@@ -103,7 +161,32 @@
         "考试策略",
         "CS5222"
       ],
-      "summary": "计算机网络课程的开卷参考、查词表与题型总结，已整理为适合查阅和下载的资料库。"
+      "summary": "计算机网络课程的开卷参考、查词表与题型总结，已整理为适合查阅和下载的资料库。",
+      "focus": [
+        "重点开卷资料提供直接下载，便于离线保存。",
+        "把题型总结、参考指南与查词表拆成不同用途的入口。",
+        "适合考前建立\"去哪找答案\"的快速索引。"
+      ],
+      "files": [
+        {
+          "name": "CS5222 期末开卷查词表.md",
+          "displayName": "期末开卷查词表",
+          "type": "Markdown 笔记",
+          "download": true
+        },
+        {
+          "name": "计算机网络开卷考试参考指南.md",
+          "displayName": "计算机网络开卷考试参考指南",
+          "type": "Markdown 笔记",
+          "download": true
+        },
+        {
+          "name": "计算机网络教程题型与解法总结.md",
+          "displayName": "计算机网络教程题型与解法总结",
+          "type": "Markdown 笔记",
+          "download": false
+        }
+      ]
     },
     {
       "slug": "software-engineering-atelier",
@@ -120,7 +203,56 @@
         "课程笔记",
         "CS5351"
       ],
-      "summary": "软件工程课程多章节复习资料的重编版，按过程模型、代码评审、需求工程与技术债分类整理。"
+      "summary": "软件工程课程多章节复习资料的重编版，按过程模型、代码评审、需求工程与技术债分类整理。",
+      "focus": [
+        "开卷资料覆盖第二到第六章，均可下载。",
+        "从过程模型到技术债，完整还原方法论线索。",
+        "期末复习整理聚焦 Agile/Scrum 全景。"
+      ],
+      "files": [
+        {
+          "name": "CS5351 期中开卷应试整理 第三章 Modern Code Review（现代代码评审）.md",
+          "displayName": "期中开卷应试整理 第三章 Modern Code Review（现代代码评审）",
+          "type": "Markdown 笔记",
+          "download": true
+        },
+        {
+          "name": "CS5351 期中开卷应试整理 第二章 Software Engineering Process Model（软件工程模型）.md",
+          "displayName": "期中开卷应试整理 第二章 Software Engineering Process Model（软件工程模型）",
+          "type": "Markdown 笔记",
+          "download": true
+        },
+        {
+          "name": "CS5351 期中开卷应试整理 第五章 Design Principles and Framework（设计原则与框架）.md",
+          "displayName": "期中开卷应试整理 第五章 Design Principles and Framework（设计原则与框架）",
+          "type": "Markdown 笔记",
+          "download": true
+        },
+        {
+          "name": "CS5351 期中开卷应试整理 第六章 Technical Debt（技术债务）.md",
+          "displayName": "期中开卷应试整理 第六章 Technical Debt（技术债务）",
+          "type": "Markdown 笔记",
+          "download": true
+        },
+        {
+          "name": "CS5351 期中开卷应试整理 第四章 Requirements Engineering（需求工程）.md",
+          "displayName": "期中开卷应试整理 第四章 Requirements Engineering（需求工程）",
+          "type": "Markdown 笔记",
+          "download": true
+        },
+        {
+          "name": "CS5351 期中开卷查词表.md",
+          "displayName": "期中开卷查词表",
+          "type": "Markdown 笔记",
+          "download": true
+        },
+        {
+          "name": "CS5351 期末复习整理.md",
+          "displayName": "期末复习整理",
+          "type": "Markdown 笔记",
+          "download": false
+        }
+      ]
     },
     {
       "slug": "tencent-interview-ledger",
@@ -137,7 +269,26 @@
         "系统设计",
         "职业成长"
       ],
-      "summary": "围绕密码学、安全系统、Redis、微服务与 AI 协作流程的腾讯面试复盘，整理出更可信的表达结构。"
+      "summary": "围绕密码学、安全系统、Redis、微服务与 AI 协作流程的腾讯面试复盘，整理出更可信的表达结构。",
+      "focus": [
+        "从加密算法推导到 Redis 集群，每一道题都以「项目实证」为主线。",
+        "二面更侧重顶层设计与容灾思维。",
+        "整理后更适合作为面试复盘模板。"
+      ],
+      "files": [
+        {
+          "name": "一面面经.md",
+          "displayName": "一面面经",
+          "type": "Markdown 笔记",
+          "download": false
+        },
+        {
+          "name": "二面面经.md",
+          "displayName": "二面面经",
+          "type": "Markdown 笔记",
+          "download": false
+        }
+      ]
     },
     {
       "slug": "vision-and-image-atlas",
@@ -153,7 +304,32 @@
         "课程笔记",
         "CS5187"
       ],
-      "summary": "围绕 Vision & Image 课程整理的三部分复习资料，重组为更清晰的知识路径。"
+      "summary": "围绕 Vision & Image 课程整理的三部分复习资料，重组为更清晰的知识路径。",
+      "focus": [
+        "三部分按低层视觉 → 特征匹配 → 三维重建组织。",
+        "期中偏滤波与边缘，期末偏投影与立体视觉。",
+        "适合按知识弧线串联复习。"
+      ],
+      "files": [
+        {
+          "name": "CS5187- Vision & Image — 期中复习大纲（第一部分）.md",
+          "displayName": "Vision & Image — 期中复习大纲（第一部分）",
+          "type": "Markdown 笔记",
+          "download": false
+        },
+        {
+          "name": "CS5187- Vision & Image — 期末复习大纲（第三部分）.md",
+          "displayName": "Vision & Image — 期末复习大纲（第三部分）",
+          "type": "Markdown 笔记",
+          "download": false
+        },
+        {
+          "name": "CS5187- Vision & Image — 期末复习大纲（第二部分）.md",
+          "displayName": "Vision & Image — 期末复习大纲（第二部分）",
+          "type": "Markdown 笔记",
+          "download": false
+        }
+      ]
     },
     {
       "slug": "vr-interface-notebook",
@@ -169,7 +345,56 @@
         "课程笔记",
         "CS5188"
       ],
-      "summary": "VR 课程模块提纲与 HTML 资料的整理版，适合按模块梳理输入、输出与系统架构。"
+      "summary": "VR 课程模块提纲与 HTML 资料的整理版，适合按模块梳理输入、输出与系统架构。",
+      "focus": [
+        "五个模块从输入设备 → 图形显示 → 声音触觉 → 系统架构递进。",
+        "HTML 资料包含完整术语表与简答题考点。",
+        "适合按模块逐步理解 VR 交互全景。"
+      ],
+      "files": [
+        {
+          "name": "VR_期中复习_知识大纲与术语表.html",
+          "displayName": "VR_期中复习_知识大纲与术语表",
+          "type": "HTML 文档",
+          "download": false
+        },
+        {
+          "name": "VR_简答题考点整理.html",
+          "displayName": "VR_简答题考点整理",
+          "type": "HTML 文档",
+          "download": false
+        },
+        {
+          "name": "期中复习大纲 · Module 1：Introduction.md",
+          "displayName": "期中复习大纲 · Module 1：Introduction",
+          "type": "Markdown 笔记",
+          "download": false
+        },
+        {
+          "name": "期中复习大纲 · Module 2：Input Devices.md",
+          "displayName": "期中复习大纲 · Module 2：Input Devices",
+          "type": "Markdown 笔记",
+          "download": false
+        },
+        {
+          "name": "期中复习大纲 · Module 3：Output Devices — Graphical Displays.md",
+          "displayName": "期中复习大纲 · Module 3：Output Devices — Graphical Displays",
+          "type": "Markdown 笔记",
+          "download": false
+        },
+        {
+          "name": "期中复习大纲 · Module 4：Output Devices — Sound and Haptics.md",
+          "displayName": "期中复习大纲 · Module 4：Output Devices — Sound and Haptics",
+          "type": "Markdown 笔记",
+          "download": false
+        },
+        {
+          "name": "期中复习大纲 · Module 5：Computing Architectures for VR.md",
+          "displayName": "期中复习大纲 · Module 5：Computing Architectures for VR",
+          "type": "Markdown 笔记",
+          "download": false
+        }
+      ]
     }
   ]
 }

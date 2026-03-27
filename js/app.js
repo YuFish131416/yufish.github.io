@@ -257,10 +257,110 @@
   /* ============================================================
      ARTICLE DETAIL
      ============================================================ */
+
+  /** Generate resource-story HTML dynamically from manifest metadata */
+  function renderResourceStory(meta) {
+    var files = meta.files || [];
+    var focus = meta.focus || [];
+    var slug = meta.slug;
+    var downloadFiles = files.filter(function (f) { return f.download; });
+    var mdCount = files.filter(function (f) { return /\.md$/i.test(f.name); }).length;
+
+    var h = '<div class="resource-story theme-' + esc(meta.theme || '') + '">';
+
+    // Intro panel
+    h += '<section class="resource-intro-panel">' +
+      '<span class="resource-kicker">' + esc(meta.label || '') + '</span>' +
+      '<h2>' + esc(meta.subtitle || '') + '</h2>' +
+      '<p>' + esc(meta.summary || '') + '</p>' +
+    '</section>';
+
+    // Metric grid
+    h += '<section class="resource-metric-grid">' +
+      '<article class="resource-metric-card"><span>资料数量</span><strong>' + files.length + '</strong></article>' +
+      '<article class="resource-metric-card"><span>Markdown</span><strong>' + mdCount + '</strong></article>' +
+      '<article class="resource-metric-card"><span>下载项</span><strong>' + downloadFiles.length + '</strong></article>' +
+    '</section>';
+
+    // Download shelf
+    if (downloadFiles.length > 0) {
+      h += '<section class="resource-download-shelf">' +
+        '<div class="resource-section-head"><span>离线资料</span><h3>这些文件更适合直接下载保存</h3></div>' +
+        '<div class="download-shelf-grid">';
+      downloadFiles.forEach(function (f) {
+        var href = 'articles/' + encodeURIComponent(slug) + '/files/' + encodeURIComponent(f.name);
+        h += '<a class="download-shelf-item" href="' + href + '" download>' +
+          '<span class="download-shelf-label">开卷资料</span>' +
+          '<strong>' + esc(f.displayName) + '</strong>' +
+          '<span class="download-shelf-action">下载</span>' +
+        '</a>';
+      });
+      h += '</div></section>';
+    }
+
+    // Focus cards
+    if (focus.length > 0) {
+      h += '<section class="resource-focus-grid">' +
+        '<div class="resource-section-head"><span>策展线索</span><h3>这组资料该如何被阅读</h3></div>' +
+        '<div class="resource-focus-cards">';
+      focus.forEach(function (text, i) {
+        h += '<article class="resource-focus-card">' +
+          '<span class="resource-focus-index">0' + (i + 1) + '</span>' +
+          '<p>' + esc(text) + '</p>' +
+        '</article>';
+      });
+      h += '</div></section>';
+    }
+
+    // File grid
+    h += '<section class="resource-index-section">' +
+      '<div class="resource-section-head"><span>目录</span><h3>按主题重新排好的入口</h3></div>' +
+      '<div class="resource-file-grid">';
+    files.forEach(function (f) {
+      var isDL = f.download;
+      var isMdOrHtml = /\.(md|html)$/i.test(f.name);
+      var href = 'articles/' + encodeURIComponent(slug) + '/files/' + encodeURIComponent(f.name);
+
+      h += '<article class="resource-file-card' + (isDL ? ' has-download' : '') + '">';
+      h += '<div class="resource-file-meta">';
+      h += '<span class="resource-file-type">' + esc(f.type || '') + '</span>';
+      if (isDL) h += '<span class="resource-pill">可下载</span>';
+      h += '</div>';
+      h += '<h3>' + esc(f.displayName) + '</h3>';
+      h += isDL
+        ? '<p>这是适合考前快速检索的下载型资料，建议离线保存，用于开卷场景下的高频查阅。</p>'
+        : '<p>围绕"' + esc(f.displayName) + '"展开，属于"' + esc(meta.label || '') + '"这条知识线上的一个节点。</p>';
+      h += '<div class="resource-file-actions">';
+      if (isMdOrHtml) {
+        h += '<a class="resource-action-link resource-read-link" href="javascript:void(0)" data-file="' + escAttr(f.name) + '">阅读</a>';
+      } else {
+        h += '<a class="resource-action-link" href="' + href + '" target="_blank" rel="noopener">在线查看</a>';
+      }
+      if (isDL) {
+        h += '<a class="resource-action-link" href="' + href + '" download>下载</a>';
+      }
+      h += '</div></article>';
+    });
+    h += '</div></section>';
+
+    h += '</div>'; // close .resource-story
+    return h;
+  }
+
   async function renderArticle(slug) {
     try {
       var data = await window.ArticleLoader.getArticle(slug);
       var meta = data.meta;
+
+      // Determine article body content
+      var contentHtml;
+      if (data.isResource) {
+        contentHtml = renderResourceStory(meta);
+      } else if (data.isHtml) {
+        contentHtml = data.content;
+      } else {
+        contentHtml = marked.parse(data.content);
+      }
 
       var html =
         '<div class="container">' +
@@ -278,8 +378,8 @@
                 : '') +
             '</div>' +
           '</header>' +
-          '<div class="article-content reveal">' +
-            (data.isHtml ? data.content : marked.parse(data.content)) +
+          '<div class="article-content page-enter">' +
+            contentHtml +
           '</div>' +
           '<div class="sub-file-reader" id="subFileReader" style="display:none">' +
             '<div class="sub-reader-header">' +
@@ -305,6 +405,7 @@
       bindReadingProgress();
 
     } catch (e) {
+      console.error('renderArticle failed for "' + slug + '":', e);
       setContent(
         '<div class="container"><div class="no-results">' +
           '<i data-lucide="file-x"></i>' +

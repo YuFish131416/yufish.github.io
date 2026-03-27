@@ -29,7 +29,8 @@
 
         /**
          * Load a single article's metadata + content by slug.
-         * Tries content.md first, then content.html.
+         * Resource articles with files in manifest skip content fetch.
+         * Plain articles try content.md first, then content.html.
          */
         getArticle: async function (slug) {
             if (articleContentCache[slug]) return articleContentCache[slug];
@@ -37,6 +38,13 @@
             var articles = await this.getArticles();
             var meta = articles.find(function (a) { return a.slug === slug; });
             if (!meta) throw new Error('Article not found in manifest');
+
+            // Resource articles: rendered dynamically from manifest metadata
+            if (meta.kind === 'resource' && Array.isArray(meta.files) && meta.files.length > 0) {
+                var result = { meta: meta, content: '', isHtml: false, isResource: true };
+                articleContentCache[slug] = result;
+                return result;
+            }
 
             // Try markdown first
             var mdUrl = 'articles/' + encodeURIComponent(slug) + '/content.md';
