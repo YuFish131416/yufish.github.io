@@ -1011,6 +1011,8 @@ button { font-family: var(--font-body); }
 .theme-vision .resource-focus-index { color: #D97706; }
 .theme-career .resource-kicker,
 .theme-career .resource-focus-index { color: var(--c-warm); }
+.theme-security .resource-kicker,
+.theme-security .resource-focus-index { color: #DC2626; }
 
 /* ===============================
    SUB-FILE READER

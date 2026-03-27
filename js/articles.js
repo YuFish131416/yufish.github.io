@@ -85,17 +85,6 @@
             var isMd = /\.md$/i.test(filename);
             var isHtml = /\.html$/i.test(filename);
             return { content: content, isHtml: isHtml, isMd: isMd, filename: filename };
-        },
-
-        /**
-         * Load the files.json index for a collection.
-         * Returns array of { name, displayName, type, download }.
-         */
-        getFilesIndex: async function (slug) {
-            var url = 'articles/' + encodeURIComponent(slug) + '/files.json';
-            var resp = await fetch(url);
-            if (!resp.ok) return null;
-            return resp.json();
         }
     };
 })();
