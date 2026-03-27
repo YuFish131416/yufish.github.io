@@ -28,9 +28,9 @@
         extensions: [{
           name: 'mathBlock',
           level: 'block',
-          start: function (src) { var m = src.match(/\$\$/); return m ? m.index : undefined; },
+          start: function (src) { var m = src.match(/$$/); return m ? m.index : undefined; },
           tokenizer: function (src) {
-            var m = src.match(/^\$\$([\s\S]+?)\$\$/);
+            var m = src.match(/^$$([\s\S]+?)$$/);
             if (m) return { type: 'mathBlock', raw: m[0], text: m[1].trim() };
           },
           renderer: function (token) {
@@ -40,9 +40,9 @@
         }, {
           name: 'mathInline',
           level: 'inline',
-          start: function (src) { var m = src.match(/\$[^\$\s]/); return m ? m.index : undefined; },
+          start: function (src) { var m = src.match(/$[^$\s]/); return m ? m.index : undefined; },
           tokenizer: function (src) {
-            var m = src.match(/^\$([^\$\n]+?)\$/);
+            var m = src.match(/^$([^$\n]+?)$/);
             if (m) return { type: 'mathInline', raw: m[0], text: m[1].trim() };
           },
           renderer: function (token) {
