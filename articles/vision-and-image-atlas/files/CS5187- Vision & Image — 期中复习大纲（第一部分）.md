@@ -172,11 +172,11 @@ $$h = \frac{1}{9}\begin{bmatrix}1&1&1\1&1&1\1&1&1\end{bmatrix}$$
 
 **核心思想**： $$\text{锐化} = \text{原图} + \alpha \times \text{高频细节}$$
 
-其中高频细节 = 原图 - 模糊图： $$\text{detail} = f - f \* G\_\sigma$$
+其中高频细节 = 原图 - 模糊图： $$\text{detail} = f - f * G_\sigma$$
 
-**锐化公式**： $$\text{sharpened} = f + \alpha (f - f \* G\_\sigma) = (1+\alpha)f - \alpha \cdot f \* G\_\sigma$$
+**锐化公式**： $$\text{sharpened} = f + \alpha (f - f * G_\sigma) = (1+\alpha)f - \alpha \cdot f * G_\sigma$$
 
-等价于用以下核进行卷积： $$h\_{\text{sharpen}} = (1+\alpha)\delta - \alpha \cdot G\_\sigma$$
+等价于用以下核进行卷积： $$h_{\text{sharpen}} = (1+\alpha)\delta - \alpha \cdot G_\sigma$$
 
 其中 $\delta$ 是单位冲激核（identity kernel）。
 

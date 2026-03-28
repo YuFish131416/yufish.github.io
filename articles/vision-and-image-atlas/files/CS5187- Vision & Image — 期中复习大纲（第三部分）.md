@@ -1,4 +1,4 @@
-# CS5187: Vision & Image — 期末复习大纲（第三部分）
+# CS5187: Vision & Image — 期中复习大纲（第三部分）
 
 > 香港城市大学（东莞）｜授课教师：Prof. Zhu Zhiyu 覆盖范围：Lecture 10 · Lecture 13 · Lecture 14 · Lecture 15 · Lecture 16
 

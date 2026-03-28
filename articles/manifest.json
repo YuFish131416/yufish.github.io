@@ -17,7 +17,7 @@
     },
     {
       "slug": "cs5293-security-lab",
-      "title": "CS5293 软件安全实验：从密码学到缓冲区溢出",
+      "title": "【CS5293作业】软件安全实验：从密码学到缓冲区溢出",
       "date": "2026-03-27",
       "subtitle": "两份课程作业的合集——用密码学原语理解加密边界，用栈溢出理解系统信任模型。",
       "kind": "resource",
@@ -30,7 +30,7 @@
         "课程笔记",
         "CS5293"
       ],
-      "summary": "CS5293 两次 Assignment 全记录：Assignment 1 涵盖频率分析、AES 模式对比与已知明文攻击；Assignment 2 覆盖环境变量提权、缓冲区溢出、Return-to-libc 与格式化字符串漏洞。",
+      "summary": "CS5293 Assignment 全记录：Assignment 1 涵盖频率分析、AES 模式对比与已知明文攻击；Assignment 2 覆盖环境变量提权、缓冲区溢出、Return-to-libc 与格式化字符串漏洞。",
       "focus": [
         "Assignment 1 以密码学为主轴：从频率分析破解古典密码，到理解 AES 的 ECB/CBC/CTR 模式边界，再到已知明文攻击的实战推导。",
         "Assignment 2 转向系统安全：通过 SEED Lab 复现环境变量提权、缓冲区溢出、Return-to-libc 与格式化字符串漏洞，每个攻击路径都有完整思路记录。",
@@ -52,8 +52,120 @@
       ]
     },
     {
+      "slug": "vision-and-image-atlas",
+      "title": "【CS5187期中】视觉与图像：把像素读成结构",
+      "date": "2026-03-27",
+      "subtitle": "从图像形成到视觉理解，这组笔记更像一册被折叠过的观察学地图。",
+      "kind": "resource",
+      "theme": "vision",
+      "label": "视觉计算",
+      "tags": [
+        "计算机视觉",
+        "图像处理",
+        "课程笔记",
+        "CS5187"
+      ],
+      "summary": "围绕 Vision & Image 课程整理的三部分复习资料，重组为更清晰的知识路径。",
+      "focus": [
+        "三部分按低层视觉 → 特征匹配 → 三维重建组织。",
+        "期中偏滤波与边缘，期末偏投影与立体视觉。",
+        "适合按知识弧线串联复习。"
+      ],
+      "files": [
+        {
+          "name": "CS5187- Vision & Image — 期中复习大纲（第一部分）.md",
+          "displayName": "Vision & Image — 期中复习大纲（第一部分）",
+          "type": "Markdown 笔记",
+          "download": false
+        },
+        {
+          "name": "CS5187- Vision & Image — 期中复习大纲（第三部分）.md",
+          "displayName": "Vision & Image — 期中复习大纲（第三部分）",
+          "type": "Markdown 笔记",
+          "download": false
+        },
+        {
+          "name": "CS5187- Vision & Image — 期中复习大纲（第二部分）.md",
+          "displayName": "Vision & Image — 期中复习大纲（第二部分）",
+          "type": "Markdown 笔记",
+          "download": false
+        },
+        {
+          "name": "eigenvalues.md",
+          "displayName": "Vision & Image — 期中计算题",
+          "type": "Markdown 笔记",
+          "download": false
+        }
+      ]
+    },
+    {
+      "slug": "vr-interface-notebook",
+      "title": "【CS5188期中】沉浸式界面札记：在空间里安放交互",
+      "date": "2026-03-27",
+      "subtitle": "VR 不只是设备参数，更是一整套关于感知、姿态与反馈的空间语言。",
+      "kind": "resource",
+      "theme": "vr",
+      "label": "VR / HCI",
+      "tags": [
+        "VR",
+        "HCI",
+        "课程笔记",
+        "CS5188"
+      ],
+      "summary": "VR 课程模块提纲与 HTML 资料的整理版，适合按模块梳理输入、输出与系统架构。",
+      "focus": [
+        "五个模块从输入设备 → 图形显示 → 声音触觉 → 系统架构递进。",
+        "HTML 资料包含完整术语表与简答题考点。",
+        "适合按模块逐步理解 VR 交互全景。"
+      ],
+      "files": [
+        {
+          "name": "VR_期中复习_知识大纲与术语表.html",
+          "displayName": "VR_期中复习_知识大纲与术语表",
+          "type": "HTML 文档",
+          "download": false
+        },
+        {
+          "name": "VR_简答题考点整理.html",
+          "displayName": "VR_简答题考点整理",
+          "type": "HTML 文档",
+          "download": false
+        },
+        {
+          "name": "期中复习大纲 · Module 1：Introduction.md",
+          "displayName": "期中复习大纲 · Module 1：Introduction",
+          "type": "Markdown 笔记",
+          "download": false
+        },
+        {
+          "name": "期中复习大纲 · Module 2：Input Devices.md",
+          "displayName": "期中复习大纲 · Module 2：Input Devices",
+          "type": "Markdown 笔记",
+          "download": false
+        },
+        {
+          "name": "期中复习大纲 · Module 3：Output Devices — Graphical Displays.md",
+          "displayName": "期中复习大纲 · Module 3：Output Devices — Graphical Displays",
+          "type": "Markdown 笔记",
+          "download": false
+        },
+        {
+          "name": "期中复习大纲 · Module 4：Output Devices — Sound and Haptics.md",
+          "displayName": "期中复习大纲 · Module 4：Output Devices — Sound and Haptics",
+          "type": "Markdown 笔记",
+          "download": false
+        },
+        {
+          "name": "期中复习大纲 · Module 5：Computing Architectures for VR.md",
+          "displayName": "期中复习大纲 · Module 5：Computing Architectures for VR",
+          "type": "Markdown 笔记",
+          "download": false
+        }
+      ]
+    },
+    {
       "slug": "ai-cognition-archive",
-      "title": "AI 认知档案：搜索、逻辑、概率与学习",
+      "title": "【CS5491期中】AI 认知档案：搜索、逻辑、概率与学习",
       "date": "2026-03-26",
       "subtitle": "我更喜欢把 AI 看作一条连续光谱，而不是几个彼此割裂的章节标题。",
       "kind": "resource",
@@ -95,7 +207,7 @@
     },
     {
       "slug": "data-engineering-field-notes",
-      "title": "数据工程野外记录：让数据真正流动起来",
+      "title": "【CS5481期末】数据工程野外记录：让数据真正流动起来",
       "date": "2026-03-26",
       "subtitle": "好的数据工程不是堆砌工具，而是让采集、转换、存储与业务逻辑之间的摩擦尽量变小。",
       "kind": "resource",
@@ -124,7 +236,7 @@
     },
     {
       "slug": "digital-value-and-mis-notes",
-      "title": "数字价值地图：把系统、组织与商业连起来",
+      "title": "【IS5313期中】数字价值地图：把系统、组织与商业连起来",
       "date": "2026-03-26",
       "subtitle": "信息系统的意义，往往不在系统本身，而在它如何改变组织流动、价值创造与决策节奏。",
       "kind": "resource",
@@ -159,18 +271,8 @@
       ]
     },
     {
-      "slug": "hello-world",
-      "title": "你好，世界",
-      "date": "2026-03-26",
-      "tags": [
-        "随笔",
-        "博客"
-      ],
-      "summary": "这是我的第一篇博客文章，分享开博的初衷与未来计划。从技术选型到博客架构，记录构建这个小空间的全过程。"
-    },
-    {
       "slug": "network-open-book-manual",
-      "title": "网络开卷手册：在协议栈里建立索引",
+      "title": "【CS5222期末】网络开卷手册：在协议栈里建立索引",
       "date": "2026-03-26",
       "subtitle": "开卷考试真正考的不是记忆，而是你能否在短时间内找到正确的结构入口。",
       "kind": "resource",
@@ -211,7 +313,7 @@
     },
     {
       "slug": "software-engineering-atelier",
-      "title": "软件工程工作台：把方法论落回团队现场",
+      "title": "【CS5351】软件工程工作台：把方法论落回团队现场",
       "date": "2026-03-26",
       "subtitle": "需求、评审、敏捷、技术债，本质上都在回答同一个问题：团队如何稳定地产生好软件。",
       "kind": "resource",
@@ -312,110 +414,14 @@
       ]
     },
     {
-      "slug": "vision-and-image-atlas",
-      "title": "视觉与图像：把像素读成结构",
-      "date": "2026-03-26",
-      "subtitle": "从图像形成到视觉理解，这组笔记更像一册被折叠过的观察学地图。",
-      "kind": "resource",
-      "theme": "vision",
-      "label": "视觉计算",
+      "slug": "hello-world",
+      "title": "你好，世界",
+      "date": "2026-03-25",
       "tags": [
-        "计算机视觉",
-        "图像处理",
-        "课程笔记",
-        "CS5187"
+        "随笔",
+        "博客"
       ],
-      "summary": "围绕 Vision & Image 课程整理的三部分复习资料，重组为更清晰的知识路径。",
-      "focus": [
-        "三部分按低层视觉 → 特征匹配 → 三维重建组织。",
-        "期中偏滤波与边缘，期末偏投影与立体视觉。",
-        "适合按知识弧线串联复习。"
-      ],
-      "files": [
-        {
-          "name": "CS5187- Vision & Image — 期中复习大纲（第一部分）.md",
-          "displayName": "Vision & Image — 期中复习大纲（第一部分）",
-          "type": "Markdown 笔记",
-          "download": false
-        },
-        {
-          "name": "CS5187- Vision & Image — 期末复习大纲（第三部分）.md",
-          "displayName": "Vision & Image — 期末复习大纲（第三部分）",
-          "type": "Markdown 笔记",
-          "download": false
-        },
-        {
-          "name": "CS5187- Vision & Image — 期末复习大纲（第二部分）.md",
-          "displayName": "Vision & Image — 期末复习大纲（第二部分）",
-          "type": "Markdown 笔记",
-          "download": false
-        }
-      ]
-    },
-    {
-      "slug": "vr-interface-notebook",
-      "title": "沉浸式界面札记：在空间里安放交互",
-      "date": "2026-03-26",
-      "subtitle": "VR 不只是设备参数，更是一整套关于感知、姿态与反馈的空间语言。",
-      "kind": "resource",
-      "theme": "vr",
-      "label": "VR / HCI",
-      "tags": [
-        "VR",
-        "HCI",
-        "课程笔记",
-        "CS5188"
-      ],
-      "summary": "VR 课程模块提纲与 HTML 资料的整理版，适合按模块梳理输入、输出与系统架构。",
-      "focus": [
-        "五个模块从输入设备 → 图形显示 → 声音触觉 → 系统架构递进。",
-        "HTML 资料包含完整术语表与简答题考点。",
-        "适合按模块逐步理解 VR 交互全景。"
-      ],
-      "files": [
-        {
-          "name": "VR_期中复习_知识大纲与术语表.html",
-          "displayName": "VR_期中复习_知识大纲与术语表",
-          "type": "HTML 文档",
-          "download": false
-        },
-        {
-          "name": "VR_简答题考点整理.html",
-          "displayName": "VR_简答题考点整理",
-          "type": "HTML 文档",
-          "download": false
-        },
-        {
-          "name": "期中复习大纲 · Module 1：Introduction.md",
-          "displayName": "期中复习大纲 · Module 1：Introduction",
-          "type": "Markdown 笔记",
-          "download": false
-        },
-        {
-          "name": "期中复习大纲 · Module 2：Input Devices.md",
-          "displayName": "期中复习大纲 · Module 2：Input Devices",
-          "type": "Markdown 笔记",
-          "download": false
-        },
-        {
-          "name": "期中复习大纲 · Module 3：Output Devices — Graphical Displays.md",
-          "displayName": "期中复习大纲 · Module 3：Output Devices — Graphical Displays",
-          "type": "Markdown 笔记",
-          "download": false
-        },
-        {
-          "name": "期中复习大纲 · Module 4：Output Devices — Sound and Haptics.md",
-          "displayName": "期中复习大纲 · Module 4：Output Devices — Sound and Haptics",
-          "type": "Markdown 笔记",
-          "download": false
-        },
-        {
-          "name": "期中复习大纲 · Module 5：Computing Architectures for VR.md",
-          "displayName": "期中复习大纲 · Module 5：Computing Architectures for VR",
-          "type": "Markdown 笔记",
-          "download": false
-        }
-      ]
+      "summary": "这是我的第一篇博客文章，分享开博的初衷与未来计划。从技术选型到博客架构，记录构建这个小空间的全过程。"
     }
   ]
 }
