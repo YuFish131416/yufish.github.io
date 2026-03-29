@@ -16,12 +16,16 @@ files:
     displayName: "Vision & Image — 期中复习大纲（第一部分）"
     type: "Markdown 笔记"
     download: false
+  - name: "CS5187- Vision & Image — 期中复习大纲（第二部分）.md"
+    displayName: "Vision & Image — 期中复习大纲（第二部分）"
+    type: "Markdown 笔记"
+    download: false
   - name: "CS5187- Vision & Image — 期中复习大纲（第三部分）.md"
     displayName: "Vision & Image — 期中复习大纲（第三部分）"
     type: "Markdown 笔记"
     download: false
-  - name: "CS5187- Vision & Image — 期中复习大纲（第二部分）.md"
-    displayName: "Vision & Image — 期中复习大纲（第二部分）"
+  - name: "CS5187- Vision & Image — 期中复习（概念与原理）.md"
+    displayName: "CS5187- Vision & Image — 期中复习（概念与原理）"
     type: "Markdown 笔记"
     download: false
   - name: "eigenvalues.md"
