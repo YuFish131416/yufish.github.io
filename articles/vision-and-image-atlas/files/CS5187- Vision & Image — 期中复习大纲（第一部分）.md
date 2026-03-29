@@ -306,8 +306,13 @@ $$g(x,y) = \begin{cases} 255 & \text{if } f(x,y) > T \\ 0 & \text{otherwise} \en
 
 **图像梯度（Image Gradient）**： $$\nabla f = \begin{bmatrix} \frac{\partial f}{\partial x}, & \frac{\partial f}{\partial y} \end{bmatrix}$$
 
-*   **梯度大小（Edge Strength）**： $$|\nabla f| = \sqrt{\left(\frac{\partial f}{\partial x}\right)^2 + \left(\frac{\partial f}{\partial y}\right)^2}$$
-*   **梯度方向（Edge Direction）**： $$\theta = \arctan \left( \frac{\partial f / \partial y}{\partial f / \partial x} \right)$$
+*   **梯度大小（Edge Strength）**： 
+
+$$|\nabla f| = \sqrt{\left(\frac{\partial f}{\partial x}\right)^2 + \left(\frac{\partial f}{\partial y}\right)^2}$$
+
+*   **梯度方向（Edge Direction）**： 
+
+$$\theta = \arctan \left( \frac{\partial f / \partial y}{\partial f / \partial x} \right)$$
 
 > 梯度方向 ⊥ 边缘方向（梯度指向强度增大最快的方向）
 
@@ -340,7 +345,7 @@ $$\frac{d}{dx}(f \ast G_\sigma) = f \ast \frac{d}{dx} G_\sigma$$
 
 **高斯导数的常用近似**：
 
-$$G\_x = \frac{1}{8}\begin{bmatrix}-1&0&1\\-2&0&2\\-1&0&1\end{bmatrix}, \quad G\_y = \frac{1}{8}\begin{bmatrix}1&2&1\\0&0&0\\-1&-2&-1\end{bmatrix}$$
+$$G_x = \frac{1}{8}\begin{bmatrix}-1&0&1\\-2&0&2\\-1&0&1\end{bmatrix}, \quad G_y = \frac{1}{8}\begin{bmatrix}1&2&1\\0&0&0\\-1&-2&-1\end{bmatrix}$$
 
 *   标准定义省略 $\frac{1}{8}$ 系数（用于边缘检测时不影响结果）
 *   加入 $\frac{1}{8}$ 才能获得正确的梯度幅值
