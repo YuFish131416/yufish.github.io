@@ -50,7 +50,13 @@ $$x' = f \cdot \frac{x}{z}, \quad y' = f \cdot \frac{y}{z}$$
 
 **齐次坐标表示**（矩阵形式）：
 
-$$s\begin{bmatrix}x'\y'\1\end{bmatrix} = \begin{bmatrix}f&0&0&0\0\&f&0&0\0&0&1&0\end{bmatrix}\begin{bmatrix}x\y\z\1\end{bmatrix}$$
+$$s \begin{bmatrix} x' \\ y' \\ 1 \end{bmatrix} =
+\begin{bmatrix}
+f & 0 & 0 & 0 \\
+0 & f & 0 & 0 \\
+0 & 0 & 1 & 0
+\end{bmatrix}
+\begin{bmatrix} x \\ y \\ z \\ 1 \end{bmatrix}$$
 
 **注意**：透视投影**不是线性变换**（有除以 $z$ 的操作），但在齐次坐标下可以用矩阵乘法表示。
 
@@ -60,7 +66,7 @@ $$s\begin{bmatrix}x'\y'\1\end{bmatrix} = \begin{bmatrix}f&0&0&0\0\&f&0&0\0&0&1&0
 
 *   相机到图像平面的距离 $\to \infty$（相当于远心镜头）
 *   投影方程：$(x, y, z) \to (x, y)$，直接丢弃 $z$
-*   投影矩阵： $$\begin{bmatrix}1&0&0&0\0&1&0&0\0&0&0&1\end{bmatrix}$$
+*   投影矩阵： $$\begin{bmatrix}1&0&0&0\\0&1&0&0\\0&0&0&1\end{bmatrix}$$
 
 ***
 
@@ -68,17 +74,21 @@ $$s\begin{bmatrix}x'\y'\1\end{bmatrix} = \begin{bmatrix}f&0&0&0\0\&f&0&0\0&0&1&0
 
 **内参矩阵**（将3D相机坐标系中的射线映射为2D像素坐标）：
 
-$$\mathbf{K} = \begin{bmatrix}f & s & c\_x \ 0 & \alpha f & c\_y \ 0 & 0 & 1\end{bmatrix}$$
+$$\mathbf{K} = \begin{bmatrix}f & s & c_x \\ 0 & \alpha f & c_y \\ 0 & 0 & 1\end{bmatrix}$$
 
 | 参数           | 含义              | 典型值            |
 | ------------ | --------------- | -------------- |
 | $f$          | 焦距（单位：像素）       | 根据传感器决定        |
-| $c\_x, c\_y$ | 主点（光轴与图像平面交点）   | 约 $(W/2, H/2)$ |
+| $c_x, c_y$ | 主点（光轴与图像平面交点）   | 约 $(\frac{W}{2}, \frac{H}{2})$ |
 | $\alpha$     | 宽高比（像素是否为正方形）   | 1              |
 | $s$          | 倾斜系数（像素是否平行四边形） | 0              |
 
 
-**典型简化内参**： $$\mathbf{K} = \begin{bmatrix}f&0\&c\_x\0\&f\&c\_y\0&0&1\end{bmatrix}$$
+**典型简化内参**： $$\mathbf{K} = \begin{bmatrix}
+f & 0 & c_{x} \\
+0 & f & c_{y} \\
+0 & 0 & 1
+\end{bmatrix}$$
 
 **焦距 $f$ 的物理意义**：
 
@@ -100,13 +110,19 @@ $$\mathbf{K} = \begin{bmatrix}f & s & c\_x \ 0 & \alpha f & c\_y \ 0 & 0 & 1\end
 1.  **平移**：将坐标系原点移至相机中心 $-\mathbf{c}$
 2.  **旋转**：用旋转矩阵 $R$ 对齐坐标轴
 
-$$\begin{bmatrix}\mathbf{x}*{cam}\1\end{bmatrix} = \begin{bmatrix}R & -R\mathbf{c} \ \mathbf{0}^T & 1\end{bmatrix}\begin{bmatrix}\mathbf{X}*{world}\1\end{bmatrix}$$
+$$\begin{bmatrix} \mathbf{x}_{\text{cam}} \\ 1 \end{bmatrix} =
+\begin{bmatrix}
+R & -R \mathbf{c} \\
+\mathbf{0}^T & 1
+\end{bmatrix}
+\begin{bmatrix} \mathbf{X}_{\text{world}} \\ 1 \end{bmatrix}$$
 
 ***
 
 ### 1.6 完整投影矩阵⭐重点
 
-$$\mathbf{x} = \mathbf{K} \begin{bmatrix}\mathbf{I} & \mathbf{0}\end{bmatrix} \begin{bmatrix}R & -R\mathbf{c} \ \mathbf{0}^T & 1\end{bmatrix} \mathbf{X}$$
+$$\mathbf{x} = \mathbf{K} \begin{bmatrix} \mathbf{I} & \mathbf{0} \end{bmatrix}
+\begin{bmatrix} R & -R\mathbf{c} \\ \mathbf{0}^T & 1 \end{bmatrix} \mathbf{X}$$
 
 分解为四个步骤：
 
@@ -118,7 +134,7 @@ $$\mathbf{x} = \mathbf{K} \begin{bmatrix}\mathbf{I} & \mathbf{0}\end{bmatrix} \b
 | 参数组    | 参数数量 | 内容                         |
 | ------ | ---- | -------------------------- |
 | **外参** | 6    | 3个旋转 + 3个平移                |
-| **内参** | 5    | $f, c\_x, c\_y, \alpha, s$ |
+| **内参** | 5    | $f, c_x, c_y, \alpha, s$ |
 
 
 ***
@@ -151,7 +167,7 @@ $$\mathbf{x} = \mathbf{K} \begin{bmatrix}\mathbf{I} & \mathbf{0}\end{bmatrix} \b
 
 **视差（Disparity）**：
 
-$$d = x\_L - x\_R$$
+$$d = x_L - x_R$$
 
 对于**矫正立体对（Rectified Stereo Pair）**（两相机平行、仅水平偏移 baseline $B$）：
 
@@ -197,7 +213,7 @@ $$Z = \frac{f \cdot B}{d}$$
 
 **目标函数**：
 
-$$E(d) = \underbrace{\sum\_{(x,y)} C(x, y, d(x,y))}*{\text{匹配代价（data term）}} + \underbrace{\lambda \sum*{(p,q)\in\mathcal{N}} V(d\_p - d\_q)}\_{\text{平滑代价（smoothness term）}}$$
+$$E(d) = \underbrace{\sum_{(x,y)} C(x, y, d(x,y))}_{\text{匹配代价（data term）}} + \underbrace{\lambda \sum_{(p,q)\in\mathcal{N}} V(d_p - d_q)}_{\text{平滑代价（smoothness term）}}$$
 
 *   **匹配代价**：每个像素在当前视差下与对应像素的相似度
 *   **平滑代价**：相邻像素应具有相近的视差（深度连续性）
@@ -206,7 +222,7 @@ $$E(d) = \underbrace{\sum\_{(x,y)} C(x, y, d(x,y))}*{\text{匹配代价（data t
 **平滑代价 $V$ 的选择**：
 
 *   L1 距离：$V(d) = |d|$
-*   Potts 模型：$V(d) = \mathbf{1}\[d \neq 0]$（跳跃惩罚）
+*   Potts 模型：$V(d) = \mathbf{1}(d \neq 0)$（跳跃惩罚）
 
 ***
 
@@ -339,13 +355,13 @@ $$f(\mathbf{x}, W, \mathbf{b}) = W\mathbf{x} + \mathbf{b}$$
 
 **Softmax 分类器**：将分数转化为概率分布
 
-$$P(y = k | \mathbf{x}) = \frac{e^{f\_k}}{\sum\_j e^{f\_j}}$$
+$$P(y = k \mid \mathbf{x}) = \frac{e^{f_k}}{\sum_{j=1}^{C} e^{f_j}}$$
 
 **交叉熵损失（Cross-Entropy Loss）**：
 
-$$L\_i = -\log P(y = y\_i | \mathbf{x}*i) = -\log\left(\frac{e^{f*{y\_i}}}{\sum\_j e^{f\_j}}\right)$$
+$$L_i = -\log P(y = y_i \mid \mathbf{x}_i) = -\log\left(\frac{e^{f_{y_i}}}{\sum_{j=1}^{C} e^{f_j}}\right)$$
 
-**总损失**： $$L = \frac{1}{N}\sum\_{i=1}^N L\_i$$
+**总损失**： $$L = \frac{1}{N} \sum_{i=1}^{N} L_i$$
 
 **最优情况**：正确类别分数远高于其他类别 → $P \to 1$ → $L \to 0$
 
@@ -379,7 +395,7 @@ $$L\_i = -\log P(y = y\_i | \mathbf{x}*i) = -\log\left(\frac{e^{f*{y\_i}}}{\sum\
 
 **结构**：多个线性层 + 非线性激活函数（如 ReLU）交替叠加
 
-$$f(\mathbf{x}) = W\_2 \cdot \max(0, W\_1\mathbf{x} + \mathbf{b}\_1) + \mathbf{b}\_2$$
+$$f(\mathbf{x}) = W_2 \cdot \max(0, W_1 \mathbf{x} + \mathbf{b}_1) + \mathbf{b}_2$$
 
 **为什么需要非线性激活？**
 
@@ -396,10 +412,10 @@ $$f(\mathbf{x}) = W\_2 \cdot \max(0, W\_1\mathbf{x} + \mathbf{b}\_1) + \mathbf{b
 
 **用途**：处理序列数据（文本、语音、时间序列）
 
-**核心公式**： $$h\_t = f(W\_{hh} h\_{t-1} + W\_{xh} x\_t + b)$$
+**核心公式**： $$h_t = f(W_{hh} h_{t-1} + W_{xh} x_t + b)$$
 
-*   $h\_t$：当前时刻隐状态
-*   $x\_t$：当前输入
+*   $h_t$：当前时刻隐状态
+*   $x_t$：当前输入
 *   同一权重矩阵 $W$ 在所有时刻**共享**
 
 **类型**：
@@ -459,7 +475,7 @@ $$f(\mathbf{x}) = W\_2 \cdot \max(0, W\_1\mathbf{x} + \mathbf{b}\_1) + \mathbf{b
 
 **注意力的核心思想**：在生成输出时，动态地"关注"输入序列的不同位置，而非仅依赖最后的隐状态。
 
-**注意力权重计算**： $$\alpha\_{t,s} = \frac{\exp(\text{score}(h\_t, e\_s))}{\sum\_{s'}\exp(\text{score}(h\_t, e\_{s'}))}$$
+**注意力权重计算**： $$\alpha_{t,s} = \frac{\exp(\text{score}(h_t, e_s))}{\sum_{s'} \exp(\text{score}(h_t, e_{s'}))}$$
 
 ***
 
@@ -471,10 +487,10 @@ $$f(\mathbf{x}) = W\_2 \cdot \max(0, W\_1\mathbf{x} + \mathbf{b}\_1) + \mathbf{b
 
 对于序列中每个位置，计算 Query（Q）、Key（K）、Value（V）：
 
-$$\text{Attention}(Q, K, V) = \text{softmax}!\left(\frac{QK^T}{\sqrt{d\_k}}\right)V$$
+$$\text{Attention}(Q, K, V) = \text{softmax}\left(\frac{QK^T}{\sqrt{d_k}}\right)V$$
 
-*   $Q = XW\_Q$，$K = XW\_K$，$V = XW\_V$
-*   $\sqrt{d\_k}$：缩放因子，防止点积过大
+*   $Q = XW_Q$，$K = XW_K$，$V = XW_V$
+*   $\sqrt{d_k}$：缩放因子，防止点积过大
 
 #### 多头注意力（Multi-Head Attention）
 
@@ -555,15 +571,15 @@ $$\text{Attention}(Q, K, V) = \text{softmax}!\left(\frac{QK^T}{\sqrt{d\_k}}\righ
 | -------------- | ----------------------------------------------------------------- |
 | 透视投影           | $x' = f \cdot x/z$，$y' = f \cdot y/z$                             |
 | 投影非线性          | 除以 $z$ 非线性；齐次坐标可矩阵化                                               |
-| 内参矩阵 K         | $K = \begin{bmatrix}f&0\&c\_x\0\&f\&c\_y\0&0&1\end{bmatrix}$，5个参数 |
-| 完整投影           | $\mathbf{x} = K\[R \mid -R\mathbf{c}]\mathbf{X}$                  |
+| 内参矩阵 K         | $K = \begin{bmatrix}f & 0 & c_x \\0 & f & c_y \\0 & 0 & 1\end{bmatrix}$，5个参数 |
+| 完整投影           | $\mathbf{x} = K \, [\, R \mid -R \mathbf{c} \,] \, \mathbf{X}_{\text{hom}}$ （注：$\mathbf{X}_{\text{hom}}$ 表示齐次坐标 $(X, Y, Z, 1)^T$）              |
 | 视差与深度          | $Z = fB/d$，深度与视差成反比                                               |
 | 代价体积           | $(\text{H} \times \text{W} \times \text{depth\_planes})$ 三维张量     |
 | 线性分类器          | $f = Wx + b$，$C \times D$ 权重矩阵                                    |
-| Softmax        | $P(k) = e^{f\_k} / \sum\_j e^{f\_j}$                              |
-| 交叉熵损失          | $L = -\log P(y\_i \mid x\_i)$                                     |
-| 卷积输出大小         | $(N - F + 2P)/S + 1$                                              |
-| 自注意力           | $\text{Attention} = \text{softmax}(QK^T/\sqrt{d\_k})V$            |
+| Softmax        | $P(k) = \frac{e^{f_k}}{\sum_{j=1}^{C} e^{f_j}}$                              |
+| 交叉熵损失          | $L = -\log P(y_i \mid \mathbf{x}_i)$                                     |
+| 卷积输出大小         | $\text{Output size} = \left\lfloor \frac{N - F + 2P}{S} \right\rfloor + 1$                                              |
+| 自注意力           | $\text{Attention}(Q,K,V) = \text{softmax}\Bigl(\frac{Q K^T}{\sqrt{d_k}}\Bigr) V$            |
 | Transformer 优势 | 并行计算 + 直接建模长程依赖                                                   |
 
 
@@ -600,7 +616,3 @@ $$\text{Attention}(Q, K, V) = \text{softmax}!\left(\frac{QK^T}{\sqrt{d\_k}}\righ
 
 *   Softmax：多分类，所有类别概率之和为1
 *   Sigmoid：二分类，输出单个概率值 $\in (0,1)$
-
-***
-
-*整理者：CS5187 研究生学员 ｜ 香港城市大学（东莞）*

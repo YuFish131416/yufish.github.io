@@ -62,13 +62,13 @@
 
 **LoG（Laplacian of Gaussian）**：高斯的拉普拉斯算子
 
-$$\text{LoG} = \nabla^2 G\_\sigma = \frac{\partial^2 G}{\partial x^2} + \frac{\partial^2 G}{\partial y^2}$$
+$$\operatorname{LoG} = \nabla^2 G_\sigma = \frac{\partial^2 G}{\partial x^2} + \frac{\partial^2 G}{\partial y^2}$$
 
 **核心作用**：斑点（Blob）检测器，对圆形区域有强响应。
 
 **特征尺度的定义**：LoG 响应取得峰值时对应的 $\sigma$ 即为该斑点的**特征尺度（Characteristic Scale）**。
 
-**DoG（Difference of Gaussians）**： $$\text{DoG} = G\_{\sigma\_1} - G\_{\sigma\_2} \approx \text{LoG}$$
+**DoG（Difference of Gaussians）**： $$\text{DoG} = G_{\sigma_1} - G_{\sigma_2} \approx \text{LoG}$$
 
 两个不同 $\sigma$ 的高斯之差近似等于 LoG，计算效率更高（SIFT 使用的方法）。
 
@@ -163,13 +163,13 @@ Detection（检测）→ Description（描述）→ Matching（匹配）
 
 #### ① L2 距离（简单方法）
 
-$$d(f\_1, f\_2) = | f\_1 - f\_2 |$$
+$$d(f_1, f_2) = | f_1 - f_2 |$$
 
 *   缺点：可能给模糊匹配赋予较小距离值。
 
 #### ② 比率距离（Ratio Distance）⭐推荐方法
 
-$$\text{ratio} = \frac{| f\_1 - f\_2 |}{| f\_1 - f\_2' |}$$
+$$\text{ratio} = \frac{| f_1 - f_2 |}{| f_1 - f_2' |}$$
 
 *   $f\_2$：最佳匹配，$f\_2'$：第二佳匹配
 *   **效果**：正确匹配比值小（远优于第二佳）；错误匹配比值接近1（两个候选差不多）
@@ -213,7 +213,7 @@ $$\text{ratio} = \frac{| f\_1 - f\_2 |}{| f\_1 - f\_2' |}$$
 
 ### 3.2 线性变换（2×2 矩阵）
 
-$$\begin{bmatrix}x'\y'\end{bmatrix} = \begin{bmatrix}a\&b\c\&d\end{bmatrix}\begin{bmatrix}x\y\end{bmatrix}$$
+$$\begin{bmatrix} x' \\ y' \end{bmatrix} = \begin{bmatrix} a & b \\ c & d \end{bmatrix} \begin{bmatrix} x \\ y \end{bmatrix}$$
 
 **可表示的变换**：缩放（Scale）、旋转（Rotation）、剪切（Shear）、镜像（Mirror）
 
@@ -230,9 +230,9 @@ $$\begin{bmatrix}x'\y'\end{bmatrix} = \begin{bmatrix}a\&b\c\&d\end{bmatrix}\begi
 
 | 变换     | 矩阵                                                                               |
 | ------ | -------------------------------------------------------------------------------- |
-| 旋转 θ   | $\begin{bmatrix}\cos\theta & -\sin\theta \ \sin\theta & \cos\theta\end{bmatrix}$ |
-| 均匀缩放 s | $\begin{bmatrix}s & 0 \ 0 & s\end{bmatrix}$                                      |
-| Y轴镜像   | $\begin{bmatrix}-1 & 0 \ 0 & 1\end{bmatrix}$                                     |
+| 旋转 θ   | $\begin{bmatrix}\cos\theta & -\sin\theta \\ \sin\theta & \cos\theta\end{bmatrix}$ |
+| 均匀缩放 s | $\begin{bmatrix}s & 0 \\ 0 & s\end{bmatrix}$                                      |
+| Y轴镜像   | $\begin{bmatrix}-1 & 0 \\ 0 & 1\end{bmatrix}$                                     |
 
 
 ***
@@ -245,15 +245,19 @@ $$\begin{bmatrix}x'\y'\end{bmatrix} = \begin{bmatrix}a\&b\c\&d\end{bmatrix}\begi
 
 **从齐次坐标恢复**：$(x, y, w) \to (x/w, y/w)$
 
-**平移的齐次表示（3×3矩阵）**： $$\begin{bmatrix}x'\y'\1\end{bmatrix} = \begin{bmatrix}1&0\&t\_x\0&1\&t\_y\0&0&1\end{bmatrix}\begin{bmatrix}x\y\1\end{bmatrix}$$
+**平移的齐次表示（3×3矩阵）**： $$\begin{bmatrix} x' \\ y' \\ 1 \end{bmatrix} =
+\begin{bmatrix} 1 & 0 & t_x \\ 0 & 1 & t_y \\ 0 & 0 & 1 \end{bmatrix}
+\begin{bmatrix} x \\ y \\ 1 \end{bmatrix}$$
 
 ***
 
 ### 3.4 仿射变换（Affine Transformation）⭐重点
 
-**定义**：最后一行为 $\[0\ 0\ 1]$ 的 3×3 矩阵所表示的变换。
+**定义**：最后一行为 $[0 \ 0 \ 1]$ 的 3×3 矩阵所表示的变换。
 
-$$\begin{bmatrix}x'\y'\1\end{bmatrix} = \begin{bmatrix}a\_{11}\&a\_{12}\&t\_x\a\_{21}\&a\_{22}\&t\_y\0&0&1\end{bmatrix}\begin{bmatrix}x\y\1\end{bmatrix}$$
+$$\begin{bmatrix} x' \\ y' \\ 1 \end{bmatrix} =
+\begin{bmatrix} a_{11} & a_{12} & t_x \\ a_{21} & a_{22} & t_y \\ 0 & 0 & 1 \end{bmatrix}
+\begin{bmatrix} x \\ y \\ 1 \end{bmatrix}$$
 
 **仿射变换 = 线性变换 + 平移**，包含：平移、旋转、缩放、剪切（6个自由度）。
 
@@ -268,11 +272,18 @@ $$\begin{bmatrix}x'\y'\1\end{bmatrix} = \begin{bmatrix}a\_{11}\&a\_{12}\&t\_x\a\
 
 ### 3.5 投影变换（Projective Transformation）/ 单应性（Homography）⭐重点
 
-**定义**：3×3 矩阵，**最后一行不再为** $\[0\ 0\ 1]$，因此分母可以不为1。
+**定义**：3×3 矩阵，**最后一行不再为** $[0\ 0\ 1]$，因此分母可以不为1。
 
-$$\begin{bmatrix}wx'\wy'\w\end{bmatrix} = \begin{bmatrix}h\_{00}\&h\_{01}\&h\_{02}\h\_{10}\&h\_{11}\&h\_{12}\h\_{20}\&h\_{21}\&h\_{22}\end{bmatrix}\begin{bmatrix}x\y\1\end{bmatrix}$$
+$$\begin{bmatrix} w x' \\ w y' \\ w \end{bmatrix} =
+\begin{bmatrix}
+h_{00} & h_{01} & h_{02} \\
+h_{10} & h_{11} & h_{12} \\
+h_{20} & h_{21} & h_{22}
+\end{bmatrix}
+\begin{bmatrix} x \\ y \\ 1 \end{bmatrix}$$
 
-$$x' = \frac{h\_{00}x + h\_{01}y + h\_{02}}{h\_{20}x + h\_{21}y + h\_{22}}, \quad y' = \frac{h\_{10}x + h\_{11}y + h\_{12}}{h\_{20}x + h\_{21}y + h\_{22}}$$
+$$x' = \frac{h_{00} x + h_{01} y + h_{02}}{h_{20} x + h_{21} y + h_{22}}, \quad
+y' = \frac{h_{10} x + h_{11} y + h_{12}}{h_{20} x + h_{21} y + h_{22}}$$
 
 **关键性质**：
 
@@ -319,11 +330,11 @@ Step 3: 用最小二乘法计算从 A 到 B 的变换 T
 
 ### 4.2 最小二乘法（Least Squares）⭐重点
 
-**问题设置**：给定 $n$ 个点对 $(p\_i, p\_i')$，求最优变换 $T$。
+**问题设置**：给定 $n$ 个点对 $(p_i, p_i')$，求最优变换 $T$。
 
-**残差（Residual）**： $$r\_i = p\_i' - T(p\_i)$$
+**残差（Residual）**： $$r_i = p_i' - T(p_i)$$
 
-**目标函数（最小化残差平方和）**： $$\min\_T \sum\_{i=1}^{n} r\_i^2 = \min\_T | A\mathbf{t} - \mathbf{b} |^2$$
+**目标函数（最小化残差平方和）**： $$\min_T \sum_{i=1}^{n} r_i^2 = \min_T | A\mathbf{t} - \mathbf{b} |^2$$
 
 **正则方程（Normal Equations）**： $$A^T A \mathbf{t} = A^T \mathbf{b}$$ $$\mathbf{t} = (A^T A)^{-1} A^T \mathbf{b}$$
 
@@ -340,14 +351,16 @@ Step 3: 用最小二乘法计算从 A 到 B 的变换 T
 
 #### 仿射变换（6 个未知数）
 
-$$\begin{bmatrix}x'\y'\end{bmatrix} = \begin{bmatrix}a\&b\&c\d\&e\&f\end{bmatrix}\begin{bmatrix}x\y\1\end{bmatrix}$$
+$$\begin{bmatrix} x' \\ y' \end{bmatrix} =
+\begin{bmatrix} a & b & c \\ d & e & f \end{bmatrix}
+\begin{bmatrix} x \\ y \\ 1 \end{bmatrix}$$
 
 *   每个点对提供 **2 个方程**
 *   最少需要 **3 对点**；实际超定用最小二乘
 
 矩阵形式（$2n \times 6$）：
 
-$$\mathbf{Ap} = \mathbf{b}, \quad A \in \mathbb{R}^{2n \times 6}, \quad \mathbf{p} \in \mathbb{R}^6$$
+$$\mathbf{A} \mathbf{p} = \mathbf{b}, \quad \mathbf{A} \in \mathbb{R}^{2n \times 6}, \quad \mathbf{p} \in \mathbb{R}^6$$
 
 #### 单应性（Homography，8 个自由度）
 
@@ -513,9 +526,9 @@ Step 6: 合并图像
 | 等变 vs 不变   | 等变：变换后特征位置随之变换；不变：位置不变                                     |
 | Harris 尺度  | ❌ 不具备尺度不变性                                                 |
 | LoG 特征尺度   | LoG 响应峰值处的 $\sigma$ 即为特征尺度                                 |
-| DoG        | $G\_{\sigma\_1} - G\_{\sigma\_2} \approx \text{LoG}$（计算更快） |
+| DoG        | $G_{\sigma_1} - G_{\sigma_2} \approx \text{LoG}$（计算更快） |
 | SIFT 维度    | $4 \times 4 \times 8 = \mathbf{128}$ 维                     |
-| 比率距离       | $\frac{\|f\_1-f\_2\|}{\|f\_1-f\_2'\|}$，正确匹配比值小             |
+| 比率距离       | $\frac{\|f_1-f_2\|}{\|f_1-f_2'\|}$，正确匹配比值小             |
 | 仿射变换自由度    | 6（平移2 + 线性4）                                               |
 | 单应性自由度     | 8（3×3矩阵，仅定义到尺度）                                            |
 | 求单应性所需点数   | **最少 4 对点**                                                |
@@ -531,7 +544,7 @@ Step 6: 合并图像
 
 **仿射变换 vs 单应性**：
 
-*   仿射：最后行固定为 $\[0\ 0\ 1]$，6自由度，**保平行线**
+*   仿射：最后行固定为 $[0\ 0\ 1]$，6自由度，**保平行线**
 *   单应性：最后行任意，8自由度，**不保平行线**，可表示透视变形
 
 **LoG vs DoG**：
@@ -551,7 +564,3 @@ Step 6: 合并图像
 
 *   不改变最佳匹配对象
 *   但改变距离度量，使"歧义匹配"（两个候选差不多）的比值接近1，便于用阈值过滤
-
-***
-
-*整理者：CS5187 研究生学员 ｜ 香港城市大学（东莞）*
