@@ -28,6 +28,10 @@ files:
     displayName: "CS5187- Vision & Image — 期中复习（概念与原理）"
     type: "Markdown 笔记"
     download: false
+  - name: "CS5187- Vision & Image — 术语表（中英对照）.md"
+    displayName: "CS5187- Vision & Image — 术语表（中英对照）"
+    type: "Markdown 笔记"
+    download: false
   - name: "eigenvalues.md"
     displayName: "Vision & Image — 期中计算题"
     type: "Markdown 笔记"
