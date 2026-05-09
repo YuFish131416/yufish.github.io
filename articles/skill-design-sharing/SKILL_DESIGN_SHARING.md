@@ -550,7 +550,12 @@ workflows/create-permission-set/
 
 ![三层架构全景](articles/skill-design-sharing/assets/06-three-layer.png)
 
-每一层只做自己擅长的事。层间只用 JSON 通信——没有自然语言的歧义，没有"你理解一下"的灰色地带。
+**三层归属**：
+- **表现层** = Agent，负责理解和交互，保留不确定性但被限定在决策空间
+- **控制层 + 执行层** = 同一个 CLI 的两个职责面。控制层是工作流引擎（discover / 步进 / Gate / 状态机 / 模板变量），执行层是原子 HTTP 调用（认证 / 重试 / 退出码）。两者在同一个 `pangu-cli.sh` 里，一起构成"CLI 这根支柱"
+- **MCP 后端** = 外部被调用的服务，不在"系统内层"——CLI 通过 JSON-RPC 访问它
+
+Agent 和 CLI 之间只用 JSON 通信；CLI 内部两层是函数级调用；CLI 到 MCP 后端走 JSON-RPC。整条链路上没有自然语言的歧义，没有"你理解一下"的灰色地带。
 
 ---
 
