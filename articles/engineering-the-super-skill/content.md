@@ -49,7 +49,7 @@ Agent 自行规划一条完整的测试链路，无异于让一个刚入职的�
 
 不是给 Agent 更多工具，而是给它一套**完整的工作流程 + 每一步的精确指令 + 固化在 CLI 里的确定性操作**。Agent 不需要"想明白该怎么做"，它只需要"按指令执行当前这一步"。
 
-![Agent 的两种处境：混乱 vs. 流水线](images/fig1_pain_vs_pipeline.png)
+![Agent 的两种处境：混乱 vs. 流水线](articles/engineering-the-super-skill/images/fig1_pain_vs_pipeline.png)
 
 ---
 
@@ -181,13 +181,13 @@ java_templates:                   # Java 脚本模板的参数化配置
 
 一句话概括 CLI 在这个 Skill 中的角色：**它是所有确定性操作的唯一通道。**
 
-![CLI 如何串联一切](images/fig3_cli_orchestration.png)
+![CLI 如何串联一切](articles/engineering-the-super-skill/images/fig3_cli_orchestration.png)
 
 Agent 不知道 Redis 密码写在哪——CLI 知道。Agent 不知道签名算法用 SHA256 还是 MD5——CLI 知道。Agent 不知道二进制文件该用 darwin_arm64 还是 linux_amd64——CLI 自动检测。所有这些"确定性但繁琐"的事，全部被 CLI 吞掉，Agent 只看到一个干净的命令接口。
 
 这就是前置文章里"Agent 做大脑，CLI 做手脚"在 2800 行 Bash 里的具体实现。
 
-![Skill 分层架构](images/fig2_layered_architecture.png)
+![Skill 分层架构](articles/engineering-the-super-skill/images/fig2_layered_architecture.png)
 
 ---
 
@@ -533,7 +533,7 @@ CLI 自动检查：Go 环境是否可用、CLI 二进制是否有执行权限、
 
 整个流程如下图所示：
 
-![testcase-generator：CLI 做主控，Agent 做填空](images/fig5_generator_loop.png)
+![testcase-generator：CLI 做主控，Agent 做填空](articles/engineering-the-super-skill/images/fig5_generator_loop.png)
 
 **这个设计的精髓**：
 
@@ -702,4 +702,4 @@ Agent 只做一件事：**读代码，理解业务，给出判断。** 这是它
 
 这就是"工程化一个超级 Skill"的本质：不是给 Agent 更多能力，而是给它**更少的负担**和**更清晰的轨道**。
 
-![工程化的本质：把确定性的事从 Agent 手中拿走](images/fig6_summary.png)
+![工程化的本质：把确定性的事从 Agent 手中拿走](articles/engineering-the-super-skill/images/fig6_summary.png)
