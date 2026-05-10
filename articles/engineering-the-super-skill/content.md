@@ -10,7 +10,7 @@
 
 ### 1.1 Testone 是什么
 
-Testone 是公司内部的接口测试平台。你可以把它理解为"公司版 Postman"，但面向 tRPC-Go 微服务体系做了深度定制：支持多节点 trace 链路编排、认证节点自动签名、Java 脚本节点做数据提取和过滤、Redis 节点做前置数据准备——功能非常完整。
+Testone 是公司内部的接口测试平台。你可以把它理解为"公司版 Postman"，但面向 tRPC 微服务体系做了深度定制：支持多节点 trace 链路编排、认证节点自动签名、Java 脚本节点做数据提取和过滤、Redis 节点做前置数据准备——功能非常完整。
 
 但功能完整不等于好用。实际情况是：**使用门槛极高，人用不明白，Agent 更用不明白。**
 
@@ -113,7 +113,7 @@ Agent 自行规划一条完整的测试链路，无异于让一个刚入职的�
 ```
 utest-skill/
 ├── skill.md                    ← Agent 的唯一入口（模式判断 + 核心规则）
-├── utest-cli.sh                ← 所有确定性操作的执行层（2800+ 行 Bash）
+├── utest-cli.sh                ← 所有确定性操作的执行层（4000+ 行 Bash）
 ├── workflows/
 │   └── interface-test/
 │       ├── WorkFlow.md         ← 工作流元信息（名称、描述、步骤列表）
@@ -187,7 +187,7 @@ java_templates:                   # Java 脚本模板的参数化配置
 
 Agent 不知道 Redis 密码写在哪——CLI 知道。Agent 不知道签名算法用 SHA256 还是 MD5——CLI 知道。Agent 不知道二进制文件该用 darwin_arm64 还是 linux_amd64——CLI 自动检测。所有这些"确定性但繁琐"的事，全部被 CLI 吞掉，Agent 只看到一个干净的命令接口。
 
-这就是前置文章里"Agent 做大脑，CLI 做手脚"在 2800 行 Bash 里的具体实现。
+这就是前置文章里"Agent 做大脑，CLI 做手脚"在 Bash 里的具体实现。
 
 ![Skill 分层架构](articles/engineering-the-super-skill/images/fig2_layered_architecture.png)
 
@@ -195,7 +195,7 @@ Agent 不知道 Redis 密码写在哪——CLI 知道。Agent 不知道签名算
 
 ## 四、构建 CLI：命令分类与设计哲学
 
-CLI 是这个 Skill 的脊柱。3000+ 行 Bash，不是因为"写多了"，而是因为它吞掉了所有 Agent 不该操心的事。这一章讲清楚命令体系的分类逻辑和每类命令的设计考量。
+CLI 是这个 Skill 的脊柱。4000+ 行 Bash，不是因为"写多了"，而是因为它吞掉了所有 Agent 不该操心的事。这一章讲清楚命令体系的分类逻辑和每类命令的设计考量。
 
 ### 4.1 第一层分类：谁在调用？
 
@@ -390,19 +390,55 @@ Agent 的错误处理逻辑因此变得极其简单：看退出码 → 解析 JS
 
 **Subagent 方案**两全：每步一个独立的 subagent 窗口，上下文互不污染；主 Agent 作为流程控制者保留语义判断能力，能处理异常、跳步、回退等需要"理解"的场景。
 
+### 5.2.1 一个反常识的 Token 账本：Subagent 反而更省
+
+直觉上，"多一个主 Agent 维护流程"意味着额外开销。但实际算一笔账，结论恰好相反——**Subagent 方案的 Token 总消耗比脚本流水线更低。**
+
+先明确每一步执行时需要注入的三类内容：
+
+| 符号 | 含义 | 典型规模 |
+|------|------|---------|
+| **A** | 全局命令（Skill 规则、工具说明、输出格式约束） | ~2000-4000 token，每步必须注入 |
+| **B** | 当前步骤命令（本步的具体指令和工作要求） | ~500-1500 token |
+| **C** | 当前步骤必读素材（代码片段、参考文档、checkpoint 数据） | 变化大，~1000-8000 token |
+
+**脚本流水线**（方案二）：每步清空上下文，启动一个全新进程。因此每一步都必须完整注入全局命令 A + 当前步骤命令 B + 当前步骤素材 C。
+
+$$\text{脚本流水线 input} = (A + B + C) \times N_{steps}$$
+
+**Subagent + Workflow**（方案三）：分为两个窗口——主 Agent 窗口只持有全局命令 A 加上极轻量的 agent 通讯消息（门禁交互、步骤推进指令，记为 $\epsilon$，通常 < 200 token/步）；每步的 subagent 窗口只需要注入当前步骤命令 B 和素材 C（全局命令不需要重复注入，因为 subagent 的 system prompt 更轻量）。
+
+$$\text{Subagent input} = A + N_{steps} \times \epsilon + (B + C) \times N_{steps}$$
+
+整理对比：
+
+$$\text{脚本流水线} - \text{Subagent} = (A - \epsilon) \times (N_{steps} - 1)$$
+
+当步骤数 $N_{steps} = 8$，全局命令 $A \approx 3000$ token 时，Subagent 方案在 input token 上少约 **$(3000 - 200) \times 7 \approx 19600$ token**——接近 20K 的 input 节省。而 output token 两者差异不大（Agent 在每步的实际产出取决于任务本身，与架构方案无关）。
+
+![脚本流水线 vs. Subagent 的 Token 消耗对比](articles/engineering-the-super-skill/images/fig4_token_comparison.png)
+
+更重要的是，这还没算 **checkpoint 带来的 C 项压缩收益**。在脚本流水线中，每步启动后对前序步骤的产出一无所知——如果步骤 5 需要步骤 3 的认证分析结果，它只能重新读整个 `filter/auth.go` 再分析一遍，C 的消耗是完整的代码量。而在 Subagent 方案中，`.state` 中的 checkpoint 已经把前序产出压缩成了结构化摘要（文件路径 + 行号范围 + 一句话结论），步骤 5 只需要精准读取 47 行代码——**C 被大幅压缩**。
+
+综合来看：Subagent 方案不仅在流程灵活性、异常处理能力上完胜脚本流水线，**在 Token 成本上也更优**——这是一个反常识但经得起计算的结论。
+
 ### 5.3 Checkpoint：步骤之间的信息传递
 
 上一步完成了，下一步需要用到上一步的结果——但两步在不同的上下文窗口里。怎么传递信息？
 
-答案是 **checkpoint**：每步完成后，产出一份精简的结构化数据，作为下一步的输入。
+答案是 **checkpoint**：每步完成后，产出一份精简的结构化数据，作为下一步的输入——但这里要明确一个关键设计决策：**checkpoint 不由主 Agent 维护，而是由 Workflow 的缓存状态文件（`.state`）持久化管理。**
 
-设计 checkpoint 有三条原则：
+回顾目录结构中的 `cache/workflows/interface-test.state`——这就是 checkpoint 的实际载体。每步完成时，CLI 的 `--advance` 命令自动将该步产出的结构化数据写入 `.state` 文件；下一步启动时，CLI 自动从 `.state` 中读取前序步骤的产出并注入给 subagent。主 Agent 不持有、不传递、不校验这些数据——它只做流程推进（`--advance`），数据的持久化和传递完全是 Workflow 状态机的内部机制。
 
-**1. 只传路径，不传内容。** 步骤 5 生成了一份 15000 字符的 testcase JSON——不把 JSON 全文塞进 checkpoint，只传文件路径。下一步（upload）的 subagent 需要它时，自己去读文件。主 Agent 的上下文里永远不出现大文件内容。
+这意味着：即使主 Agent 的上下文窗口被完全刷新，只要 `.state` 文件还在，整个工作流可以从任意断点恢复——因为所有步骤间的信息传递都固化在文件系统里，不依赖任何 Agent 的记忆。
 
-**2. 只传结构化摘要，不传原始数据。** 步骤 3 读了项目代码发现认证方式是"太湖签名"——不把整个 filter/auth.go 传给后续步骤，只传一条摘要：`{auth_type: "taihu", filter_file: "filter/auth.go", lines: [42,89]}`。下一步需要认证细节时，只读这 47 行。
+设计 checkpoint 数据本身有三条原则：
 
-**3. 校验由 CLI 做，不由主 Agent 做。** checkpoint 数据的格式合法性、文件是否存在、必填字段是否完整——全部在 `--advance` 的门禁逻辑里自动验证。主 Agent 不需要"打开 checkpoint 文件检查一下是否合法"。
+**1. 只传路径，不传内容。** 步骤 5 生成了一份 15000 字符的 testcase JSON——不把 JSON 全文塞进 `.state`，只传文件路径。下一步（upload）的 subagent 需要它时，自己去读文件。主 Agent 的上下文里永远不出现大文件内容。
+
+**2. 只传结构化摘要，不传原始数据。** 步骤 3 读了项目代码发现认证方式是"太湖签名"——不把整个 filter/auth.go 传给后续步骤，只在 `.state` 中写入一条摘要：`{auth_type: "taihu", filter_file: "filter/auth.go", lines: [42,89]}`。下一步需要认证细节时，只读这 47 行。
+
+**3. 校验由 CLI 做，不由主 Agent 做。** checkpoint 数据的格式合法性、文件是否存在、必填字段是否完整——全部在 `--advance` 的门禁逻辑里自动验证。主 Agent 不需要"打开 `.state` 文件检查一下是否合法"。
 
 ### 5.4 重复读代码的 Token 权衡
 
@@ -412,7 +448,7 @@ Agent 的错误处理逻辑因此变得极其简单：看退出码 → 解析 JS
 
 - **重复读的成本是线性的**：步骤 3 读一次 47 行，步骤 5 再读一次 47 行。总计 94 行 ≈ 2000 token。
 - **上下文累积的成本是二次方的**：不拆分的话，步骤 5 的 input 里不仅有这 47 行，还有步骤 1-4 的所有历史——可能 50000+ token。
-- **而且**：通过 checkpoint 里的代码引用（文件路径 + 行号范围 + 一句话摘要），下一步的 subagent 不需要搜索或猜测该读什么——直接 `read_file(filter/auth.go, offset=42, limit=47)` 即可。
+- **而且**：通过 `.state` 中 checkpoint 里的代码引用（文件路径 + 行号范围 + 一句话摘要），下一步的 subagent 不需要搜索或猜测该读什么——直接 `read_file(filter/auth.go, offset=42, limit=47)` 即可。
 
 每步独立 = 每步互不干扰 = 每步都以最佳状态工作。这比省两千 token 重要得多。
 
@@ -519,9 +555,9 @@ CLI 自动检查：Go 环境是否可用、CLI 二进制是否有执行权限、
 - ...
 ```
 
-这份方案表以文件形式写入 `output_dir`，路径作为 checkpoint 传给主 Agent。
+这份方案表以文件形式写入 `output_dir`，路径作为 checkpoint 写入 `.state`。
 
-**Checkpoint 设计**：只传方案文件路径。主 Agent 不打开这个文件看内容——它的内容由下一阶段的 `testcase-generator` CLI 自己读取。主 Agent 只校验"文件存在且格式合法"。
+**Checkpoint 设计**：只传方案文件路径。主 Agent 不打开这个文件看内容——它的内容由下一阶段的 `testcase-generator` CLI 自己从 `.state` 中读取路径后加载。主 Agent 只做流程推进，"文件存在且格式合法"的校验由 CLI 门禁自动完成。
 
 **门禁**：方案文件路径 + 文件存在确认。
 
