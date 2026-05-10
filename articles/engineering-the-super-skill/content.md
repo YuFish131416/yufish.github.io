@@ -45,7 +45,7 @@ Testone 是公司内部的接口测试平台。你可以把它理解为"公司�
 
 Agent 自行规划一条完整的测试链路，无异于让一个刚入职的实习生在没有任何文档的情况下，独立完成一个从未接触过的平台的全流程配置。结果是确定的：要么幻觉乱填，要么反复试错耗尽上下文窗口。
 
-**所以我们做了这个 Skill。**
+**所以我做了这个 Skill。**
 
 不是给 Agent 更多工具，而是给它一套**完整的工作流程 + 每一步的精确指令 + 固化在 CLI 里的确定性操作**。Agent 不需要"想明白该怎么做"，它只需要"按指令执行当前这一步"。
 
@@ -54,6 +54,8 @@ Agent 自行规划一条完整的测试链路，无异于让一个刚入职的�
 ---
 
 ## 二、成果预览：全自动、全链路、零手写 JSON
+
+> 注：这个 Skill 暂时还没有开放获取途径
 
 在讲怎么构建之前，先看看这个 Skill 能做到什么。
 
@@ -617,76 +619,7 @@ Agent 解读测试报告，对失败用例做归因分析。这一步会参考 `
 
 ---
 
-## 八、接入新项目：五步跑通
-
-讲了这么多设计，最后回到实用：**你怎么在自己的 tRPC-Go 项目里用这个 Skill？**
-
-### 步骤 1：复制 Skill
-
-```bash
-cp -r utest-skill/ your-project/.codebuddy/skills/utest-skill/
-# 或者
-cp -r utest-skill/ your-project/.claude/skills/utest-skill/
-```
-
-两种路径都支持，CLI 启动时自动检测。
-
-### 步骤 2：创建项目配置
-
-在你的 testcase 输出目录（通常是 `test/testone/`）下创建 `.utest-project.yaml`：
-
-```yaml
-project:
-  app: your-app-name
-  server: your-server-name
-utest:
-  execution_group: 42          # 你的优测执行组 ID
-auth:
-  type: taihu                  # 或 pangu / none
-  gateway_domain: "http://your-gateway.woa.com/cgi"
-  redis:
-    server: "your-redis:6379"
-    password: "your-password"
-```
-
-### 步骤 3：设置环境变量
-
-```bash
-export AUTHORIZATION_03_TOKEN="your-03-token"
-export AUTHORIZATION_UTEST_TOKEN="your-utest-token"
-```
-
-### 步骤 4：环境检查
-
-```bash
-bash .codebuddy/skills/utest-skill/utest-cli.sh env-check
-```
-
-CLI 会逐项检查环境并报告哪些通过、哪些缺失。
-
-### 步骤 5：触发 Skill
-
-对 Agent 说："帮我测一下这个项目的接口。"
-
-Skill 自动激活，进入全链路工作流。
-
-### 进阶配置
-
-如果你的项目有特殊的数据提取需求（比如需要从 Redis 结果中提取特定字段），在 `.utest-project.yaml` 的 `java_templates` 下配置模板参数：
-
-```yaml
-java_templates:
-  filter_by_field:
-    field_name: "status"
-    field_value: "active"
-    extract_var: "filtered_item"
-```
-
-CLI 在生成 Java 脚本节点时会自动使用这些参数化模板，Agent 不需要手写 Java 代码。
-
----
-
-## 九、写在最后：确定性是工程化的核心
+## 八、写在最后：确定性是工程化的核心
 
 回顾整篇文章，有一条线贯穿始终：**把确定性的事从 Agent 手中拿走。**
 
