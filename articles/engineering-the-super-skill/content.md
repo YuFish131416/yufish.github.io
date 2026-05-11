@@ -59,7 +59,7 @@ Agent 自行规划一条完整的测试链路，无异于让一个刚入职的�
 
 在讲怎么构建之前，先看看这个 Skill 能做到什么。
 
-### 2.1 一句话触发，八步自动完成
+### 2.1 一句话触发，九步自动完成
 
 用户只需要说一句"帮我测一下这个接口"，Skill 就启动一条完整的工作流水线：
 
@@ -69,12 +69,13 @@ Agent 自行规划一条完整的测试链路，无异于让一个刚入职的�
 | ② Proto 提取 | 从 GOMODCACHE 自动提取接口的 proto 定义文件 | CLI（全自动） |
 | ③ 接口确认 | Agent 读代码理解项目，列出可测接口，用户确认或调整 | Agent + 用户 |
 | ④ 框架配置 | 自动从 123 平台查询 serviceName、namespace 等运行时配置 | CLI（全自动） |
-| ⑤ **用例生成** | 设计 trace 链路 → 生成 testcase 骨架 → 逐节点填充参数 → 实时校验 | Agent + CLI 协作 |
-| ⑥ 上传 | 将生成的 testcase JSON 上传到优测平台 | CLI（全自动） |
-| ⑦ 执行测试 | 触发测试任务，等待平台返回结果 | CLI + Agent 解读 |
-| ⑧ 报告归因 | Agent 解读测试结果，定位失败原因，给出修复建议 | Agent |
+| ⑤ **用例规划** | 读代码理解业务，设计 trace 链路方案，输出结构化方案表 | Agent |
+| ⑥ **用例生成** | CLI 驱动逐节点生成循环：scaffold 骨架 → Agent 填参数 → 实时校验 | Agent + CLI 协作 |
+| ⑦ 上传 | 将生成的 testcase JSON 上传到优测平台 | CLI（全自动） |
+| ⑧ 执行测试 | 触发测试任务，等待平台返回结果 | CLI + Agent 解读 |
+| ⑨ 报告归因 | Agent 解读测试结果，定位失败原因，给出修复建议 | Agent |
 
-注意"谁在干活"这一列——Agent 只在需要"理解"和"判断"的步骤出场（③⑤⑦⑧），纯确定性的操作全部由 CLI 在幕后完成。这就是前置文章里讲的"Agent 是大脑，CLI 是手脚"在这个项目里的具体体现。
+注意"谁在干活"这一列——Agent 只在需要"理解"和"判断"的步骤出场（③⑤⑥⑧⑨），纯确定性的操作全部由 CLI 在幕后完成。这就是前置文章里讲的"Agent 是大脑，CLI 是手脚"在这个项目里的具体体现。
 
 ### 2.2 用户全程不需要做什么
 
@@ -117,11 +118,11 @@ utest-skill/
 ├── workflows/
 │   └── interface-test/
 │       ├── WorkFlow.md         ← 工作流元信息（名称、描述、步骤列表）
-│       └── references/         ← 8 个步骤文件，每步一份指令文档
+│       └── references/         ← 9 个步骤文件，每步一份指令文档
 │           ├── 01-env-check.md
 │           ├── 02-proto-extract.md
 │           ├── ...
-│           └── 08-report.md
+│           └── 09-report.md
 ├── references/                 ← 按需加载的参考文档（Skill 级 RAG）
 │   ├── testcase-format.md      ← testcase JSON 完整规范
 │   ├── auth-patterns.md        ← 认证模式决策树
@@ -135,8 +136,9 @@ utest-skill/
 │   └── templates/              ← Java/JSON 节点模板（参数化）
 ├── bin/                        ← 平台 CLI 二进制（darwin_amd64/arm64, linux_amd64）
 └── cache/                      ← 运行时状态持久化
-    └── workflows/
-        └── interface-test.state← 工作流状态快照（JSON）
+    ├── workflows/
+    │   └── interface-test.state← 工作流状态快照（checkpoints + 步骤进度）
+    └── .cli-context.json       ← CLI 运行时上下文（CLI 自动读写，Agent 不感知）
 ```
 
 每个目录都有明确的职责边界：
@@ -146,6 +148,7 @@ utest-skill/
 - **workflows/**：工作流定义。WorkFlow.md 声明有哪些步骤，references/ 下每步一个文件描述具体指令。
 - **references/**：知识库。不全量注入，而是"索引注入 + 按需读取"——Agent 看到轻量索引头（一行 trigger 描述），自行判断需要哪个 section，再调 CLI 按行号读取对应片段。完整设计见 §4.4。
 - **scripts/** 和 **bin/**：工具层。Agent 不感知它们的存在，CLI 在幕后调用。
+- **cache/.cli-context.json**：CLI 自身的运行时上下文文件。存储 CLI 在工作流推进过程中需要跨步骤记忆的运营数据（如 `output_dir`、`upload_batch_id`），由 CLI 在 `--start` 时创建、`--abort` 时清除、各步骤中自动填充。Agent 完全不感知这个文件的存在——它不读、不写、不提交。这是三层数据模型中"CLI-Context"层的物理载体，与 `.state` 文件中的 checkpoint 数据形成明确的职责分离。详见 §5.3。
 
 ### 3.2 `.utest-project.yaml`：Skill 与项目之间的边界
 
@@ -219,15 +222,17 @@ CLI 里的命令，按**调用方**分为两类：
 |--------|------|------|
 | `--start` | 工作流开始时 | 初始化状态，返回第一步指令 |
 | `--current` | 已有进行中工作流时 | 断点恢复，返回当前步骤 |
-| `--gate-info` | 每次 advance 之前 | 返回当前步骤的门禁 schema |
-| `--advance --gate-data '{...}'` | 当前步骤完成时 | 提交数据、验证门禁、推进 |
-| `--abort` | 用户要求中止时 | 清除状态，允许重新开始 |
+| `--gate-info` | 每次 advance 之前 | 返回当前步骤的三层 schema（gate / checkpoint / CLI-context） |
+| `--advance --gate-data '{...}'` | 当前步骤完成时 | 分拣数据、验证门禁、持久化 checkpoint、推进 |
+| `--abort` | 用户要求中止时 | 清除所有状态，允许重新开始 |
 
 这里有一个设计值得单独讲：**`--gate-info` 为什么是一个独立命令？**
 
 虽然在后续的 Workflow 章节会看到，我用了非常多的手段严格的控制 Agent 的上下文，使其难以因为上下文过长而出现各种问题，但是当你把事情交给概率，哪怕极小，那么偶然也会变成必然。如果 Agent 凭记忆拼 gate-data，偶尔会出现字段名写错（`selected_interfaces` 写成 `interfaces`）、缺少必填字段等问题，导致流程无法推进，这个时候 Agent 就会为所欲为，按照自己的幻觉自由发挥。
 
 解决方案不是"让 Agent 记得更好"，而是**让它不需要记**。每次 advance 之前强制查一次 gate-info，CLI 实时返回当前步骤需要的字段列表和类型约束。这消除了记忆偏差这个不确定性因素——不是靠 Agent 的记忆力，而是靠 CLI 的即时反馈。
+
+在后续迭代中，`--gate-info` 还承担了另一个重要职责：**向 Agent 展示三层数据分离的边界**。它返回的不是一个扁平的字段列表，而是三个独立的 schema：gate 部分（CLI 验证用）、checkpoint 部分（给下一步 subagent 的信息）、cli-context 部分（CLI 自己的运行时数据）。Agent 只需要按照这个结构组织提交的 JSON，CLI 自动完成数据分拣——gate 部分验证后丢弃，checkpoint 部分写入 `.state`，cli-context 部分写入 `.cli-context.json`。对于 cli-context 中的部分字段，CLI 也可能从环境中自动获取而不依赖 Agent 提供。参见 §5.3。
 
 #### 生成与校验层——testcase 生命周期命令
 
@@ -384,9 +389,9 @@ Agent 的错误处理逻辑因此变得极其简单：看退出码 → 解析 JS
 | 隔离机制 | 无 | 操作系统进程 | 主 Agent 手动切换 subagent |
 | 流程灵活性 | 低 | 低（脚本硬编码，不能处理异常） | 高（Agent 可做语义判断和异常处理） |
 
-**无隔离方案**的 Token 增长是**二次方的**：第 N 步的 input = 第 1 步到第 N-1 步所有内容的累积。到第 5 步（generate-testcase），上下文窗口里已经有 proto 文件、项目代码、框架配置结果、三份参考文档……Agent 的有效注意力被严重稀释。
+**无隔离方案**的 Token 增长是**二次方的**：第 N 步的 input = 第 1 步到第 N-1 步所有内容的累积。到第 5-6 步（用例规划与生成），上下文窗口里已经有 proto 文件、项目代码、框架配置结果、三份参考文档……Agent 的有效注意力被严重稀释。
 
-**脚本流水线**解决了隔离问题，但失去了灵活性。如果步骤 5 生成的 testcase 校验失败，脚本只能"重试一次"或"终止"，不能像 Agent 那样读错误信息、理解原因、做针对性修正。
+**脚本流水线**解决了隔离问题，但失去了灵活性。如果步骤 6 生成的 testcase 校验失败，脚本只能"重试一次"或"终止"，不能像 Agent 那样读错误信息、理解原因、做针对性修正。
 
 **Subagent 方案**两全：每步一个独立的 subagent 窗口，上下文互不污染；主 Agent 作为流程控制者保留语义判断能力，能处理异常、跳步、回退等需要"理解"的场景。
 
@@ -414,7 +419,7 @@ $$\text{Subagent input} = A + N_{steps} \times \epsilon + (B + C) \times N_{step
 
 $$\text{脚本流水线} - \text{Subagent} = (A - \epsilon) \times (N_{steps} - 1)$$
 
-当步骤数 $N_{steps} = 8$，全局命令 $A \approx 3000$ token 时，Subagent 方案在 input token 上少约 **$(3000 - 200) \times 7 \approx 19600$ token**——接近 20K 的 input 节省。而 output token 两者差异不大（Agent 在每步的实际产出取决于任务本身，与架构方案无关）。
+当步骤数 $N_{steps} = 9$，全局命令 $A \approx 3000$ token 时，Subagent 方案在 input token 上少约 **$(3000 - 200) \times 8 \approx 22400$ token**——超过 20K 的 input 节省。而 output token 两者差异不大（Agent 在每步的实际产出取决于任务本身，与架构方案无关）。
 
 ![脚本流水线 vs. Subagent 的 Token 消耗对比](articles/engineering-the-super-skill/images/fig4_token_comparison.png)
 
@@ -422,23 +427,100 @@ $$\text{脚本流水线} - \text{Subagent} = (A - \epsilon) \times (N_{steps} - 
 
 综合来看：Subagent 方案不仅在流程灵活性、异常处理能力上完胜脚本流水线，**在 Token 成本上也更优**——这是一个反常识但经得起计算的结论。
 
-### 5.3 Checkpoint：步骤之间的信息传递
+### 5.3 三层数据模型：Gate / Checkpoint / CLI-Context
 
-上一步完成了，下一步需要用到上一步的结果——但两步在不同的上下文窗口里。怎么传递信息？
+上一步完成了，下一步需要用到上一步的结果——但两步在不同的上下文窗口里。怎么传递信息？早期设计用两层（Gate 验证 + Checkpoint 传递）就够了。但随着项目复杂度增长，我们发现了一个被忽视的第三方：**CLI 自己也需要跨步骤记忆**。
 
-答案是 **checkpoint**：每步完成后，产出一份精简的结构化数据，作为下一步的输入——但这里要明确一个关键设计决策：**checkpoint 不由主 Agent 维护，而是由 Workflow 的缓存状态文件（`.state`）持久化管理。**
+#### 为什么是三层，不是两层
 
-回顾目录结构中的 `cache/workflows/interface-test.state`——这就是 checkpoint 的实际载体。每步完成时，CLI 的 `--advance` 命令自动将该步产出的结构化数据写入 `.state` 文件；下一步启动时，CLI 自动从 `.state` 中读取前序步骤的产出并注入给 subagent。主 Agent 不持有、不传递、不校验这些数据——它只做流程推进（`--advance`），数据的持久化和传递完全是 Workflow 状态机的内部机制。
+考虑这个场景：步骤 3 中 Agent 确认了 testcase 的输出目录 `output_dir`。这个值后续谁需要？
 
-这意味着：即使主 Agent 的上下文窗口被完全刷新，只要 `.state` 文件还在，整个工作流可以从任意断点恢复——因为所有步骤间的信息传递都固化在文件系统里，不依赖任何 Agent 的记忆。
+- Agent（步骤 5/6 的 subagent）？——不需要。subagent 只管"填什么参数值"，不关心文件最终写到哪里。
+- CLI？——**需要**。步骤 7 的 `upload` 命令需要知道去哪个目录找 JSON 文件。
 
-设计 checkpoint 数据本身有三条原则：
+如果把 `output_dir` 放进 checkpoint（给 subagent 看的），就是在给 subagent 注入它不需要的信息，浪费上下文空间。如果不持久化，CLI 在步骤 7 就不知道文件在哪。
 
-**1. 只传路径，不传内容。** 步骤 5 生成了一份 15000 字符的 testcase JSON——不把 JSON 全文塞进 `.state`，只传文件路径。下一步（upload）的 subagent 需要它时，自己去读文件。主 Agent 的上下文里永远不出现大文件内容。
+答案是引入第三层：**CLI-Context**——CLI 自己的运行时上下文，Agent 不知道它的存在。
 
-**2. 只传结构化摘要，不传原始数据。** 步骤 3 读了项目代码发现认证方式是"太湖签名"——不把整个 filter/auth.go 传给后续步骤，只在 `.state` 中写入一条摘要：`{auth_type: "taihu", filter_file: "filter/auth.go", lines: [42,89]}`。下一步需要认证细节时，只读这 47 行。
+三层各司其职：
 
-**3. 校验由 CLI 做，不由主 Agent 做。** checkpoint 数据的格式合法性、文件是否存在、必填字段是否完整——全部在 `--advance` 的门禁逻辑里自动验证。主 Agent 不需要"打开 `.state` 文件检查一下是否合法"。
+| 层 | 谁产生 | 谁消费 | 持久化位置 | 生命周期 |
+|---|---|---|---|---|
+| **Gate** | Agent 提交 | CLI 验证后**丢弃** | 不持久化 | 当次 advance 调用内 |
+| **Checkpoint** | Agent 提交 | 下一步 subagent 读取 | `.state` → `checkpoints` 键 | 工作流存续期间 |
+| **CLI-Context** | Agent 提交或 CLI 自动获取 | CLI 后续命令读取 | `.cli-context.json` | `--start` 创建，`--abort` 清除 |
+
+#### 解耦原则：能从配置文件推导的，不存任何地方
+
+这是三层模型之上更高层的设计原则：**如果一个值可以从固定配置文件（Makefile、`.utest-project.yaml`、`trpc_go.yaml`、`go.mod`）中按确定性逻辑读取，那它不写入 `.state`，也不写入 `.cli-context.json`——CLI 在需要时即时读取。**
+
+为什么？因为配置文件可能被用户修改。如果我们在步骤 1 把 `app=pangu-admin` 缓存下来，用户在步骤 4 修改了 Makefile 里的 APP 变量，后续步骤用的就是过时的值。即时读取 = 永远是最新值。
+
+具体来说：
+- `app`（项目名）：从 Makefile 的 `APP=` 行解析 → **不存**
+- `server`（服务名）：从 Makefile 的 `SERVER=` 行解析 → **不存**
+- `auth.type`（认证类型）：从 `.utest-project.yaml` 读取 → **不存**
+- `service_name`（北极星名称）：从 123 平台 API 查询，无配置文件可推导 → **存入 checkpoint**（subagent 需要）
+- `output_dir`（输出目录）：从 `.utest-project.yaml` 所在位置推导 → **存入 cli-context**（CLI 需要，但推导逻辑涉及向上查找，结果缓存可提高效率）
+
+#### 具体示例：步骤 3 的三层提交
+
+步骤 3（confirm-interfaces）完成后，Agent 提交的 gate-data 结构：
+
+```json
+{
+  "gate": {
+    "validated": true,
+    "selected_interfaces": ["GetUserList", "CreateUser", "DeleteUser"]
+  },
+  "checkpoint": {
+    "interface_code_refs": {
+      "GetUserList": {"file": "controller/user.go", "lines": [42, 89]},
+      "CreateUser": {"file": "controller/user.go", "lines": [91, 145]},
+      "DeleteUser": {"file": "controller/user.go", "lines": [147, 180]}
+    },
+    "filter_names": ["panguSignChecker", "operateLog"]
+  },
+  "cli-context": {
+    "output_dir": "/path/to/test/testone"
+  }
+}
+```
+
+CLI 收到后自动分拣：
+1. **Gate 部分**：验证 `validated == true`、`selected_interfaces` 非空 → 验证通过后**丢弃**（不写入任何文件）
+2. **Checkpoint 部分**：`interface_code_refs` 和 `filter_names` 写入 `.state` 的 `checkpoints.step3` → 下一步 subagent 启动时注入
+3. **CLI-Context 部分**：`output_dir` 写入 `.cli-context.json` → 步骤 7 的 upload 命令读取
+
+注意 `selected_interfaces` 是 **gate 而非 checkpoint**——为什么？因为后续 subagent 不需要一个字符串列表来知道"测哪些接口"，它需要的是 `interface_code_refs`（代码位置）。`selected_interfaces` 的唯一作用是让 CLI 验证"用户确实做了选择"——验证完就可以丢弃。
+
+#### CLI-Context 的生命周期
+
+```
+--start    → 创建空的 .cli-context.json（清除上一轮残留）
+步骤推进   → CLI 按需写入字段（如 output_dir、upload_batch_id、last_run_id）
+--abort    → 删除 .cli-context.json
+工作流完成 → 保留（可用于诊断）
+```
+
+Agent 永远不需要、也不应该读取 `.cli-context.json`。它的内容对 Agent 是不可见的——不在 gate-info 的返回中出现（gate-info 只展示 Agent 需要填写的 schema），不在步骤指令中被引用。
+
+#### Checkpoint 层的三条设计原则（继承自早期设计）
+
+以下三条原则，在三层模型中专门约束 **checkpoint 层**（即写入 `.state` 给 subagent 消费的数据）：
+
+**1. 只传路径，不传内容。** 步骤 6 生成了一份 15000 字符的 testcase JSON——不把 JSON 全文塞进 `.state`，只传文件路径。下一步（upload）的 CLI 需要它时，自己去读文件。Subagent 的上下文里永远不出现大文件内容。
+
+**2. 只传结构化摘要，不传原始数据。** 步骤 3 读了项目代码发现认证方式是"太湖签名"——不把整个 filter/auth.go 传给后续步骤，只在 `.state` 中写入代码引用：`{"file": "filter/auth.go", "lines": [42, 89]}`。下一步 subagent 需要认证细节时，按这个引用精准读取 47 行。
+
+**3. 校验由 CLI 做，不由 Agent 做。** checkpoint 数据的格式合法性、文件路径是否存在、必填字段是否完整——全部在 `--advance` 的门禁逻辑里自动验证。主 Agent 不需要"打开 `.state` 文件检查一下是否合法"。
+
+#### 一个类比
+
+把三层想象成一个工厂的交接班：
+- **Gate** = 上一班的"签退确认"——你签了字证明活干完了，保安看一眼就撕掉了，不归档
+- **Checkpoint** = 交接班记录本——写给下一班的同事看的，告诉他"我做到哪了、有什么需要注意的"
+- **CLI-Context** = 车间主任的笔记本——主任自己记的调度信息，工人不看，但主任靠它调度一切
 
 ### 5.4 重复读代码的 Token 权衡
 
@@ -456,17 +538,22 @@ $$\text{脚本流水线} - \text{Subagent} = (A - \epsilon) \times (N_{steps} - 
 
 ## 六、逐步骤解析：工作流的推进全貌
 
-理论讲完了，现在走一遍实际的 8 步工作流。前 4 步和后 3 步一笔带过，重点放在步骤 5（generate-testcase）——这是整个 Skill 最复杂、最有工程价值的一步。
+理论讲完了，现在走一遍实际的 9 步工作流。前 4 步和后 3 步一笔带过，重点放在步骤 5-6（测试用例的规划与生成）——这是整个 Skill 最复杂、最有工程价值的部分。
 
 ### 6.1 步骤 1-4：环境准备阶段
 
-这四步的主题是"把项目信息搜集齐"，为步骤 5 的用例生成准备所有前置数据。
+这四步的主题是"把项目信息搜集齐"，为步骤 5-6 的用例规划与生成准备所有前置数据。
 
 **步骤 1：env-check（automated）**
 
 CLI 自动检查：Go 环境是否可用、CLI 二进制是否有执行权限、`AUTHORIZATION_03_TOKEN` 等环境变量Token是否设置（没有设置 CLI 会自动输出信息引导用户获取）、项目根目录下是否有 `trpc_go.yaml`（没有则 CLI 会去 03 平台自己搞一份回来用）。
 
-输出 checkpoint：`app`（项目名）、`server`（服务名）、`login_name`（当前登录用户）。这些值从 `Makefile` 解析而来，后续步骤会用到。
+数据产出：
+- **Gate**：`env_ready: true`（环境检查全部通过的证明）
+- **Checkpoint**：无——`app`（项目名）和 `server`（服务名）均可从 Makefile 即时解析，遵循解耦原则不作持久化
+- **CLI-Context**：`login_name`（当前登录用户，CLI 后续 API 调用需要）
+
+注意：早期版本将 `app`、`server` 存入 checkpoint。三层模型重构后，所有能从 Makefile 确定性推导的值一律不存——CLI 在需要时即时读取，永远拿到最新值。
 
 **步骤 2：proto-extract（automated）**
 
@@ -474,13 +561,19 @@ CLI 自动检查：Go 环境是否可用、CLI 二进制是否有执行权限、
 
 为什么不用工蜂 API？因为工蜂的 API 认证和项目代码的认证是两套体系。让 Agent 去调工蜂 API，需要额外的 token 配置和错误处理。而 `GOMODCACHE` 里已经有了编译过的 proto 依赖——直接从本地文件系统读，零网络依赖，零认证问题。
 
-输出 checkpoint：`proto_files`（提取出的 proto 文件路径列表）。
+数据产出：
+- **Gate**：`proto_extracted: true`（proto 文件成功提取的证明）
+- **Checkpoint**：`proto_files`（提取出的 proto 文件路径列表）——subagent 需要读这些文件来理解接口定义
+- **CLI-Context**：无
 
 **步骤 3：confirm-interfaces（interactive）**
 
 这是第一个需要用户参与的步骤。Agent 读取 proto 文件和项目代码，理解有哪些接口可以测试，然后列出建议的接口列表，等用户确认或调整。
 
-这步的 checkpoint 信息量最大：`selected_interfaces`（用户选定的接口列表）、`request_fields`（每个接口的请求字段）、`filter_names`（项目使用的 filter 列表，用于推断认证方式）、`output_dir`（testcase 输出目录，即 `.utest-project.yaml` 所在目录）。
+这步的数据产出跨越三层，是理解三层分离的最佳示例：
+- **Gate**：`selected_interfaces`（用户选定的接口名列表）——证明用户确实做了选择。验证后丢弃，因为后续 subagent 需要的不是接口名列表，而是代码位置引用
+- **Checkpoint**：`interface_code_refs`（每个接口的代码文件路径 + 行号范围）、`filter_names`（项目使用的 filter 列表，用于推断认证方式）——这些是下一步 subagent 需要且无法从配置文件推导的信息
+- **CLI-Context**：`output_dir`（testcase 输出目录）——CLI 的 upload、scaffold 等命令需要知道文件写在哪里，但 subagent 不需要关心这个路径
 
 **步骤 4：config-query（automated）**
 
@@ -488,17 +581,20 @@ CLI 自动检查：Go 环境是否可用、CLI 二进制是否有执行权限、
 
 为什么不让 Agent 猜？因为 serviceName 的拼接规则因项目而异（有的是 `trpc.app.server`，有的带额外前缀），namespace 有 Development/Production/Formal 等多种值。猜错了直接导致后续测试路由到错误的服务实例——这种错误在运行时才暴露，排查成本极高。
 
-输出 checkpoint：`service_name`、`namespace`。
+数据产出：
+- **Gate**：`config_resolved: true`（配置查询成功的证明）
+- **Checkpoint**：`service_name`、`namespace`——从 123 平台 API 查询，无配置文件可推导，subagent 在生成 testcase 时需要这两个值填入 `callee` 字段
+- **CLI-Context**：无
 
-到这一步结束，步骤 5 需要的所有前置数据都已就绪。
+到这一步结束，步骤 5-6 需要的所有前置数据都已就绪。
 
-<!-- [图片占位：一个简洁的 4 步流程图，每步标注类型（automated/interactive）和关键输出。用管道风格，强调"信息逐步积累，最终汇聚到步骤 5"。] -->
+<!-- [图片占位：一个简洁的 4 步流程图，每步标注类型（automated/interactive）和关键输出。用管道风格，强调"信息逐步积累，最终汇聚到步骤 5-6"。] -->
 
-### 6.2 步骤 5：generate-testcase（重头戏）
+### 6.2 步骤 5-6：测试用例的规划与生成（重头戏）
 
 这是整个 Skill 的核心——也是最能体现"CLI 做主控、Agent 做填空"设计哲学的地方。
 
-#### 6.2.1 为什么需要两阶段拆分
+#### 6.2.1 为什么需要拆成两步（步骤 5 + 步骤 6）
 
 直觉上，"生成测试用例"是一个任务。但在工程实践中，这个"一个任务"实际包含两个性质完全不同的子任务：
 
@@ -557,11 +653,15 @@ CLI 自动检查：Go 环境是否可用、CLI 二进制是否有执行权限、
 
 这份方案表以文件形式写入 `output_dir`，路径作为 checkpoint 写入 `.state`。
 
-**Checkpoint 设计**：只传方案文件路径。主 Agent 不打开这个文件看内容——它的内容由下一阶段的 `testcase-generator` CLI 自己从 `.state` 中读取路径后加载。主 Agent 只做流程推进，"文件存在且格式合法"的校验由 CLI 门禁自动完成。
+**三层数据产出**（步骤 5 → 步骤 6 的衔接）：
 
-**门禁**：方案文件路径 + 文件存在确认。
+- **Gate**：`plan_file_exists: true` + `plan_file_path`——证明规划完成、方案文件已写入。CLI 验证文件确实存在且格式合法后丢弃
+- **Checkpoint**：`plan_file_path`（方案表文件路径）——步骤 6 的 `testcase-generator` CLI 需要解析这个文件来驱动逐节点生成循环。注意这里遵循"只传路径不传内容"原则——方案表可能有数十行，不塞进 `.state`
+- **CLI-Context**：无（output_dir 已在步骤 3 写入）
 
-#### 6.2.3 阶段二：testcase-generator CLI + 生成 subagent——按图施工
+主 Agent 不打开方案文件看内容——它只知道"文件在 X 路径、格式合法"。内容由步骤 6 的 CLI 自行加载解析。
+
+#### 6.2.3 步骤 6：testcase-generator CLI + 生成 subagent——按图施工
 
 这里有这个 Skill 最关键的设计变化：**生成过程的控制权从 Agent 转移到 CLI。**
 
@@ -589,7 +689,10 @@ Agent 在这个循环里的角色就像流水线上的工人：工头（CLI）�
 - 不需要记住前面节点的内容——CLI 管理状态
 - 只需要：当前节点的任务描述 + 对应的一小段代码
 
-**门禁**：`testcase_files`（生成的文件路径列表）+ `validated: true`（所有文件校验通过）。
+**三层数据产出**（步骤 6 → 步骤 7 的衔接）：
+- **Gate**：`validated: true`（所有 testcase 文件通过 validate 校验的证明）+ `testcase_files`（文件路径列表，供 CLI 验证文件确实存在）
+- **Checkpoint**：`testcase_files`（文件路径列表）——步骤 7 的 upload 命令需要知道上传哪些文件。遵循"只传路径不传内容"
+- **CLI-Context**：无（output_dir 已在步骤 3 写入，CLI 也可从中推导文件列表）
 
 > 类比：阶段一是"建筑师"画图纸，阶段二是"施工队按图纸建楼"。但施工队里有一个工头（CLI）在指挥工人（Agent）干活——建筑师不施工，工人不设计，工头不读图纸也不搬砖，只负责调度。三方各司其职。
 
@@ -625,19 +728,24 @@ validate 在这个 Skill 里不是"可选的质量检查"，而是**每个节点
 
 为什么这些校验不写在文档里让 Agent 自己遵守？因为 Agent 会忘、会简化、会幻觉。**把规范固化在 validate 命令的代码逻辑里**，Agent 不需要记住规范——它只需要看 validate 的输出：通过就继续，失败就按错误提示修正。
 
-### 6.3 步骤 6-8：测试执行阶段
+### 6.3 步骤 7-9：测试执行阶段
 
 用例生成完毕后，后面三步相对简单：
 
-**步骤 6：upload（automated）**
+**步骤 7：upload（automated）**
 
-CLI 调用平台 API，将 `output_dir` 下所有通过 validate 的 JSON 文件上传到优测平台。输出 checkpoint：`case_ids`（平台返回的用例 ID 列表）。
+CLI 从 `.cli-context.json` 读取 `output_dir`，将该目录下所有通过 validate 的 JSON 文件上传到优测平台。
 
-**步骤 7：run-test（interactive）**
+数据产出：
+- **Gate**：`upload_success: true`
+- **Checkpoint**：`case_ids`（平台返回的用例 ID 列表）——步骤 8 的 run 命令需要
+- **CLI-Context**：`upload_batch_id`（本次上传的批次 ID，CLI 用于后续状态查询）
+
+**步骤 8：run-test（interactive）**
 
 Agent 触发测试执行，等待平台返回结果。这步是 interactive 的原因：可能需要用户确认执行环境（测试环境 vs 预发环境），或者测试耗时较长需要等待。
 
-**步骤 8：report（interactive）**
+**步骤 9：report（interactive）**
 
 Agent 解读测试报告，对失败用例做归因分析。这一步会参考 `references/troubleshooting.md` 里的错误速查表——比如 `retCode:41` 通常意味着签名校验失败，需要检查 Redis 节点是否正确写入了 token，或者 Java 签名节点的时间戳是否过期。
 
