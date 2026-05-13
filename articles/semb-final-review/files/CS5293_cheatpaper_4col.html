@@ -1,0 +1,1351 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <style>
+@font-face {
+    font-family: 'KoseFont';
+    src: url('file:///Users/yufish/Documents/GitHub/yufish.github.io/articles/semb-final-review/files/fonts/Kosefont-JP.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@page {
+    size: A4;
+    margin: 4mm 4mm 4mm 4mm;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'KoseFont', 'Hiragino Sans GB', sans-serif;
+    font-size: 4.9375pt;
+    line-height: 1.2;
+    column-count: 4;
+    column-gap: 6px;
+    column-rule: none;
+    orphans: 2;
+    widows: 2;
+    color: #1a1a1a;
+}
+
+/* === HEADINGS: Blue + Bold === */
+h1 {
+    font-family: 'KoseFont', sans-serif;
+    font-size: 6.4375pt;
+    color: #0056b3;
+    font-weight: bold;
+    margin: 2px 0 1px 0;
+    line-height: 1.3;
+}
+
+h2 {
+    font-family: 'KoseFont', sans-serif;
+    font-size: 5.9375pt;
+    color: #0056b3;
+    font-weight: bold;
+    margin: 2px 0 1px 0;
+    line-height: 1.2;
+    break-after: avoid;
+}
+
+h3 {
+    font-family: 'KoseFont', sans-serif;
+    font-size: 5.4375pt;
+    color: #0056b3;
+    font-weight: bold;
+    margin: 1.5px 0 0.5px 0;
+    line-height: 1.2;
+    break-after: avoid;
+}
+
+h4 {
+    font-family: 'KoseFont', sans-serif;
+    font-size: 4.9375pt;
+    color: #0056b3;
+    font-weight: bold;
+    margin: 1px 0 0.5px 0;
+    line-height: 1.2;
+    break-after: avoid;
+}
+
+h5, h6 {
+    font-family: 'KoseFont', sans-serif;
+    font-size: 4.9375pt;
+    color: #0056b3;
+    font-weight: bold;
+    margin: 1px 0 0.5px 0;
+    line-height: 1.2;
+    break-after: avoid;
+}
+
+/* === BODY TEXT: Same handwriting font everywhere === */
+p {
+    margin: 0.5px 0;
+    line-height: 1.2;
+}
+
+strong {
+    font-weight: bold;
+}
+
+em {
+    font-style: italic;
+}
+
+ul, ol {
+    margin: 0.5px 0;
+    padding-left: 10px;
+}
+
+li {
+    margin: 0.3px 0;
+    line-height: 1.2;
+}
+
+/* === TABLES: NO borders, NO background — just indented text === */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 1px 0;
+    font-size: 4.9375pt;
+    border: none;
+}
+
+th, td {
+    border: none;
+    padding: 0.3px 3px;
+    text-align: left;
+    line-height: 1.2;
+    font-family: 'KoseFont', sans-serif;
+}
+
+th {
+    background: none;
+    font-weight: bold;
+    border-bottom: 0.3px solid #999;
+}
+
+/* === CODE: Same font, no background, no monospace === */
+code {
+    font-family: 'KoseFont', sans-serif;
+    font-size: 4.9375pt;
+    background: none;
+    padding: 0;
+    border: none;
+}
+
+pre {
+    font-family: 'KoseFont', sans-serif;
+    background: none;
+    padding: 1px 0;
+    margin: 0.5px 0;
+    border: none;
+    font-size: 4.9375pt;
+    line-height: 1.2;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+}
+
+pre code {
+    font-family: 'KoseFont', sans-serif;
+    background: none;
+    padding: 0;
+    font-size: 4.9375pt;
+}
+
+/* === BLOCKQUOTE: No left border, just slight indent === */
+blockquote {
+    border: none;
+    padding-left: 6px;
+    margin: 0.5px 0;
+    color: #333;
+    font-size: 4.9375pt;
+}
+
+/* === HR: Very subtle or invisible === */
+hr {
+    border: none;
+    border-top: 0.2px solid #ddd;
+    margin: 1.5px 0;
+}
+
+/* No break-inside for tables since they look like plain text now */
+</style>
+</head>
+<body>
+<h1>CS5293 Final Exam Review / 期末复习资料</h1>
+<blockquote>
+<p>Topics on Information Security --- Prof. Cong Wang, CityU CS</p>
+<p>Coverage: Weeks 1--11 (Cryptography, PKI/TLS, Authentication, Memory Corruption, DNS, Firewalls/VPN, Web Security, CSRF/SSRF/SQLi, AI Security)</p>
+</blockquote>
+<hr />
+<h2>1. Knowledge Framework / 知识框架</h2>
+<table>
+<thead>
+<tr>
+<th>Week</th>
+<th>Topic / 主题</th>
+<th>Core Focus / 核心要点</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>Cryptography Foundations / 密码学基础</td>
+<td>Symmetric/Asymmetric crypto, AES modes, hash/MAC</td>
+</tr>
+<tr>
+<td>2</td>
+<td>PKI, TLS &amp; Secure Channels / 公钥基础设施与安全通道</td>
+<td>Certificate chain, TLS handshake, attacks</td>
+</tr>
+<tr>
+<td>3</td>
+<td>Authentication &amp; Access Control / 认证与访问控制</td>
+<td>Password security, Set-UID, RBAC/MAC/DAC</td>
+</tr>
+<tr>
+<td>4</td>
+<td>Memory Corruption: Basics / 内存破坏基础</td>
+<td>Stack overflow, shellcode, ASLR/Canary/NX</td>
+</tr>
+<tr>
+<td>5</td>
+<td>Advanced Memory Corruption / 高级内存破坏</td>
+<td>Ret2libc, ROP, Format String, PLT/GOT</td>
+</tr>
+<tr>
+<td>6</td>
+<td>OpenClaw &amp; AI Agents / AI代理安全 (supplementary)</td>
+<td>Agent loop, attack surfaces, local deployment</td>
+</tr>
+<tr>
+<td>7</td>
+<td>DNS Security / DNS安全</td>
+<td>Cache poisoning, Kaminsky, DNSSEC, DoH/DoT</td>
+</tr>
+<tr>
+<td>8</td>
+<td>Firewalls &amp; VPN / 防火墙与VPN</td>
+<td>iptables, stateful filtering, TUN/TAP, IPsec/OpenVPN</td>
+</tr>
+<tr>
+<td>9</td>
+<td>Web Security &amp; XSS / Web安全与XSS</td>
+<td>SOP, Reflected/Stored/DOM XSS, CSP</td>
+</tr>
+<tr>
+<td>10</td>
+<td>CSRF, SSRF &amp; SQL Injection / CSRF/SSRF/SQL注入</td>
+<td>CSRF tokens, SSRF metadata, prepared statements</td>
+</tr>
+<tr>
+<td>11</td>
+<td>Security of AI / AI安全</td>
+<td>Jailbreaks, prompt injection, defense in depth</td>
+</tr>
+<tr>
+<td>12</td>
+<td>AI for Cybersecurity / AI赋能网络安全</td>
+<td>AI offense/defense, agent reliability, red/blue/purple teaming</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2>2. Core Concepts / 核心概念梳理</h2>
+<h3>2.1 Cryptography / 密码学 (Week 1)</h3>
+<h4>Symmetric Encryption（对称加密）</h4>
+<ul>
+<li><strong>Definition</strong>: Same key for encryption and decryption / 加密和解密使用同一密钥</li>
+<li><strong>Key Points</strong>: Fast; key distribution problem / 速度快；密钥分发问题</li>
+<li><strong>AES</strong>: Block cipher, 128/192/256-bit keys / 分组密码，128/192/256位密钥</li>
+</ul>
+<h4>AES Modes of Operation（AES工作模式）</h4>
+<table>
+<thead>
+<tr>
+<th>Mode</th>
+<th>Parallel Encrypt</th>
+<th>Parallel Decrypt</th>
+<th>Random Access</th>
+<th>Error Propagation</th>
+<th>Security</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>ECB</td>
+<td>Yes</td>
+<td>Yes</td>
+<td>Yes</td>
+<td>Single block</td>
+<td><strong>Insecure</strong> — identical plaintext → identical ciphertext</td>
+</tr>
+<tr>
+<td>CBC</td>
+<td>No</td>
+<td>Yes</td>
+<td>No</td>
+<td>Two blocks</td>
+<td>Secure with random IV</td>
+</tr>
+<tr>
+<td>CTR</td>
+<td>Yes</td>
+<td>Yes</td>
+<td>Yes</td>
+<td>None</td>
+<td>Secure if nonce never reused</td>
+</tr>
+<tr>
+<td>GCM</td>
+<td>Yes</td>
+<td>Yes</td>
+<td>Yes</td>
+<td>None</td>
+<td>Authenticated encryption (AEAD)</td>
+</tr>
+</tbody>
+</table>
+<h4>ECB Insecurity（ECB模式不安全性）</h4>
+<ul>
+<li>Identical plaintext blocks produce identical ciphertext blocks / 相同明文块产生相同密文块</li>
+<li>Reveals patterns in data (e.g., images still recognizable) / 泄露数据模式</li>
+<li>CBC solves this by XORing each block with previous ciphertext before encryption / CBC通过与前一个密文块异或来解决</li>
+</ul>
+<h4>Hash Functions（哈希函数）</h4>
+<ul>
+<li><strong>Definition</strong>: One-way function: easy to compute, infeasible to reverse / 单向函数：易计算，不可逆</li>
+<li><strong>Properties</strong>: Pre-image resistance, second pre-image resistance, collision resistance / 原像抗性、第二原像抗性、碰撞抗性</li>
+<li><strong>Examples</strong>: SHA-256, SHA-3, MD5 (broken) / SHA-256、SHA-3、MD5（已破解）</li>
+</ul>
+<h4>MAC &amp; HMAC（消息认证码）</h4>
+<ul>
+<li><strong>MAC</strong>: Symmetric key + hash \rightarrow verify integrity AND authenticity / 对称密钥+哈希\rightarrow验证完整性和真实性</li>
+<li><strong>HMAC</strong>: Hash-based MAC; HMAC(K, m) = H((K\oplusopad) ‖ H((K\oplusipad) ‖ m))</li>
+<li><strong>Key difference</strong>: Hash verifies integrity only; MAC also authenticates sender / 哈希仅验证完整性；MAC还认证发送者</li>
+</ul>
+<h4>Diffie-Hellman Key Exchange（Diffie-Hellman密钥交换）</h4>
+<ul>
+<li>Two parties agree on shared secret without sending it / 双方不发送共享密钥即可协商共享秘密</li>
+<li>Vulnerable to Man-in-the-Middle (MITM) attack / 易受中间人攻击</li>
+<li>Authenticated DH (with certificates) prevents MITM / 认证DH（带证书）防止MITM</li>
+</ul>
+<hr />
+<h3>2.2 PKI &amp; TLS / 公钥基础设施与TLS (Week 2)</h3>
+<h4>Public-Key Cryptography（公钥密码学）</h4>
+<ul>
+<li><strong>Asymmetric</strong>: Public key encrypts, private key decrypts / 非对称：公钥加密，私钥解密</li>
+<li><strong>RSA</strong>: Trapdoor function, 2048-4096 bit keys / 陷阱门函数，2048-4096位密钥</li>
+<li><strong>Hybrid approach</strong>: Asymmetric for key exchange, symmetric for bulk data / 混合方式：非对称用于密钥交换，对称用于批量数据</li>
+</ul>
+<h4>Certificate &amp; PKI（数字证书与公钥基础设施）</h4>
+<ul>
+<li><strong>Certificate</strong>: Binds public key to identity, signed by CA / 将公钥绑定到身份，由CA签名</li>
+<li><strong>Certificate Chain</strong>: Root CA $\rightarrow$ Intermediate CA $\rightarrow$ End-entity cert / 证书链：根CA\rightarrow中间CA\rightarrow终端证书</li>
+<li><strong>Trust Store</strong>: OS/browser ships with trusted Root CA public keys / 信任库：操作系统/浏览器内置可信根CA公钥</li>
+</ul>
+<h4>TLS Handshake（TLS握手）</h4>
+<ol>
+<li>ClientHello: Supported cipher suites, random nonce / 支持的密码套件，随机数</li>
+<li>ServerHello: Chosen cipher suite, certificate / 选定密码套件，证书</li>
+<li>Key Exchange: DH or RSA-based pre-master secret / DH或RSA方式的预主密钥</li>
+<li>Derive session keys: From pre-master secret + both randoms / 从预主密钥+双方随机数派生会话密钥</li>
+<li>Finished: Encrypted handshake messages / 加密的握手消息</li>
+</ol>
+<h4>TLS Attacks（TLS攻击）</h4>
+<ul>
+<li><strong>SSL Stripping</strong>: Downgrade HTTPS$\rightarrow$HTTP (Moxie Marlinspike) / 降级HTTPS为HTTP</li>
+<li><strong>HSTS</strong>: HTTP Strict Transport Security; tells browser to always use HTTPS / HTTP严格传输安全；告诉浏览器始终使用HTTPS</li>
+<li><strong>HSTS limitation</strong>: First visit still vulnerable (no HSTS header received yet) / 首次访问仍有漏洞</li>
+<li><strong>BEAST/CRIME/Poodle</strong>: Protocol-level attacks on older TLS versions / 针对旧版TLS的协议级攻击</li>
+</ul>
+<h4>SNI &amp; ECH（服务器名称指示与加密SNI）</h4>
+<ul>
+<li><strong>SNI</strong>: Client sends hostname in plaintext in ClientHello for virtual hosting / 客户端在ClientHello中明文发送主机名</li>
+<li><strong>ECH</strong>: Encrypts SNI to prevent observers from seeing which site / 加密SNI防止观察者看到访问的网站</li>
+</ul>
+<hr />
+<h3>2.3 Authentication &amp; Access Control / 认证与访问控制 (Week 3)</h3>
+<h4>Three Authentication Factors（三种认证因素）</h4>
+<table>
+<thead>
+<tr>
+<th>Factor</th>
+<th>Type</th>
+<th>Examples</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Something you know</td>
+<td>Knowledge / 知识</td>
+<td>Password, PIN</td>
+</tr>
+<tr>
+<td>Something you have</td>
+<td>Possession / 持有</td>
+<td>Phone, hardware token</td>
+</tr>
+<tr>
+<td>Something you are</td>
+<td>Biometric / 生物</td>
+<td>Fingerprint, face</td>
+</tr>
+</tbody>
+</table>
+<h4>Biometric Metrics（生物识别指标）</h4>
+<ul>
+<li><strong>FAR</strong> (False Acceptance Rate): Unauthorized accepted / 未授权被接受</li>
+<li><strong>FRR</strong> (False Rejection Rate): Authorized rejected / 授权被拒绝</li>
+<li><strong>CER</strong> (Crossover Error Rate): FAR = FRR; lower = better system / FAR=FRR；越低系统越好</li>
+</ul>
+<h4>Password Security（密码安全）</h4>
+<ul>
+<li><strong>Storage</strong>: Never store plaintext; use hash + salt / 永不存储明文；使用哈希+盐</li>
+<li><strong>Rainbow table</strong>: Precomputed hash lookup table / 预计算哈希查找表</li>
+<li><strong>Salt</strong>: Random value per user; defeats rainbow tables / 每用户随机值；击败彩虹表</li>
+<li><strong>KDF</strong> (Key Derivation Function): Slow hash (bcrypt, scrypt, Argon2) for brute-force resistance / 慢哈希用于抗暴力破解</li>
+</ul>
+<h4>Access Control Models（访问控制模型）</h4>
+<table>
+<thead>
+<tr>
+<th>Model</th>
+<th>Principle / 原则</th>
+<th>Example</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>DAC</td>
+<td>Owner controls access / 所有者控制访问</td>
+<td>Unix file permissions</td>
+</tr>
+<tr>
+<td>MAC</td>
+<td>System-enforced labels / 系统强制标签</td>
+<td>Military classification</td>
+</tr>
+<tr>
+<td>RBAC</td>
+<td>Role-based permissions / 基于角色的权限</td>
+<td>Corporate IT systems</td>
+</tr>
+<tr>
+<td>Bell-LaPadula</td>
+<td>No read up, no write down (confidentiality) / 不上读不下写</td>
+<td>Secret clearance</td>
+</tr>
+</tbody>
+</table>
+<h4>Set-UID Mechanism（Set-UID机制）</h4>
+<ul>
+<li><strong>RUID</strong> (Real UID): Who launched the process / 谁启动了进程</li>
+<li><strong>EUID</strong> (Effective UID): Whose privileges are used / 使用谁的权限</li>
+<li>Set-UID bit: Program runs with owner's EUID / 程序以所有者的EUID运行</li>
+<li><code>chmod 4755</code>: 4 = Set-UID bit + 755 (rwxr-xr-x)</li>
+</ul>
+<h4>Set-UID Attack Surfaces（Set-UID攻击面）</h4>
+<ul>
+<li><strong>Capability Leaking</strong>: Open file descriptors persist after privilege drop / 特权降级后文件描述符仍开放</li>
+<li><strong>Environment Variables</strong>: PATH manipulation, LD_PRELOAD / PATH操纵，LD_PRELOAD</li>
+<li><strong>Command Injection</strong>: system() with user input / 使用用户输入的system()</li>
+</ul>
+<hr />
+<h3>2.4 Memory Corruption: Basics / 内存破坏基础 (Week 4)</h3>
+<h4>Process Memory Layout（进程内存布局）</h4>
+<pre><code>High Address
+┌──────────────┐
+│    Stack      │ ← grows downward
+│      ↓        │
+├──────────────┤
+│  (free space) │
+│      ↑        │
+│    Heap       │ ← grows upward
+├──────────────┤
+│    BSS/Data   │
+├──────────────┤
+│    Text       │ (code)
+└──────────────┘
+Low Address
+</code></pre>
+<h4>Key Registers（关键寄存器）</h4>
+<table>
+<thead>
+<tr>
+<th>Register</th>
+<th>Purpose / 用途</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>EIP/RIP</td>
+<td>Instruction pointer — controls execution flow / 指令指针—控制执行流</td>
+</tr>
+<tr>
+<td>ESP/RSP</td>
+<td>Stack pointer — top of stack / 栈指针—栈顶</td>
+</tr>
+<tr>
+<td>EBP/RBP</td>
+<td>Base pointer — frame anchor / 基址指针—栈帧锚点</td>
+</tr>
+</tbody>
+</table>
+<h4>Stack Operation（栈操作）</h4>
+<ul>
+<li><strong>CALL</strong>: Push return address, jump to function / 压入返回地址，跳转到函数</li>
+<li><strong>RET</strong>: Pop return address to EIP / 弹出返回地址到EIP</li>
+<li>Stack grows DOWNWARD (toward lower addresses) / 栈向下增长</li>
+</ul>
+<h4>Buffer Overflow（缓冲区溢出）</h4>
+<ul>
+<li>Writing past buffer boundary \rightarrow overwrite saved EBP, return address, local variables / 越界写入\rightarrow覆盖保存的EBP、返回地址、局部变量</li>
+<li><strong>No bounds checking</strong> in C: gets(), strcpy(), sprintf() / C语言无边界检查</li>
+</ul>
+<h4>Shellcode（Shell代码）</h4>
+<ul>
+<li>Machine code to spawn a shell (/bin/sh) / 生成shell的机器码</li>
+<li>Must be NULL-free (0x00 terminates string operations) / 必须无NULL字节</li>
+</ul>
+<h4>Defenses（防御机制）</h4>
+<table>
+<thead>
+<tr>
+<th>Defense</th>
+<th>Mechanism / 机制</th>
+<th>Bypass / 绕过</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>ASLR</td>
+<td>Randomizes memory layout / 随机化内存布局</td>
+<td>Brute force (32-bit), info leak</td>
+</tr>
+<tr>
+<td>Stack Canary</td>
+<td>Secret value before return addr / 返回地址前的秘密值</td>
+<td>Info leak, format string</td>
+</tr>
+<tr>
+<td>NX/DEP</td>
+<td>Stack not executable / 栈不可执行</td>
+<td>Ret2libc, ROP</td>
+</tr>
+<tr>
+<td>Shadow Stack</td>
+<td>Hardware backup of return addresses / 硬件备份返回地址</td>
+<td>—</td>
+</tr>
+<tr>
+<td>PIE</td>
+<td>Position-independent executable / 位置无关可执行文件</td>
+<td>Info leak</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h3>2.5 Advanced Memory Corruption / 高级内存破坏 (Week 5)</h3>
+<h4>Dynamic Linking: PLT/GOT（动态链接：PLT/GOT）</h4>
+<ul>
+<li><strong>PLT</strong> (Procedure Linkage Table): Stub code for lazy resolution / 延迟解析的存根代码</li>
+<li><strong>GOT</strong> (Global Offset Table): Contains resolved function addresses / 包含已解析的函数地址</li>
+<li>Lazy binding: First call \rightarrow resolver fills GOT; subsequent calls use GOT directly / 懒绑定：首次调用\rightarrow解析器填充GOT；后续调用直接使用GOT</li>
+</ul>
+<h4>Ret2Libc（返回Libc攻击）</h4>
+<ul>
+<li>Instead of injecting shellcode, return to existing libc functions / 不注入shellcode，而是返回到已有libc函数</li>
+<li>Chain: system("/bin/sh") using stack frames / 使用栈帧链接system("/bin/sh")</li>
+<li>Bypasses NX: no code on stack is executed / 绕过NX：栈上无代码执行</li>
+</ul>
+<h4>Return-Oriented Programming — ROP（返回导向编程）</h4>
+<ul>
+<li><strong>Gadget</strong>: Short instruction sequence ending in RET / 以RET结尾的短指令序列</li>
+<li>Chain gadgets via stack: each RET jumps to next gadget / 通过栈链接gadget：每个RET跳到下一个</li>
+<li><strong>Turing-complete</strong>: Can perform arbitrary computation / 图灵完备：可执行任意计算</li>
+<li>x64 calling convention: Arguments in registers (rdi, rsi, rdx, rcx) / x64调用约定：参数在寄存器中</li>
+</ul>
+<h4>Format String Vulnerability（格式化字符串漏洞）</h4>
+<ul>
+<li><code>printf(user_input)</code>: User controls format string / 用户控制格式字符串</li>
+<li><strong>Reading memory</strong>: %x leaks stack values, %s reads pointer target / %x泄露栈值，%s读取指针目标</li>
+<li><strong>Writing memory</strong>: %n writes count of bytes printed so far / %n写入已打印的字节数</li>
+<li><strong>Direct parameter access</strong>: %7$x accesses 7th parameter directly / %7$x直接访问第7个参数</li>
+</ul>
+<h4>Modern Exploit Workflow（现代利用流程）</h4>
+<ol>
+<li><strong>Leak</strong>: Use format string or GOT read to leak libc address / 使用格式化字符串或GOT读取泄露libc地址</li>
+<li><strong>Calculate</strong>: Compute system(), "/bin/sh" offsets from base / 从基地址计算system()、"/bin/sh"偏移</li>
+<li><strong>Pwn</strong>: Overwrite GOT or return address with computed target / 用计算目标覆盖GOT或返回地址</li>
+</ol>
+<h4>RELRO（重定位只读）</h4>
+<ul>
+<li><strong>Partial RELRO</strong>: GOT.PLT still writable / GOT.PLT仍可写</li>
+<li><strong>Full RELRO</strong>: Entire GOT marked read-only at startup; blocks GOT overwrite / 启动时整个GOT标记为只读；阻止GOT覆写</li>
+</ul>
+<hr />
+<h3>2.6 DNS Security / DNS安全 (Week 7)</h3>
+<h4>DNS Infrastructure（DNS基础设施）</h4>
+<ul>
+<li><strong>Hierarchy</strong>: Root (.) \rightarrow TLD (.com) \rightarrow Second-level (example) \rightarrow Subdomain (www) / 层级结构</li>
+<li><strong>Root servers</strong>: 13 clusters (A--M), hundreds via anycast / 13个集群，通过任播扩展</li>
+<li><strong>DNS Zones</strong>: Delegation of authority / 权限委托</li>
+</ul>
+<h4>DNS Record Types（DNS记录类型）</h4>
+<table>
+<thead>
+<tr>
+<th>Type</th>
+<th>Purpose / 用途</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>A</td>
+<td>Name → IPv4 address / 名称→IPv4地址</td>
+</tr>
+<tr>
+<td>AAAA</td>
+<td>Name → IPv6 address / 名称→IPv6地址</td>
+</tr>
+<tr>
+<td>NS</td>
+<td>Delegated name server / 委派名称服务器</td>
+</tr>
+<tr>
+<td>MX</td>
+<td>Mail server / 邮件服务器</td>
+</tr>
+<tr>
+<td>CNAME</td>
+<td>Alias / 别名</td>
+</tr>
+<tr>
+<td>SOA</td>
+<td>Zone authority info / 区域权威信息</td>
+</tr>
+</tbody>
+</table>
+<h4>DNS Query Process（DNS查询过程）</h4>
+<ol>
+<li>Client \rightarrow Local resolver (stub) \rightarrow Recursive resolver \rightarrow Root \rightarrow TLD \rightarrow Authoritative</li>
+<li><strong>Caching</strong>: Each level caches responses for TTL duration / 每级缓存响应直到TTL过期</li>
+<li><strong>Iterative vs Recursive</strong>: Resolver does iterative lookup on behalf of client / 解析器代表客户端做迭代查询</li>
+</ol>
+<h4>DNS Cache Poisoning（DNS缓存投毒）</h4>
+<ul>
+<li><strong>Local attack</strong>: Attacker on same LAN, forge DNS response / 同一局域网，伪造DNS响应</li>
+<li><strong>Remote attack (Kaminsky)</strong>: Query random subdomains \rightarrow never cached \rightarrow unlimited attempts / 查询随机子域名\rightarrow永不缓存\rightarrow无限尝试</li>
+<li><strong>Key insight of Kaminsky</strong>: Random subdomains bypass caching, giving unlimited fresh attempts / 随机子域名绕过缓存，获得无限新鲜尝试</li>
+<li><strong>Required fields to spoof</strong>: Source port + Transaction ID (16-bit each) / 源端口+事务ID</li>
+</ul>
+<h4>Modern DNS Threats（现代DNS威胁）</h4>
+<table>
+<thead>
+<tr>
+<th>Threat</th>
+<th>Description / 描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>DGA</td>
+<td>Domain Generation Algorithm — malware uses algorithmic domains / 域名生成算法</td>
+</tr>
+<tr>
+<td>Fast Flux</td>
+<td>Rapidly changing IP addresses behind a domain / 域名后快速更换IP</td>
+</tr>
+<tr>
+<td>DNS Tunneling</td>
+<td>Encode data in DNS queries/responses for exfiltration / 在DNS查询/响应中编码数据以进行数据外泄</td>
+</tr>
+<tr>
+<td>DNS Rebinding</td>
+<td>Manipulate DNS to bypass same-origin policy / 操纵DNS绕过同源策略</td>
+</tr>
+</tbody>
+</table>
+<h4>DNSSEC（DNS安全扩展）</h4>
+<ul>
+<li>Signs DNS records with digital signatures / 用数字签名签署DNS记录</li>
+<li><strong>Chain of trust</strong>: Root KSK \rightarrow ZSK \rightarrow Zone signatures / 信任链：根KSK\rightarrowZSK\rightarrow区域签名</li>
+<li><strong>DS record</strong>: Links parent zone to child zone's KSK / DS记录将父区域链接到子区域的KSK</li>
+<li><strong>Does NOT encrypt</strong> DNS data; only provides authenticity and integrity / 不加密DNS数据；仅提供真实性和完整性</li>
+</ul>
+<h4>Encrypted DNS（加密DNS）</h4>
+<ul>
+<li><strong>DoH</strong> (DNS over HTTPS): Port 443; blends with web traffic / 端口443；与Web流量混合</li>
+<li><strong>DoT</strong> (DNS over TLS): Port 853; dedicated port / 端口853；专用端口</li>
+<li><strong>Detection challenge</strong>: DoH looks like normal HTTPS / DoH看起来像正常HTTPS</li>
+</ul>
+<hr />
+<h3>2.7 Firewalls &amp; VPN / 防火墙与VPN (Week 8)</h3>
+<h4>Firewall Types（防火墙类型）</h4>
+<table>
+<thead>
+<tr>
+<th>Type</th>
+<th>Works at</th>
+<th>Inspects / 检查</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Packet filtering</td>
+<td>Network layer (L3)</td>
+<td>IP, port, protocol headers</td>
+</tr>
+<tr>
+<td>Stateful firewall</td>
+<td>L3-L4 + state</td>
+<td>Connection tracking (conntrack)</td>
+</tr>
+<tr>
+<td>Application proxy</td>
+<td>L7</td>
+<td>Full application data</td>
+</tr>
+</tbody>
+</table>
+<h4>iptables Architecture（iptables架构）</h4>
+<ul>
+<li><strong>Tables</strong>: filter (default), nat, mangle / filter（默认）、nat、mangle</li>
+<li><strong>Chains</strong>: INPUT, OUTPUT, FORWARD / INPUT、OUTPUT、FORWARD</li>
+<li><strong>Rules</strong>: Match criteria \rightarrow target (ACCEPT, DROP, REJECT) / 匹配条件\rightarrow目标</li>
+<li><strong>Connection tracking</strong>: ESTABLISHED, RELATED states allow return traffic / ESTABLISHED、RELATED状态允许返回流量</li>
+</ul>
+<h4>Stateful vs Stateless Filtering（有状态vs无状态过滤）</h4>
+<ul>
+<li><strong>Stateless</strong>: Only checks individual packets; easily spoofed / 仅检查单个包；易被伪造</li>
+<li><strong>Stateful</strong>: Checks connection state; blocks unsolicited inbound / 检查连接状态；阻止未经请求的入站</li>
+</ul>
+<h4>VPN Concepts（VPN概念）</h4>
+<ul>
+<li><strong>TUN interface</strong>: Layer 3 (IP packets) --- no Ethernet overhead / 三层（IP包）---无以太网开销</li>
+<li><strong>TAP interface</strong>: Layer 2 (Ethernet frames) --- bridging, same broadcast domain / 二层（以太网帧）---桥接，同广播域</li>
+<li><strong>TUN preferred</strong> for site-to-site routing; <strong>TAP</strong> when L2 connectivity needed / TUN用于站点间路由；TAP在需要L2连接性时使用</li>
+</ul>
+<h4>VPN Packet Flow（VPN包流程）</h4>
+<ol>
+<li>Application sends packet to private network (e.g., 10.0.8.5) / 应用发送包到私有网络</li>
+<li>Kernel routing table directs traffic to tun0 / 内核路由表将流量导向tun0</li>
+<li>VPN app reads raw packet from tun0, encrypts it / VPN应用从tun0读取原始包，加密</li>
+<li>Wraps in new IP/UDP packet addressed to VPN server's public IP / 封装在新的IP/UDP包中</li>
+<li>Sends out through eth0 / 通过eth0发出</li>
+</ol>
+<h4>IPsec vs OpenVPN</h4>
+<table>
+<thead>
+<tr>
+<th>Feature</th>
+<th>IPsec</th>
+<th>OpenVPN</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Standard</td>
+<td>IETF standard</td>
+<td>Proprietary protocol</td>
+</tr>
+<tr>
+<td>NAT traversal</td>
+<td>ESP in UDP (port 4500)</td>
+<td>UDP port 1194</td>
+</tr>
+<tr>
+<td>Compatibility</td>
+<td>Kernel-level, varies</td>
+<td>User-space, cross-platform</td>
+</tr>
+<tr>
+<td>Firewall traversal</td>
+<td>Can be blocked</td>
+<td>Looks like regular UDP</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h3>2.8 Web Security &amp; XSS / Web安全与XSS (Week 9)</h3>
+<h4>Same-Origin Policy — SOP（同源策略）</h4>
+<ul>
+<li><strong>Origin</strong> = scheme + host + port / 源 = 协议 + 主机 + 端口</li>
+<li>SOP blocks: DOM access, AJAX reads across origins / SOP阻止跨源的DOM访问和AJAX读取</li>
+<li>SOP allows: Cross-origin form submission, script/image loading / SOP允许跨源表单提交、脚本/图片加载</li>
+</ul>
+<h4>XSS Types（XSS类型）</h4>
+<table>
+<thead>
+<tr>
+<th>Type</th>
+<th>Source</th>
+<th>Persistence / 持久性</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Reflected</td>
+<td>URL parameter, reflected in response / URL参数，反映在响应中</td>
+<td>One-time / 一次性</td>
+</tr>
+<tr>
+<td>Stored</td>
+<td>Saved in database (e.g., profile field) / 保存在数据库中</td>
+<td>Persistent / 持久</td>
+</tr>
+<tr>
+<td>DOM-based</td>
+<td>Client-side JS writes user input to DOM without sanitization / 客户端JS将用户输入写入DOM</td>
+<td>Client-side only / 仅客户端</td>
+</tr>
+</tbody>
+</table>
+<h4>XSS Impact（XSS影响）</h4>
+<ul>
+<li>Steal cookies (if not HttpOnly) / 窃取Cookie</li>
+<li>Bypass CSRF tokens (XSS can read page content) / 绕过CSRF令牌</li>
+<li>Keylogging, phishing, worm propagation / 键盘记录、钓鱼、蠕虫传播</li>
+<li><strong>Key insight</strong>: XSS injects code into trusted origin \rightarrow full access to victim's session / XSS在可信源中注入代码\rightarrow完全访问受害者会话</li>
+</ul>
+<h4>XSS Defenses（XSS防御）</h4>
+<table>
+<thead>
+<tr>
+<th>Defense</th>
+<th>Mechanism / 机制</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Output Encoding</td>
+<td>Context-aware escaping (HTML, JS, URL, CSS) / 上下文感知转义</td>
+</tr>
+<tr>
+<td>CSP</td>
+<td>Content Security Policy — restrict script sources / 内容安全策略—限制脚本来源</td>
+</tr>
+<tr>
+<td>HttpOnly</td>
+<td>Cookie flag — JS cannot access cookie / Cookie标志—JS无法访问</td>
+</tr>
+<tr>
+<td>Framework auto-escaping</td>
+<td>React, Django escape by default / React、Django默认转义</td>
+</tr>
+</tbody>
+</table>
+<h4>CSP Directives（CSP指令）</h4>
+<ul>
+<li><code>default-src 'self'</code>: Only load from same origin / 仅从同源加载</li>
+<li><code>script-src 'nonce-abc'</code>: Only scripts with matching nonce / 仅匹配nonce的脚本</li>
+<li><code>unsafe-inline</code> / <code>unsafe-eval</code>: Weaken CSP; avoid in production / 削弱CSP；生产环境避免</li>
+</ul>
+<hr />
+<h3>2.9 CSRF, SSRF &amp; SQL Injection / CSRF/SSRF/SQL注入 (Week 10)</h3>
+<h4>CSRF (Cross-Site Request Forgery)（跨站请求伪造）</h4>
+<ul>
+<li><strong>Attack</strong>: Forges authenticated request from attacker's site / 从攻击者站点伪造认证请求</li>
+<li><strong>Key</strong>: Browser automatically attaches target site's cookies / 浏览器自动附加目标站点的Cookie</li>
+<li><strong>CSRF vs XSS</strong>: CSRF cannot READ response (SOP blocks); XSS can / CSRF不能读取响应；XSS可以</li>
+<li><strong>XSS &gt; CSRF</strong>: XSS can bypass CSRF tokens by reading them from page / XSS可通过从页面读取来绕过CSRF令牌</li>
+</ul>
+<h4>CSRF Defenses（CSRF防御）</h4>
+<table>
+<thead>
+<tr>
+<th>Defense</th>
+<th>Mechanism / 机制</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>CSRF Token</td>
+<td>Server-issued secret token in forms / 服务器在表单中发放的秘密令牌</td>
+</tr>
+<tr>
+<td>SameSite Cookie</td>
+<td>Strict/Lax — cookie not sent on cross-site requests / Strict/Lax—跨站请求不发送Cookie</td>
+</tr>
+<tr>
+<td>Referer/Origin check</td>
+<td>Verify request originates from same site / 验证请求来源同站</td>
+</tr>
+<tr>
+<td>Custom headers</td>
+<td>X-Requested-With (AJAX only) / 仅AJAX</td>
+</tr>
+</tbody>
+</table>
+<h4>SSRF (Server-Side Request Forgery)（服务器端请求伪造）</h4>
+<ul>
+<li><strong>Attack</strong>: Server makes requests to attacker-specified URLs / 服务器向攻击者指定的URL发送请求</li>
+<li><strong>Cloud metadata attack</strong>: Access http://169.254.169.254 to steal cloud credentials / 访问元数据端点窃取云凭证</li>
+<li><strong>Defenses</strong>: Whitelist allowed destinations, block private IPs, disable URL redirects / 白名单允许目的地、阻止私有IP、禁用URL重定向</li>
+</ul>
+<h4>SQL Injection（SQL注入）</h4>
+<ul>
+<li><strong>Classic attack</strong>: <code>' OR 1=1 --</code> bypasses authentication / 绕过认证</li>
+<li><strong>Types</strong>: In-band (UNION, error-based), blind (boolean, time-based) / 内联、盲注</li>
+<li><strong>Impact</strong>: Data exfiltration, authentication bypass, RCE (via INTO OUTFILE) / 数据外泄、认证绕过、远程代码执行</li>
+</ul>
+<h4>SQL Injection Defenses（SQL注入防御）</h4>
+<table>
+<thead>
+<tr>
+<th>Defense</th>
+<th>Mechanism / 机制</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Prepared Statements</td>
+<td>Parameterized queries; code and data separated / 参数化查询；代码与数据分离</td>
+</tr>
+<tr>
+<td>Input Validation</td>
+<td>Whitelist allowed patterns / 白名单允许模式</td>
+</tr>
+<tr>
+<td>Least Privilege</td>
+<td>DB user has minimal permissions / 数据库用户最小权限</td>
+</tr>
+<tr>
+<td>ORM</td>
+<td>Frameworks escape by default / 框架默认转义</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h3>2.10 AI Security / AI安全 (Week 11)</h3>
+<h4>AI Attack Categories（AI攻击类别）</h4>
+<table>
+<thead>
+<tr>
+<th>Category</th>
+<th>Description / 描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Handcrafted Jailbreaks</td>
+<td>Carefully crafted prompts to bypass alignment / 精心构造的提示词绕过对齐</td>
+</tr>
+<tr>
+<td>Gradient-Based (GCG)</td>
+<td>Automated adversarial suffix generation / 自动对抗后缀生成</td>
+</tr>
+<tr>
+<td>Gradient-Free / Model-Based</td>
+<td>Use one model to jailbreak another / 用一个模型越狱另一个</td>
+</tr>
+<tr>
+<td>Direct Prompt Injection</td>
+<td>Attacker controls prompt directly / 攻击者直接控制提示词</td>
+</tr>
+<tr>
+<td>Indirect Prompt Injection</td>
+<td>Attacker controls data that model reads (emails, docs) / 攻击者控制模型读取的数据</td>
+</tr>
+<tr>
+<td>Side Channel Attacks</td>
+<td>Extract info via timing, cache, power / 通过时序、缓存、功耗提取信息</td>
+</tr>
+</tbody>
+</table>
+<h4>Prompt Injection Hierarchy（提示注入层级）</h4>
+<ul>
+<li><strong>Direct</strong>: Attacker talks to model directly / 攻击者直接与模型对话</li>
+<li><strong>Indirect</strong>: Attacker embeds instructions in external data (more dangerous) / 攻击者在外部数据中嵌入指令（更危险）</li>
+</ul>
+<h4>Defense in Depth for AI（AI的纵深防御）</h4>
+<table>
+<thead>
+<tr>
+<th>Layer</th>
+<th>Defense</th>
+<th>Target</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Input</td>
+<td>Filtering, guard models</td>
+<td>Malicious prompts</td>
+</tr>
+<tr>
+<td>Model</td>
+<td>Alignment, RLHF</td>
+<td>Harmful generation</td>
+</tr>
+<tr>
+<td>Output</td>
+<td>Content filtering, fact-checking</td>
+<td>Harmful responses</td>
+</tr>
+<tr>
+<td>Tool</td>
+<td>Least privilege, approval gates</td>
+<td>Unauthorized actions</td>
+</tr>
+<tr>
+<td>System</td>
+<td>Sandboxing, logging, rate limits</td>
+<td>Blast radius, forensics</td>
+</tr>
+</tbody>
+</table>
+<h4>Open Weight Security Risks（开源权重安全风险）</h4>
+<ul>
+<li>Anyone can fine-tune to remove safety alignment / 任何人都可以微调移除安全对齐</li>
+<li>Deployment security matters more than model alignment / 部署安全比模型对齐更重要</li>
+<li><strong>Key insight</strong>: Alignment is a thin veneer; prompt injection is the "new SQLi" / 对齐是薄层；提示注入是"新型SQL注入"</li>
+</ul>
+<hr />
+<h2>3. Key Formulas &amp; Theorems / 重点公式与定理</h2>
+<h3>AES Encryption（AES加密）</h3>
+<ul>
+<li><strong>Formula</strong>: C = AES_Enc(K, P); P = AES_Dec(K, C)</li>
+<li><strong>Variables</strong>: K = key, P = plaintext, C = ciphertext / K=密钥, P=明文, C=密文</li>
+<li><strong>Conditions</strong>: Block size = 128 bits; key = 128/192/256 bits / 块大小128位；密钥128/192/256位</li>
+</ul>
+<h3>CBC Mode Encryption（CBC模式加密）</h3>
+<ul>
+<li><strong>Formula</strong>: $C_i = \mathrm{Enc}(K, P_i \oplus C_{i-1})$; $C_0 = \mathrm{IV}$</li>
+<li><strong>Variables</strong>: IV = initialization vector (must be random and unpredictable) / IV=初始化向量（必须随机且不可预测）</li>
+<li><strong>Conditions</strong>: IV must never be reused with same key / IV不能与同一密钥重复使用</li>
+</ul>
+<h3>HMAC Construction（HMAC构造）</h3>
+<ul>
+<li><strong>Formula</strong>: $\mathrm{HMAC}(K, m) = H((K \oplus \mathrm{opad}) | H((K \oplus \mathrm{ipad}) | m))$</li>
+<li><strong>Variables</strong>: K = key, m = message, H = hash function, ipad/opad = inner/outer padding constants / K=密钥, m=消息, H=哈希函数</li>
+<li><strong>Conditions</strong>: Key should be hash output length / 密钥应为哈希输出长度</li>
+</ul>
+<h3>Diffie-Hellman Key Exchange（DH密钥交换）</h3>
+<ul>
+<li><strong>Formula</strong>: $\mathrm{Shared secret} = (g^b \bmod p)^a \bmod p = (g^a \bmod p)^b \bmod p = g^{ab} \bmod p$</li>
+<li><strong>Variables</strong>: g = generator, p = prime, a/b = private values / g=生成元, p=素数, a/b=私有值</li>
+<li><strong>Conditions</strong>: Vulnerable to MITM without authentication / 无认证时易受中间人攻击</li>
+</ul>
+<h3>Buffer Overflow Offset（缓冲区溢出偏移）</h3>
+<ul>
+<li><strong>Formula</strong>: offset = distance from buffer start to saved return address</li>
+<li><strong>Variables</strong>: $\mathrm{offset} = \mathrm{buf_start} + \mathrm{buffer_size} + \mathrm{padding} + \mathrm{saved_EBP_size}$ / 偏移=缓冲区起始+缓冲区大小+填充+保存的EBP大小</li>
+<li><strong>Conditions</strong>: Alignment may add padding; verify with GDB / 对齐可能添加填充；用GDB验证</li>
+</ul>
+<h3>Format String %n Write（格式化字符串%n写入）</h3>
+<ul>
+<li><strong>Formula</strong>: <code>%n</code> writes the number of characters printed so far into the pointed-to address</li>
+<li><strong>Variables</strong>: <code>%n</code> = writes int count; <code>%hn</code> = writes short; <code>%hhn</code> = writes char / %n写入int计数；%hn写入short；%hhn写入char</li>
+<li><strong>Conditions</strong>: Must have a pointer to target address on the stack / 栈上必须有指向目标地址的指针</li>
+</ul>
+<hr />
+<h2>4. Typical Questions &amp; Solutions / 典型例题与解答</h2>
+<h3>Question 1: ECB vs CBC（ECB与CBC模式对比）</h3>
+<p><strong>Problem</strong>: ECB mode encrypts each block independently with the same key. Explain why this is insecure and how CBC mode solves the problem.</p>
+<p><strong>Solution</strong>: 
+- ECB is insecure because identical plaintext blocks produce identical ciphertext blocks, revealing patterns in the data. An attacker can detect repetitions and even identify content from ciphertext patterns (e.g., encrypted images remain recognizable).
+- CBC solves this by XORing each plaintext block with the previous ciphertext block before encryption: $C_i = \mathrm{Enc}(K, P_i \oplus C_{i-1})$. The first block uses a random IV. This ensures identical plaintext blocks produce different ciphertext blocks, eliminating pattern leakage.</p>
+<ul>
+<li>ECB不安全是因为相同的明文块产生相同的密文块，暴露数据模式。攻击者可以检测重复，甚至从密文模式识别内容。</li>
+<li>CBC通过对每个明文块在加密前与前一个密文块异或来解决：$C_i = \mathrm{Enc}(K, P_i \oplus C_{i-1})$。第一个块使用随机IV。这确保相同明文块产生不同密文块。</li>
+</ul>
+<hr />
+<h3>Question 2: SSL Stripping &amp; HSTS（SSL剥离与HSTS）</h3>
+<p><strong>Problem</strong>: Explain how an SSL stripping attack works, and describe how HSTS defends against it. What limitation does HSTS have on a user's very first visit?</p>
+<p><strong>Solution</strong>:
+- SSL stripping (Moxie Marlinspike): MITM attacker intercepts the initial HTTP request and prevents the redirect to HTTPS. The victim continues on HTTP while the attacker proxies to the server via HTTPS. The victim sees no warning.
+- HSTS defends by telling the browser (via Strict-Transport-Security header) to always use HTTPS for that domain in future visits.
+- Limitation: On the very first visit, the browser hasn't received the HSTS header yet, so the first connection is still vulnerable to SSL stripping.</p>
+<ul>
+<li>SSL剥离：中间人攻击者拦截初始HTTP请求，阻止重定向到HTTPS。受害者继续使用HTTP，而攻击者通过HTTPS代理到服务器。受害者看不到警告。</li>
+<li>HSTS通过Strict-Transport-Security头告诉浏览器未来始终使用HTTPS。</li>
+<li>限制：首次访问时浏览器尚未收到HSTS头，因此首次连接仍易受SSL剥离攻击。</li>
+</ul>
+<hr />
+<h3>Question 3: Set-UID Privilege Analysis（Set-UID权限分析）</h3>
+<p><strong>Problem</strong>: Consider the root-owned Set-UID program:</p>
+<pre><code class="language-c">int main(int argc, char *argv[]) {
+    int fd = open(&quot;/etc/secret_notes&quot;, O_RDWR);   // Line A
+    setuid(getuid());                               // Line B
+    char cmd[256];
+    sprintf(cmd, &quot;cat %s&quot;, argv[1]);               // Line C
+    system(cmd);                                    // Line D
+    return 0;
+}
+</code></pre>
+<p>User alice (UID 1000) runs: <code>./privnotes myfile.txt</code></p>
+<p>(a) State the RUID and EUID at Line A, and again at Line B. Which line causes EUID to change?
+(b) After Line B, how can an attacker still exploit this program?
+(c) Give two concrete fixes.</p>
+<p><strong>Solution</strong>:
+<strong>(a)</strong> At Line A: RUID=1000 (alice), EUID=0 (root). After Line B (setuid(getuid())): RUID=1000, EUID=1000. Line B causes EUID to change because setuid(getuid()) drops root privileges by setting EUID to the real UID.</p>
+<p><strong>(b)</strong> Two vulnerabilities remain:
+1. <strong>File descriptor leak (Line A$\rightarrow$D)</strong>: fd to /etc/secret_notes is still open after privilege drop. Attacker can pass <code>/proc/self/fd/3</code> as argv[1] to read the protected file via the still-open descriptor.
+2. <strong>Command injection (Line C$\rightarrow$D)</strong>: system() executes user-supplied argv[1] through the shell. Attacker can pass <code>myfile.txt; cat /etc/secret_notes</code> or use shell metacharacters.</p>
+<p><strong>(c)</strong> Fixes:
+1. For FD leak: Close the file descriptor before calling system(), or set FD_CLOEXEC flag so it's automatically closed on exec.
+2. For command injection: Replace system() with execvp() which does not invoke a shell, or use execve() with explicit argument arrays.</p>
+<ul>
+<li>(a) Line A处：RUID=1000，EUID=0（root）。Line B后：RUID=1000，EUID=1000。Line B导致EUID改变。</li>
+<li>(b) 两个漏洞：文件描述符泄漏（特权降级后fd仍开放）和命令注入（system()使用用户输入）。</li>
+<li>(c) 修复：关闭fd或设置FD_CLOEXEC；用execvp()替代system()。</li>
+</ul>
+<hr />
+<h3>Question 4: Kaminsky DNS Attack（Kaminsky DNS攻击）</h3>
+<p><strong>Problem</strong>: In the Kaminsky DNS cache poisoning attack, the attacker queries for random subdomains (e.g., xyz123.example.com) instead of the target hostname directly. Why is this the key insight?</p>
+<p><strong>Solution</strong>: 
+<strong>C</strong>: Random subdomains are never cached, so the attacker gets unlimited fresh attempts without waiting for TTL expiry. If the attacker queried the target hostname directly, the legitimate response would be cached and the attacker would have to wait for TTL to expire before trying again. Random subdomains ensure the resolver always has to forward the query to the authoritative server, giving the attacker unlimited chances to race with the legitimate response.</p>
+<ul>
+<li>随机子域名永远不会被缓存，因此攻击者获得无限新鲜尝试而无需等待TTL过期。如果直接查询目标主机名，合法响应会被缓存，攻击者必须等待TTL过期才能再试。随机子域名确保解析器总是必须将查询转发到权威服务器。</li>
+</ul>
+<hr />
+<h3>Question 5: DNS Spoofing Required Fields（DNS欺骗必要字段）</h3>
+<p><strong>Problem</strong>: Which combination of fields must a remote attacker correctly guess to successfully spoof a DNS response?</p>
+<p><strong>Solution</strong>: 
+<strong>B</strong>: 16-bit Transaction ID + 16-bit source port. The attacker must match both the Transaction ID (to identify the correct query) and the source port (to direct the response to the correct resolver port). Older resolvers used fixed source port 53, making only Transaction ID guessing necessary (65,536 possibilities). Modern resolvers randomize source ports, increasing the search space to 2^32.</p>
+<ul>
+<li>16位事务ID + 16位源端口。攻击者必须同时匹配事务ID和源端口。旧解析器使用固定源端口53，使事务ID猜测成为唯一障碍（65,536种可能）。现代解析器随机化源端口，将搜索空间增加到2^32。</li>
+</ul>
+<hr />
+<h3>Question 6: Stateful vs Stateless Firewall（有状态vs无状态防火墙）</h3>
+<p><strong>Problem</strong>: Explain why a stateless packet filter that allows outbound TCP/80 and inbound TCP from source port 80 is vulnerable, and how a stateful firewall prevents this.</p>
+<p><strong>Solution</strong>:
+A stateless firewall allows any inbound packet with source port 80, including unsolicited packets from an attacker who sets their source port to 80. An attacker can initiate connections to internal services by sending packets FROM port 80, and the stateless filter would allow them through.</p>
+<p>A stateful firewall maintains a connection tracking (conntrack) table. It only allows inbound packets that match an existing outbound connection in the ESTABLISHED state. Since no outbound connection was initiated to the attacker's address, the unsolicited inbound packet is dropped.</p>
+<ul>
+<li>无状态防火墙允许任何源端口80的入站包，包括攻击者从端口80发起的未请求的包。有状态防火墙维护连接跟踪表，仅允许匹配已有出站连接的入站包。</li>
+</ul>
+<hr />
+<h3>Question 7: VPN Packet Flow（VPN包流程）</h3>
+<p><strong>Problem</strong>: A browser on a VPN client sends a packet to 10.0.8.5. Describe the packet's journey through the VPN.</p>
+<p><strong>Solution</strong>:
+1. The browser sends a packet to 10.0.8.5 (private IP). / 浏览器发送包到10.0.8.5
+2. The kernel's routing table directs 10.0.8.x traffic to the tun0 interface. / 内核路由表将流量导向tun0
+3. The VPN application reads the raw IP packet from tun0, encrypts it with AES-256. / VPN应用从tun0读取原始IP包，用AES-256加密
+4. Wraps it in a new UDP packet: outer src=client's public IP, dst=VPN server's public IP. / 封装在新的UDP包中
+5. Sends the encrypted tunnel packet out through eth0. / 通过eth0发出加密隧道包</p>
+<hr />
+<h3>Question 8: DNS Exfiltration via DoH（通过DoH的DNS数据外泄）</h3>
+<p><strong>Problem</strong>: A compromised host uses DNS-over-HTTPS (DoH) for data exfiltration. (a) Why can't a firewall detect this? (b) What's a better approach than blocking all outbound UDP/53? (c) What detection strategies exist?</p>
+<p><strong>Solution</strong>:
+<strong>(a)</strong> DoH encapsulates DNS queries inside HTTPS on port 443, making them indistinguishable from normal web browsing traffic. The firewall cannot differentiate between legitimate HTTPS and DoH exfiltration.</p>
+<p><strong>(b)</strong> Instead of blocking all outbound DNS (which breaks all services), force DNS through a designated internal resolver: whitelist only the resolver's IP for outbound port 53, and deploy DNS-layer monitoring (entropy analysis, query-rate limits, DNS firewall like RPZ).</p>
+<p><strong>(c)</strong> Detection strategies: monitor connections to known public DoH resolver IPs (1.1.1.1, 8.8.8.8 on port 443); deploy enterprise TLS inspection proxy; use endpoint detection (EDR) to flag processes making DoH requests.</p>
+<ul>
+<li>(a) DoH将DNS查询封装在HTTPS的443端口中，与正常Web流量无法区分。</li>
+<li>(b) 强制DNS通过指定内部解析器，白名单仅允许解析器IP的出站53端口，部署DNS层监控。</li>
+<li>(c) 监控已知DoH解析器IP的连接、部署TLS检测代理、使用EDR终端检测。</li>
+</ul>
+<hr />
+<h3>Question 9: TUN vs TAP Mode（TUN与TAP模式对比）</h3>
+<p><strong>Problem</strong>: In VPN site-to-site configuration, when would you prefer TAP (Layer 2) over TUN (Layer 3)?</p>
+<p><strong>Solution</strong>:
+TUN (Layer 3, IP packets only) is preferred for most site-to-site routing because it's more efficient (no Ethernet overhead, no MAC addresses, no ARP). TAP (Layer 2, Ethernet frames) is preferred when the two sites need to appear as one broadcast domain --- e.g., when applications rely on Layer 2 discovery protocols, ARP resolution across sites, or DHCP that must span both locations.</p>
+<ul>
+<li>TUN（三层，仅IP包）更高效，用于大多数站点间路由。TAP（二层，以太网帧）在两个站点需要同一广播域时使用，如应用依赖二层发现协议、跨站点ARP或DHCP。</li>
+</ul>
+<hr />
+<h3>Question 10: XSS vs CSRF（XSS与CSRF对比）</h3>
+<p><strong>Problem</strong>: Compare XSS and CSRF: which is more powerful and why?</p>
+<p><strong>Solution</strong>:
+XSS is more powerful because:
+- XSS code runs in the victim's origin \rightarrow can both SEND requests AND READ responses
+- CSRF can only SEND requests; cannot READ responses (blocked by SOP)
+- XSS can bypass CSRF tokens by reading them from the page DOM
+- XSS can steal cookies (if not HttpOnly), perform actions as the victim, and propagate as a worm</p>
+<table>
+<thead>
+<tr>
+<th>Aspect</th>
+<th>CSRF</th>
+<th>XSS</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Can send requests?</td>
+<td>Yes</td>
+<td>Yes</td>
+</tr>
+<tr>
+<td>Can read responses?</td>
+<td>No (SOP blocks)</td>
+<td>Yes (same origin)</td>
+</tr>
+<tr>
+<td>Can bypass CSRF tokens?</td>
+<td>No</td>
+<td>Yes (can read tokens)</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>XSS更强大：XSS代码在受害者源中运行\rightarrow可以发送请求并读取响应。CSRF只能发送请求，不能读取响应（被SOP阻止）。XSS可以通过从页面DOM读取来绕过CSRF令牌。</li>
+</ul>
+<hr />
+<h3>Question 11: SQL Injection Prevention（SQL注入防御）</h3>
+<p><strong>Problem</strong>: Why are prepared statements effective against SQL injection? Give an example.</p>
+<p><strong>Solution</strong>:
+Prepared statements separate SQL code from data. The query structure is fixed before any user input is inserted, and parameters are treated as literal values, not executable SQL.</p>
+<p>Example --- Vulnerable:</p>
+<pre><code class="language-python">query = &quot;SELECT * FROM users WHERE name = '&quot; + user_input + &quot;'&quot;
+# Input: ' OR 1=1 -- → SELECT * FROM users WHERE name = '' OR 1=1 --'
+</code></pre>
+<p>Example --- Safe:</p>
+<pre><code class="language-python">query = &quot;SELECT * FROM users WHERE name = ?&quot;
+cursor.execute(query, (user_input,))  # Parameter treated as data, not SQL
+</code></pre>
+<p>Even if user_input = "' OR 1=1 --", the database treats it as a literal string to match against the name column, not as SQL code.</p>
+<ul>
+<li>预处理语句将SQL代码与数据分离。查询结构在任何用户输入插入之前已固定，参数被视为字面值而非可执行SQL。</li>
+</ul>
+<hr />
+<h3>Question 12: AI Prompt Injection（AI提示注入）</h3>
+<p><strong>Problem</strong>: Explain the difference between direct and indirect prompt injection. Which is more dangerous and why?</p>
+<p><strong>Solution</strong>:
+- <strong>Direct prompt injection</strong>: Attacker directly controls the prompt sent to the model (e.g., typing "ignore previous instructions" in a chat interface).
+- <strong>Indirect prompt injection</strong>: Attacker embeds malicious instructions in external data that the model reads (e.g., hidden text in an email, webpage, or document that the AI agent processes).</p>
+<p>Indirect prompt injection is more dangerous because:
+1. The user doesn't see the malicious instructions (they're embedded in data)
+2. The model may trust the data source implicitly
+3. It scales --- one poisoned document can affect every user whose AI reads it
+4. Harder to detect and prevent</p>
+<ul>
+<li>直接注入：攻击者直接控制发给模型的提示词。间接注入：攻击者在模型读取的外部数据中嵌入恶意指令。间接注入更危险，因为用户看不到恶意指令，模型可能隐式信任数据源，且一个有毒文档可影响所有用户。</li>
+</ul>
+<hr />
+<h2>5. Exam Tips / 考试要点</h2>
+<h3>Key Comparison Tables to Remember（需记住的关键对比表）</h3>
+<ol>
+<li>ECB vs CBC vs CTR vs GCM</li>
+<li>Symmetric vs Asymmetric encryption</li>
+<li>Reflected vs Stored vs DOM-based XSS</li>
+<li>CSRF vs XSS</li>
+<li>TUN vs TAP</li>
+<li>Stateful vs Stateless firewall</li>
+<li>DNSSEC vs DoH vs DoT</li>
+<li>Ret2Libc vs ROP</li>
+<li>DAC vs MAC vs RBAC</li>
+</ol>
+<h3>Common Pitfalls（常见陷阱）</h3>
+<ul>
+<li>ASLR doesn't prevent overflow --- it just makes guessing addresses harder / ASLR不阻止溢出---只是让猜测地址更难</li>
+<li>NX prevents shellcode on stack, but doesn't prevent code reuse attacks / NX阻止栈上shellcode，但不阻止代码重用攻击</li>
+<li>CSRF tokens are useless against XSS / CSRF令牌对XSS无效</li>
+<li>HttpOnly prevents JS cookie access but doesn't stop authenticated requests / HttpOnly阻止JS访问Cookie但不阻止认证请求</li>
+<li>DNSSEC doesn't encrypt DNS data / DNSSEC不加密DNS数据</li>
+</ul>
+<hr />
+<h2>Week 12: AI for Cybersecurity / AI赋能网络安全</h2>
+<h3>12.1 The Phase Transition（相变）</h3>
+<ul>
+<li><strong>Definition（定义）</strong>: AI in cybersecurity is a qualitative shift, not incremental. Both attackers and defenders gain speed, scale, and adaptability simultaneously. / AI在网络安全中是质变而非渐变，攻防双方同时获得速度、规模和适应性优势。</li>
+<li><strong>Key Comparison（关键对比）</strong>:</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>Property / 属性</th>
+<th>Before AI / AI之前</th>
+<th>After AI / AI之后</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Speed / 速度</td>
+<td>Human reaction (minutes–hours) / 人类反应</td>
+<td>Machine reaction (milliseconds) / 机器反应</td>
+</tr>
+<tr>
+<td>Scale / 规模</td>
+<td>One analyst per investigation / 一位分析师一项调查</td>
+<td>One agent per alert, thousands in parallel / 一个Agent一个告警，数千并行</td>
+</tr>
+<tr>
+<td>Adaptability / 适应性</td>
+<td>Rules updated quarterly / 规则季度更新</td>
+<td>Models retrained continuously / 模型持续重训</td>
+</tr>
+<tr>
+<td>Entry barrier / 准入门槛</td>
+<td>Years of training / 多年训练</td>
+<td>Natural-language instruction / 自然语言指令</td>
+</tr>
+</tbody>
+</table>
+<h3>12.2 Intent-Based Security Operations（基于意图的安全运营）</h3>
+<ul>
+<li><strong>Definition（定义）</strong>: AI bridges the gap between intent and execution — describe goals in natural language, agent selects/configures tools and orchestrates multi-step workflows. / AI弥合意图与执行之间的鸿沟。</li>
+<li><strong>Key Points（要点）</strong>: Works for both offense ("find a way into this network") and defense ("detect lateral movement in these logs"). The barrier to entry has collapsed for both sides. / 攻防双方均可用；准入门槛已崩塌。</li>
+</ul>
+<h3>12.3 The Fundamental Tension（根本矛盾）</h3>
+<ul>
+<li><strong>Definition（定义）</strong>: AI agents are probabilistic; cybersecurity is consequential. / AI Agent是概率性的；网络安全是后果严重的。</li>
+<li><strong>Key Issues（关键问题）</strong>:</li>
+<li><strong>Hallucination（幻觉）</strong>: Agent reports non-existent vulnerabilities or misses real ones / 报告不存在的漏洞或遗漏真实漏洞</li>
+<li><strong>Non-determinism（非确定性）</strong>: Same input may produce different actions on different runs / 相同输入不同运行产生不同动作</li>
+<li><strong>Instruction/data confusion（指令/数据混淆）</strong>: Agent can't reliably distinguish commands from content (prompt injection) / 无法可靠区分指令与内容</li>
+<li><strong>No formal guarantees（无形式化保证）</strong>: Cannot prove agent won't cause unintended effects / 无法证明Agent不会导致意外效果</li>
+</ul>
+<h3>12.4 AI-Powered Offense（AI赋能攻击）</h3>
+<ul>
+<li><strong>Reconnaissance（侦察）</strong>: AI-driven OSINT gathering, automated port scanning, vulnerability correlation / AI驱动的开源情报收集、自动端口扫描、漏洞关联</li>
+<li><strong>Weaponization（武器化）</strong>: Automated exploit generation, polymorphic malware / 自动化利用生成、多态恶意软件</li>
+<li><strong>Social Engineering（社会工程）</strong>: Deepfake voice/video, personalized phishing at scale / 深伪语音/视频、大规模个性化钓鱼</li>
+<li><strong>Lateral Movement（横向移动）</strong>: AI-guided privilege escalation and path finding / AI引导的提权和路径发现</li>
+<li><strong>Key Points（要点）</strong>: AI lowers the skill barrier for sophisticated attacks; enables fully autonomous attack chains. / AI降低了高级攻击的技能门槛。</li>
+</ul>
+<h3>12.5 AI-Powered Defense（AI赋能防御）</h3>
+<ul>
+<li><strong>Threat Detection（威胁检测）</strong>: ML-based anomaly detection, behavioral analytics / 基于ML的异常检测、行为分析</li>
+<li><strong>Automated Response（自动响应）</strong>: SOAR (Security Orchestration, Automation, Response) / 安全编排、自动化与响应</li>
+<li><strong>Vulnerability Management（漏洞管理）</strong>: AI-assisted code review, priority scoring / AI辅助代码审查、优先级评分</li>
+<li><strong>Threat Intelligence（威胁情报）</strong>: NLP on threat reports, IOC extraction / 威胁报告NLP处理、IOC提取</li>
+<li><strong>Key Points（要点）</strong>: AI matches attacker speed; enables 24/7 monitoring at scale impossible for humans. / AI匹配攻击者速度；实现人类不可能达到的全天候大规模监控。</li>
+</ul>
+<h3>12.6 Agent Reliability Problem（Agent可靠性问题）</h3>
+<ul>
+<li><strong>Definition（定义）</strong>: Making AI tools trustworthy enough to deploy in high-stakes security environments. / 使AI工具足够可信以部署在高风险安全环境中。</li>
+<li><strong>Key Aspects（关键方面）</strong>:</li>
+<li>Human-in-the-loop vs fully autonomous / 人在环中 vs 完全自主</li>
+<li>Confidence calibration and uncertainty quantification / 置信度校准与不确定性量化</li>
+<li>Audit trails and explainability / 审计追踪与可解释性</li>
+<li>Sandboxing and containment / 沙箱与隔离</li>
+</ul>
+<h3>12.7 Red, Blue, and Purple Teaming（红蓝紫队演练）</h3>
+<ul>
+<li><strong>Red Team（红队）</strong>: AI-assisted attack simulation, automated penetration testing / AI辅助攻击模拟、自动化渗透测试</li>
+<li><strong>Blue Team（蓝队）</strong>: AI-enhanced detection and response / AI增强检测与响应</li>
+<li><strong>Purple Team（紫队）</strong>: Continuous adversarial improvement — red and blue collaborate to strengthen defenses iteratively / 持续对抗性改进——红蓝协作迭代加强防御</li>
+<li><strong>Key Points（要点）</strong>: AI enables continuous, automated adversarial testing rather than periodic manual exercises. / AI使对抗测试从定期人工变为持续自动化。</li>
+</ul>
+<h3>12.8 Limits and the Human Role（局限性与人的角色）</h3>
+<ul>
+<li><strong>Where AI Fails（AI失败之处）</strong>: Novel zero-day attacks with no training data; ethical/legal judgment; understanding attacker intent; strategic decision making / 无训练数据的新型零日攻击；伦理/法律判断；理解攻击者意图；战略决策</li>
+<li><strong>Human Role（人的角色）</strong>: Oversight, ethical decisions, policy creation, handling edge cases, validating AI outputs / 监督、伦理决策、策略制定、处理边缘情况、验证AI输出</li>
+<li><strong>Key Points（要点）</strong>: AI amplifies human capabilities but cannot replace human judgment in consequential decisions. / AI放大人类能力但不能替代后果严重决策中的人类判断。</li>
+</ul>
+<hr />
+<h3>Typical Questions for Week 12 / Week 12典型例题</h3>
+<h3>Question: AI Offense vs Defense Asymmetry（AI攻防不对称性）</h3>
+<p><strong>Problem（问题）</strong>: Explain why the introduction of AI into cybersecurity creates an asymmetric advantage and which side benefits more initially.</p>
+<p><strong>Solution（解答）</strong>:
+- <strong>Offense initially benefits more</strong> because: (1) attackers only need to find ONE vulnerability, defenders must protect ALL surfaces; (2) AI-generated attacks can be tested privately before deployment; (3) defenders must avoid false positives while attackers don't care about precision. / 攻击方初期获益更多，因为攻击者只需找一个漏洞，防御者须保护所有面。
+- <strong>However, over time defense catches up</strong> because: (1) defenders have more data (logs, traffic); (2) defenders can retrain continuously on new attack patterns; (3) automated response can match attack speed. / 但长期防御方追赶上来，因为防御者有更多数据且可持续重训。</p>
+<h3>Question: Agent Reliability（Agent可靠性）</h3>
+<p><strong>Problem（问题）</strong>: Why is deploying AI agents in cybersecurity particularly challenging compared to other AI applications?</p>
+<p><strong>Solution（解答）</strong>:
+1. <strong>Consequences are severe</strong>: A hallucinating agent might block legitimate traffic or miss real attacks / 后果严重：幻觉Agent可能阻断合法流量或遗漏真实攻击
+2. <strong>Adversarial environment</strong>: Attackers actively try to fool AI (adversarial examples, prompt injection) / 对抗环境：攻击者主动欺骗AI
+3. <strong>Non-determinism is unacceptable</strong>: Security operations require predictable, auditable behavior / 安全运营需要可预测、可审计的行为
+4. <strong>Data/instruction confusion</strong>: In security contexts, processing attacker-controlled input that may contain injected instructions / 处理攻击者控制的输入可能包含注入的指令</p>
+</body>
+</html>

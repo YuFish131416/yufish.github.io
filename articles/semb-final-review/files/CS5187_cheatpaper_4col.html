@@ -1,0 +1,1348 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <style>
+@font-face {
+    font-family: 'LXGWWenKai';
+    src: url('file:///Users/yufish/Documents/GitHub/yufish.github.io/articles/semb-final-review/files/fonts/LXGWWenKai-Regular.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@page {
+    size: A4;
+    margin: 4mm 4mm 4mm 4mm;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'LXGWWenKai', 'Songti SC', serif;
+    font-size: 4.46875pt;
+    line-height: 1.15;
+    column-count: 4;
+    column-gap: 6px;
+    column-rule: 0.3px solid #ccc;
+    orphans: 2;
+    widows: 2;
+    color: #1a1a1a;
+}
+
+h1 {
+    font-size: 5.96875pt;
+    color: #0056b3;
+    font-weight: bold;
+    margin: 2px 0 1px 0;
+    padding-bottom: 0.5px;
+    border-bottom: 0.5px solid #0056b3;
+    column-span: all;
+    line-height: 1.3;
+}
+
+h2 {
+    font-size: 5.46875pt;
+    color: #0056b3;
+    font-weight: bold;
+    margin: 2px 0 1px 0;
+    padding-bottom: 0.5px;
+    border-bottom: 0.3px solid #0056b3;
+    line-height: 1.2;
+    break-after: avoid;
+}
+
+h3 {
+    font-size: 4.96875pt;
+    color: #0056b3;
+    font-weight: bold;
+    margin: 1.5px 0 0.5px 0;
+    line-height: 1.2;
+    break-after: avoid;
+}
+
+h4 {
+    font-size: 4.46875pt;
+    color: #0056b3;
+    font-weight: bold;
+    margin: 1px 0 0.5px 0;
+    line-height: 1.2;
+    break-after: avoid;
+}
+
+h5, h6 {
+    font-size: 4.46875pt;
+    color: #0056b3;
+    font-weight: bold;
+    margin: 1px 0 0.5px 0;
+    line-height: 1.2;
+    break-after: avoid;
+}
+
+p {
+    margin: 0.5px 0;
+    text-align: justify;
+    line-height: 1.15;
+}
+
+strong {
+    font-weight: bold;
+}
+
+em {
+    font-style: italic;
+}
+
+ul, ol {
+    margin: 0.5px 0;
+    padding-left: 10px;
+}
+
+li {
+    margin: 0.3px 0;
+    line-height: 1.15;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 1px 0;
+    font-size: 3.96875pt;
+    break-inside: avoid;
+}
+
+th, td {
+    border: 0.3px solid #666;
+    padding: 0.5px 2px;
+    text-align: left;
+    line-height: 1.15;
+}
+
+th {
+    background-color: #e8f0fe;
+    font-weight: bold;
+}
+
+code {
+    font-family: 'Menlo', 'Monaco', monospace;
+    font-size: 3.46875pt;
+    background-color: #f5f5f5;
+    padding: 0 1px;
+    border-radius: 1px;
+}
+
+pre {
+    background-color: #f5f5f5;
+    padding: 2px 3px;
+    margin: 1px 0;
+    border-radius: 2px;
+    overflow: hidden;
+    font-size: 2.96875pt;
+    line-height: 1.1;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+}
+
+pre code {
+    background: none;
+    padding: 0;
+}
+
+blockquote {
+    border-left: 1.5px solid #0056b3;
+    padding-left: 4px;
+    margin: 1px 0;
+    color: #333;
+    font-size: 4.16875pt;
+}
+
+hr {
+    border: none;
+    border-top: 0.3px solid #ccc;
+    margin: 2px 0;
+}
+
+/* Avoid page breaks inside important elements */
+table, pre, blockquote {
+    break-inside: avoid;
+}
+
+/* Remove the first h1 span-all if it causes issues */
+h1:first-child {
+    column-span: none;
+}
+</style>
+</head>
+<body>
+<h1>CS5187 Final Exam Review / 期末复习资料</h1>
+<p><strong>Course / 课程</strong>: CS5187: Vision &amp; Image<br />
+<strong>Instructor / 授课教师</strong>: Prof. Zhu Zhiyu  </p>
+<hr />
+<h2>1. Knowledge Framework / 知识框架</h2>
+<h3>Part I: Low-Level Vision / 低层视觉 (lec00–lec05)</h3>
+<table>
+<thead>
+<tr>
+<th>Lecture</th>
+<th>Topic / 主题</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>lec00</td>
+<td>Introduction to Computer Vision / 计算机视觉导论</td>
+</tr>
+<tr>
+<td>lec01</td>
+<td>Images &amp; Image Filtering / 图像与图像滤波</td>
+</tr>
+<tr>
+<td>lec02</td>
+<td>Edge Detection / 边缘检测</td>
+</tr>
+<tr>
+<td>lec03</td>
+<td>Image Resampling &amp; Interpolation / 图像重采样与插值</td>
+</tr>
+<tr>
+<td>lec04</td>
+<td>Harris Corner Detection / Harris角点检测</td>
+</tr>
+<tr>
+<td>lec05</td>
+<td>Feature Invariance / 特征不变性</td>
+</tr>
+</tbody>
+</table>
+<h3>Part II: Geometry &amp; Appearance / 几何与外观 (lec06–lec10, lec13–lec14)</h3>
+<table>
+<thead>
+<tr>
+<th>Lecture</th>
+<th>Topic / 主题</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>lec06</td>
+<td>Feature Descriptors &amp; Matching / 特征描述子与匹配</td>
+</tr>
+<tr>
+<td>lec07</td>
+<td>Image Transformations &amp; Warping / 图像变换与变形</td>
+</tr>
+<tr>
+<td>lec08</td>
+<td>Image Alignment / 图像对齐</td>
+</tr>
+<tr>
+<td>lec09</td>
+<td>RANSAC / 随机抽样一致</td>
+</tr>
+<tr>
+<td>lec10</td>
+<td>Cameras &amp; Projection / 相机与投影</td>
+</tr>
+<tr>
+<td>lec13</td>
+<td>Binocular Stereo / 双目立体视觉</td>
+</tr>
+<tr>
+<td>lec14</td>
+<td>Multi-View Stereo / 多视图立体</td>
+</tr>
+</tbody>
+</table>
+<h3>Part III: Recognition &amp; Deep Learning / 识别与深度学习 (lec15–lec16)</h3>
+<table>
+<thead>
+<tr>
+<th>Lecture</th>
+<th>Topic / 主题</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>lec15</td>
+<td>Neural Networks / 神经网络</td>
+</tr>
+<tr>
+<td>lec16</td>
+<td>CNNs, RNNs, Attention &amp; Transformers / 卷积网络、循环网络、注意力与Transformer</td>
+</tr>
+</tbody>
+</table>
+<h3>Part IV: Generative Models / 生成模型 (下半学期)</h3>
+<table>
+<thead>
+<tr>
+<th>Lecture</th>
+<th>Topic / 主题</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>lecture4</td>
+<td>Maximum Likelihood &amp; MLE / 最大似然估计</td>
+</tr>
+<tr>
+<td>lecture5</td>
+<td>Latent Variable Models &amp; ELBO / 潜变量模型与证据下界</td>
+</tr>
+<tr>
+<td>LVM_02</td>
+<td>VAE &amp; Reparameterization / 变分自编码器与重参数化</td>
+</tr>
+<tr>
+<td>NF_01</td>
+<td>Normalizing Flow Models (1) / 标准化流模型(1)</td>
+</tr>
+<tr>
+<td>lecture8</td>
+<td>Normalizing Flow Models (2) / 标准化流模型(2)</td>
+</tr>
+<tr>
+<td>lecture9</td>
+<td>GANs / 生成对抗网络</td>
+</tr>
+<tr>
+<td>lecture10</td>
+<td>f-GANs, Wasserstein GAN, BiGAN, CycleGAN / f-散度GAN、WGAN、双向GAN、循环GAN</td>
+</tr>
+<tr>
+<td>lecture11</td>
+<td>Energy-Based Models / 基于能量的模型</td>
+</tr>
+<tr>
+<td>lecture12</td>
+<td>Score Matching &amp; NCE / 分数匹配与噪声对比估计</td>
+</tr>
+<tr>
+<td>lecture13</td>
+<td>Score-Based Models (1) / 基于分数的模型(1)</td>
+</tr>
+<tr>
+<td>lecture14</td>
+<td>Score-Based Models (2) / 基于分数的模型(2)</td>
+</tr>
+<tr>
+<td>lecture15</td>
+<td>Diffusion Models (DDPM, SDE) / 扩散模型</td>
+</tr>
+<tr>
+<td>lecture16</td>
+<td>Diffusion Models: SDE↔ODE, Architecture / 扩散模型进阶</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2>2. Core Concepts / 核心概念梳理</h2>
+<hr />
+<h3>2.1 Image Filtering / 图像滤波</h3>
+<h4>Convolution / 卷积</h4>
+<ul>
+<li><strong>Definition (定义)</strong>: Replace each pixel with a weighted sum of its neighbors using a kernel. / 用卷积核将每个像素替换为其邻域的加权和。</li>
+<li><strong>Formula (公式)</strong>: $G[i,j] = \sum\sum H[m,n] \cdot F[i-m, j-n]$</li>
+<li><strong>Key property (关键性质)</strong>: Convolution is associative and commutative; convolution with self is another Gaussian. / 卷积满足结合律和交换律。</li>
+</ul>
+<h4>Gaussian Filter / 高斯滤波器</h4>
+<ul>
+<li><strong>Definition (定义)</strong>: A low-pass filter that removes high-frequency components. / 去除高频成分的低通滤波器。</li>
+<li><strong>Property (性质)</strong>: Convolving two Gaussians of $\sigma_{1}$ and $\sigma_{2}$ yields a Gaussian of $\sigma = \sqrt{\sigma_{1}^{2} + \sigma_{2}^{2}}$. / 两个高斯卷积仍为高斯。</li>
+</ul>
+<h4>Sharpening Filter / 锐化滤波器</h4>
+<ul>
+<li><strong>Definition (定义)</strong>: original + (original − blurred) = $2\cdot\mathrm{original}$ − blurred. / 原图加上(原图减模糊图)实现锐化。</li>
+<li><strong>Also called (亦称)</strong>: High-pass filter / 高通滤波器。</li>
+</ul>
+<hr />
+<h3>2.2 Edge Detection / 边缘检测</h3>
+<h4>Image Gradient / 图像梯度</h4>
+<ul>
+<li><strong>Definition (定义)</strong>: $\nabla f = [\partial f/\partial x, \partial f/\partial y]$, points in direction of most rapid increase. / 指向强度增长最快的方向。</li>
+<li><strong>Gradient magnitude (梯度幅值)</strong>: $|\nabla f| = \sqrt{(\partial f/\partial x)^{2} + (\partial f/\partial y)^{2}}$</li>
+<li><strong>Gradient direction (梯度方向)</strong>: $\theta = \mathrm{atan2}(\partial f/\partial y, \partial f/\partial x)$</li>
+</ul>
+<h4>Sobel Operator / Sobel算子</h4>
+<ul>
+<li><strong>Definition (定义)</strong>: Common approximation of derivative of Gaussian. / 高斯导数的常用近似。</li>
+<li><strong>Kernels (核)</strong>: </li>
+<li>x-direction: [[-1,0,1],[-2,0,2],[-1,0,1]]</li>
+<li>y-direction: [[1,2,1],[0,0,0],[-1,-2,-1]]</li>
+</ul>
+<h4>Canny Edge Detector / Canny边缘检测器</h4>
+<ol>
+<li>Filter image with derivative of Gaussian / 用高斯导数滤波</li>
+<li>Find magnitude and orientation of gradient / 求梯度幅值和方向</li>
+<li>Non-maximum suppression / 非极大值抑制</li>
+<li>Hysteresis thresholding (two thresholds: high T, low t) / 滞后阈值化</li>
+<li>Strong edges: R &gt; T; Weak edges: t &lt; R &lt; T (kept only if connected to strong edge) / 强边缘保留，弱边缘仅在与强边缘相连时保留</li>
+</ol>
+<h4>Scale Space / 尺度空间</h4>
+<ul>
+<li><strong>Properties (性质)</strong>: Edge position may shift with $\sigma$; two edges may merge; an edge cannot split into two. / 边缘位置可能随$\sigma$偏移，可合并但不能分裂。</li>
+</ul>
+<hr />
+<h3>2.3 Image Resampling / 图像重采样</h3>
+<h4>Aliasing / 混叠</h4>
+<ul>
+<li><strong>Definition (定义)</strong>: Occurs when sampling rate &lt; $2\times$ max frequency (Nyquist rate). / 采样率低于奈奎斯特率时发生。</li>
+<li><strong>Solution (解决方案)</strong>: Gaussian pre-filtering before subsampling. / 下采样前先做高斯预滤波。</li>
+</ul>
+<h4>Gaussian Pyramid / 高斯金字塔</h4>
+<ul>
+<li><strong>Definition (定义)</strong>: Repeatedly blur and downsample by 2x. / 反复模糊后2倍下采样。</li>
+<li><strong>Space (空间)</strong>: Total space = $4/3 \times$ original image. / 总空间为原图的4/3。</li>
+</ul>
+<h4>Interpolation Methods / 插值方法</h4>
+<ul>
+<li><strong>Nearest-neighbor (最近邻)</strong>: Fastest, but blocky. / 最快但产生方块效应。</li>
+<li><strong>Bilinear (双线性)</strong>: Better quality, tent function. / 质量更好。</li>
+<li><strong>Bicubic (双三次)</strong>: Best quality among common choices. / 常用方法中质量最好。</li>
+</ul>
+<hr />
+<h3>2.4 Harris Corner Detection / Harris角点检测</h3>
+<h4>SSD Error / SSD误差</h4>
+<ul>
+<li><strong>Formula (公式)</strong>: $E(u,v) = \sum_{(x,y)\in W} w(x,y) [I(x+u, y+v) - I(x,y)]^{2}$</li>
+<li><strong>Small motion approximation (小运动近似)</strong>: $E(u,v) \approx [u\ v]\ H\ [u;\ v]$, where H is the second moment matrix. / 二阶矩矩阵H近似。</li>
+</ul>
+<h4>Second Moment Matrix / 二阶矩矩阵</h4>
+<ul>
+<li><strong>Definition (定义)</strong>: $H = \sum w(x,y) \begin{bmatrix} I_x^{2} &amp; I_xI_y \ I_xI_y &amp; I_y^{2} \end{bmatrix}$</li>
+<li><strong>Eigenvalues (特征值)</strong>: $\lambda_{1}$, $\lambda_{2}$ determine corner/edge/flat classification. / 决定角点/边缘/平坦区域分类。</li>
+</ul>
+<h4>Classification / 分类</h4>
+<table>
+<thead>
+<tr>
+<th>Case (情况)</th>
+<th>$\lambda_1,\ \lambda_2$</th>
+<th>Classification (分类)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Both small (都很小)</td>
+<td>$\lambda_1 \approx \lambda_2 \approx 0$</td>
+<td>Flat / 平坦区域</td>
+</tr>
+<tr>
+<td>One large, one small (一大一小)</td>
+<td>$\lambda_1 \gg \lambda_2$ or $\lambda_2 \gg \lambda_1$</td>
+<td>Edge / 边缘</td>
+</tr>
+<tr>
+<td>Both large (都很大)</td>
+<td>$\lambda_1 \sim \lambda_2 \gg 0$</td>
+<td>Corner / 角点</td>
+</tr>
+</tbody>
+</table>
+<h4>Harris Operator / Harris算子</h4>
+<ul>
+<li><strong>Formula (公式)</strong>: $R = \det(H) - \alpha \cdot \mathrm{trace}(H)^{2} = \lambda_{1}\lambda_{2} - \alpha(\lambda_{1}+\lambda_{2})^{2}$</li>
+<li><strong>Typical $\alpha$ (典型参数)</strong>: $\alpha \in [0.04, 0.06]$</li>
+</ul>
+<h4>Harris Detector Steps / Harris检测步骤</h4>
+<ol>
+<li>Compute image gradients / 计算图像梯度</li>
+<li>Square of derivatives, Gaussian filter / 梯度平方后高斯滤波</li>
+<li>Compute cornerness function / 计算角点响应函数</li>
+<li>Non-maxima suppression / 非极大值抑制</li>
+</ol>
+<hr />
+<h3>2.5 Feature Invariance / 特征不变性</h3>
+<h4>Invariance vs. Equivariance / 不变性与等变性</h4>
+<ul>
+<li><strong>Invariance (不变性)</strong>: Feature locations don't change after transformation. / 变换后特征位置不变。</li>
+<li><strong>Equivariance (等变性)</strong>: Features detected at corresponding locations in transformed images. / 变换后特征在对应位置被检测到。</li>
+</ul>
+<h4>Harris Invariance Properties / Harris不变性</h4>
+<table>
+<thead>
+<tr>
+<th>Transformation (变换)</th>
+<th>Property (性质)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Translation (平移)</td>
+<td>Equivariant / 等变</td>
+</tr>
+<tr>
+<td>Rotation (旋转)</td>
+<td>Equivariant (eigenvalues unchanged) / 等变</td>
+</tr>
+<tr>
+<td>Affine intensity (仿射强度)</td>
+<td>Partially invariant / 部分不变</td>
+</tr>
+<tr>
+<td>Scale (尺度)</td>
+<td>NOT invariant / 不变</td>
+</tr>
+</tbody>
+</table>
+<h4>Scale Invariant Detection / 尺度不变检测</h4>
+<ul>
+<li><strong>Key idea (核心思想)</strong>: Find local maximum in both position AND scale. / 在位置和尺度上同时寻找局部极大值。</li>
+<li><strong>Laplacian of Gaussian (LoG)</strong>: Blob detector, find maxima in position-scale space. / 斑点检测器，在位置-尺度空间找极大值。</li>
+<li><strong>Difference of Gaussians (DoG)</strong>: Approximation of LoG, used in SIFT. / LoG的近似，SIFT中使用。</li>
+</ul>
+<h4>Characteristic Scale / 特征尺度</h4>
+<ul>
+<li><strong>Definition (定义)</strong>: Scale producing peak LoG response. / 产生LoG峰值响应的尺度。</li>
+</ul>
+<hr />
+<h3>2.6 Feature Descriptors &amp; Matching / 特征描述子与匹配</h3>
+<h4>SIFT Descriptor / SIFT描述子</h4>
+<ul>
+<li><strong>Process (过程)</strong>:</li>
+<li>Take $16\times16$ window around feature / 取$16\times16$窗口</li>
+<li>Compute gradient orientation per pixel / 计算每像素梯度方向</li>
+<li>Threshold weak edges / 阈值化弱边缘</li>
+<li>Create $4\times4$ grid of cells, 8 orientation bins each / $4\times4$网格，每格8方向bin</li>
+<li>Result: 128-dimensional descriptor / 结果为128维描述子</li>
+<li><strong>Properties (性质)</strong>: Robust to viewpoint (up to ~60°), illumination changes. / 对视点变化（~60°以内）和光照变化鲁棒。</li>
+</ul>
+<h4>HOG Descriptor / HOG描述子</h4>
+<ul>
+<li><strong>Steps</strong>: Gradient computation \rightarrow Cell histograms (9 bins) \rightarrow Block normalization (L2-norm). / 梯度计算\rightarrow单元直方图\rightarrow块归一化。</li>
+</ul>
+<h4>ORB Descriptor / ORB描述子</h4>
+<ul>
+<li><strong>Steps</strong>: oFAST keypoint detection \rightarrow rBRIEF binary descriptor (256 bits). / oFAST关键点检测\rightarrowrBRIEF二进制描述子。</li>
+</ul>
+<h4>Feature Matching / 特征匹配</h4>
+<ul>
+<li><strong>L2 distance</strong>: $|f_1 - f_2|$</li>
+<li><strong>Ratio distance</strong>: $|f_1 - f_2|$ / ‖f_{1} − f_{2}'‖ (f_{2} = best match, f_{2}' = 2nd best) / 比值距离</li>
+<li><strong>ROC Curve</strong>: True positive rate vs. false positive rate; AUC summarizes performance. / ROC曲线与AUC指标。</li>
+</ul>
+<hr />
+<h3>2.7 Image Transformations / 图像变换</h3>
+<h4>Transformation Hierarchy / 变换层级</h4>
+<table>
+<thead>
+<tr>
+<th>Transform (变换)</th>
+<th>Matrix (矩阵)</th>
+<th>DOF</th>
+<th>Properties (性质)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Translation (平移)</td>
+<td>3×3 (last row [0,0,1])</td>
+<td>2</td>
+<td>Origin may shift / 原点可移动</td>
+</tr>
+<tr>
+<td>Euclidean (欧氏)</td>
+<td>R + t</td>
+<td>3</td>
+<td>Preserves distances / 保持距离</td>
+</tr>
+<tr>
+<td>Similarity (相似)</td>
+<td>sR + t</td>
+<td>4</td>
+<td>Preserves angles / 保持角度</td>
+</tr>
+<tr>
+<td>Affine (仿射)</td>
+<td>[A b; 0 0 1]</td>
+<td>6</td>
+<td>Parallel lines preserved / 平行线保持</td>
+</tr>
+<tr>
+<td>Projective (射影/单应)</td>
+<td>General 3×3</td>
+<td>8</td>
+<td>Lines preserved, parallel not / 直线保持，平行不一定</td>
+</tr>
+</tbody>
+</table>
+<h4>Homography / 单应变换</h4>
+<ul>
+<li><strong>Definition (定义)</strong>: 8-DOF projective transformation; defined up to scale. / 8自由度射影变换，由尺度因子决定。</li>
+<li><strong>Minimum matches (最少匹配)</strong>: 4 point correspondences. / 4对匹配点。</li>
+</ul>
+<h4>Forward vs. Inverse Warping / 前向与逆向变形</h4>
+<ul>
+<li><strong>Forward warping</strong>: Send source pixels to target; may cause holes. / 源像素送到目标，可能产生空洞。</li>
+<li><strong>Inverse warping</strong>: For each target pixel, sample from source via T^{-1}; use interpolation. / 对每个目标像素从源采样，需插值。</li>
+</ul>
+<hr />
+<h3>2.8 Image Alignment &amp; Least Squares / 图像对齐与最小二乘</h3>
+<h4>Least Squares / 最小二乘法</h4>
+<ul>
+<li><strong>Translation (平移)</strong>: t* = mean displacement; normal equations: $A^T A \cdot t = A^T b$. / 平移的最优解为平均位移。</li>
+<li><strong>Affine (仿射)</strong>: 6 unknowns, need $\geq 3$ matches. / 6个未知量，至少3对匹配。</li>
+<li><strong>Homography (单应)</strong>: Solve via SVD; h = eigenvector of $A^T A$ with smallest eigenvalue. / 通过SVD求解。</li>
+</ul>
+<hr />
+<h3>2.9 RANSAC / 随机抽样一致</h3>
+<h4>Algorithm / 算法步骤</h4>
+<ol>
+<li>Randomly select s samples (minimum to fit model) / 随机选s个样本</li>
+<li>Fit model / 拟合模型</li>
+<li>Count inliers (within threshold $\varepsilon$) / 计数内点</li>
+<li>Repeat N times / 重复N次</li>
+<li>Choose model with most inliers / 选择内点最多的模型</li>
+<li>Refit using all inliers (least squares) / 用所有内点重新拟合</li>
+</ol>
+<h4>Number of Rounds / 迭代次数</h4>
+<ul>
+<li><strong>Formula (公式)</strong>: $N = \frac{\log(1-p)}{\log(1-(1-e)^s)}$</li>
+<li>p = desired probability of success / 期望成功概率</li>
+<li>e = outlier ratio / 外点比例</li>
+<li>s = minimum sample size / 最小样本数</li>
+</ul>
+<h4>Pros &amp; Cons / 优缺点</h4>
+<ul>
+<li><strong>Pros</strong>: Simple, general, often works well. / 简单、通用、效果好。</li>
+<li><strong>Cons</strong>: Parameters to tune; can fail for very low inlier ratios. / 需调参；内点率极低时可能失败。</li>
+</ul>
+<hr />
+<h3>2.10 Cameras &amp; Projection / 相机与投影</h3>
+<h4>Pinhole Camera / 针孔相机</h4>
+<ul>
+<li><strong>Projection (投影)</strong>: (x,y,z) \rightarrow $(f \cdot x/z,\ f \cdot y/z)$ using similar triangles. / 利用相似三角形投影。</li>
+<li><strong>Perspective projection matrix / 透视投影矩阵</strong>:
+  <code>K = [[f, 0, cx],
+       [0, f, cy],
+       [0, 0,  1]]</code></li>
+</ul>
+<h4>Camera Parameters / 相机参数</h4>
+<ul>
+<li><strong>Intrinsics (内参)</strong>: focal length f, principal point (cx,cy), aspect ratio $\alpha$, skew $s$. / 焦距、主点、长宽比、倾斜。</li>
+<li><strong>Extrinsics (外参)</strong>: Rotation $R$ ($3\times3$) and translation $t$ ($3\times1$). / 旋转矩阵和平移向量。</li>
+<li><strong>Full projection (完整投影)</strong>: $x_{\mathrm{pixel}} = K \left[R \mid t\right] X_{\mathrm{world}}$</li>
+</ul>
+<h4>Projection Types / 投影类型</h4>
+<ul>
+<li><strong>Perspective (透视)</strong>: General case, parallel lines converge. / 一般情况，平行线汇聚。</li>
+<li><strong>Orthographic (正交)</strong>: Distance to image plane = $\infty$; (x,y,z) \rightarrow (x,y). / 距离无限远。</li>
+<li><strong>Weak perspective (弱透视)</strong>: Scaled orthographic; good for small depth range. / 缩放正交投影。</li>
+</ul>
+<h4>Radial Distortion / 径向畸变</h4>
+<ul>
+<li><strong>Types</strong>: Barrel (桶形) vs. Pincushion (枕形)</li>
+<li><strong>Model</strong>: $r_{\mathrm{corrected}} = r(1 + k_1 r^2 + k_2 r^4 + \cdots)$</li>
+</ul>
+<hr />
+<h3>2.11 Stereo Vision / 立体视觉</h3>
+<h4>Disparity &amp; Depth / 视差与深度</h4>
+<ul>
+<li><strong>Disparity (视差)</strong>: $d = x_1 - x_2$ (horizontal pixel difference between views). / 左右视图水平像素差。</li>
+<li><strong>Depth (深度)</strong>: $Z = f \cdot B / d$, where B = baseline, f = focal length. / 深度与视差成反比。</li>
+</ul>
+<h4>Stereo Matching / 立体匹配</h4>
+<ul>
+<li><strong>SSD matching</strong>: Sum of squared differences within a window. / 窗口内平方差之和。</li>
+<li><strong>Window size tradeoff</strong>: Small $\rightarrow$ more detail but more noise; Large $\rightarrow$ less noise but less detail. / 窗口大小的权衡。</li>
+</ul>
+<h4>Stereo as Energy Minimization / 立体视觉作为能量最小化</h4>
+<ul>
+<li><strong>Energy</strong>: $E(d) = \sum \mathrm{data_cost}(x, d(x)) + \lambda \sum \mathrm{smoothness_cost}(d(x), d(y))$</li>
+<li><strong>Smoothness costs</strong>: Potts model (0 if same, $\lambda$ if different); L1 distance. / Potts模型；L1距离。</li>
+</ul>
+<h4>Multi-View Stereo (MVS) / 多视图立体</h4>
+<ul>
+<li><strong>SSSD</strong>: Sum of SSD over multiple baselines. / 多基线SSD之和。</li>
+<li><strong>Matching scores</strong>: SSD, SAD, ZNCC (zero-mean normalized cross-correlation). / 匹配评分方法。</li>
+</ul>
+<h4>Plane-Sweep Stereo / 平面扫描立体</h4>
+<ul>
+<li>Sweep family of planes at different depths, reproject neighbors, compare. / 在不同深度扫描平面，重投影邻居并比较。</li>
+<li><strong>NeRF</strong>: Represent scenes as $(x,y,z) \rightarrow \mathrm{RGB}+\alpha$ functions, volume rendering. / 用神经网络表示场景的辐射场。</li>
+</ul>
+<hr />
+<h3>2.12 Neural Networks / 神经网络</h3>
+<h4>Linear Classifier / 线性分类器</h4>
+<ul>
+<li><strong>Score function (得分函数)</strong>: $f(x, W) = Wx + b$</li>
+<li><strong>Three viewpoints (三个视角)</strong>: Algebraic (代数), Geometric (几何), Template matching (模板匹配)</li>
+</ul>
+<h4>Loss Functions / 损失函数</h4>
+<ul>
+<li><strong>Cross-entropy loss (交叉熵损失)</strong>: $L_i = -\log(\exp(f_{y_i}) / \sum_j \exp(f_j))$</li>
+<li><strong>Softmax (软最大)</strong>: $P(y=j|x) = \exp(f_j) / \sum_k \exp(f_k)$</li>
+</ul>
+<h4>Neural Network Architecture / 神经网络架构</h4>
+<ul>
+<li><strong>MLP (多层感知机)</strong>: Linear functions separated by non-linear activations. / 线性函数间插入非线性激活函数。</li>
+<li><strong>Gradient descent (梯度下降)</strong>: $W \leftarrow W - \eta \nabla L(W)$; learning rate $\eta$ crucial. / 学习率$\eta$至关重要。</li>
+<li><strong>Backpropagation (反向传播)</strong>: Efficient gradient computation via chain rule. / 通过链式法则高效计算梯度。</li>
+</ul>
+<hr />
+<h3>2.13 CNNs, RNNs, Attention, Transformers / CNN、RNN、注意力、Transformer</h3>
+<h4>Convolutional Layer / 卷积层</h4>
+<ul>
+<li><strong>Output size (输出尺寸)</strong>: $(N - F)/\mathrm{stride} + 1$</li>
+<li><strong>Filters (滤波器)</strong>: Extend full depth of input; produce activation maps. / 滤波器覆盖输入全深度，产生激活图。</li>
+<li><strong>Padding &amp; Stride</strong>: Control output spatial dimensions. / 控制输出空间维度。</li>
+</ul>
+<h4>Pooling Layer / 池化层</h4>
+<ul>
+<li><strong>Max pooling (最大池化)</strong>: Reduces spatial dimensions; operates per activation map. / 减小空间维度，逐激活图操作。</li>
+</ul>
+<h4>RNN / 循环神经网络</h4>
+<ul>
+<li><strong>Recurrence (递推)</strong>: $h_t = f(W \cdot x_t + U \cdot h_{t-1})$; same weights at each time step. / 每个时间步使用相同权重。</li>
+<li><strong>BPTT</strong>: Backpropagation Through Time. / 时间反向传播。</li>
+<li><strong>Truncated BPTT</strong>: Backpropagate only for limited steps. / 截断时间反向传播。</li>
+<li><strong>Types</strong>: Vanilla RNN, LSTM, GRU. / 类型。</li>
+</ul>
+<h4>Self-Attention / 自注意力</h4>
+<ul>
+<li><strong>Query-Key-Value (查询-键-值)</strong>: $\mathrm{Attention}(Q,K,V) = \mathrm{softmax}(QK^T / \sqrt{d_k})V$</li>
+<li><strong>Multi-Head Attention (多头注意力)</strong>: Multiple attention heads in parallel; concatenate outputs. / 多个注意力头并行，拼接输出。</li>
+</ul>
+<h4>Transformer</h4>
+<ul>
+<li><strong>Encoder (编码器)</strong>: Self-attention + FFN, with residual connections and layer norm. / 自注意力+前馈网络，带残差连接和层归一化。</li>
+<li><strong>Decoder (解码器)</strong>: Masked multi-head attention (cannot see future) + cross-attention + FFN. / 掩码多头注意力+交叉注意力+前馈网络。</li>
+<li><strong>Positional Encoding (位置编码)</strong>: Injects sequence order information. / 注入序列顺序信息。</li>
+</ul>
+<hr />
+<h3>2.14 Maximum Likelihood Estimation / 最大似然估计</h3>
+<h4>KL Divergence / KL散度</h4>
+<ul>
+<li><strong>Definition (定义)</strong>: $D_{\mathrm{KL}}(p|q) = \mathbb{E}_{x \sim p}[\log p(x)/q(x)] \geq 0$; asymmetric. / 非对称，衡量两个分布的差异。</li>
+<li><strong>Interpretation (解释)</strong>: Extra bits needed when using code optimized for q on data from p. / 用q的编码压缩来自p的数据时多用的比特数。</li>
+</ul>
+<h4>MLE / 最大似然估计</h4>
+<ul>
+<li><strong>Formula (公式)</strong>: $\theta^* = \arg\max_\theta \sum_{x \in D} \log P_\theta(x)$</li>
+<li><strong>Equivalence (等价性)</strong>: Minimizing $\mathrm{KL}(p_{\mathrm{data}} | p_\theta)$ ≡ maximizing expected log-likelihood. / 最小化KL散度等价于最大化期望对数似然。</li>
+</ul>
+<h4>Monte Carlo Estimation / 蒙特卡洛估计</h4>
+<ul>
+<li><strong>Unbiased (无偏)</strong>: $\mathbb{E}[\hat{g}] = \mathbb{E}[g(x)]$</li>
+<li><strong>Variance (方差)</strong>: $\mathrm{Var}(\hat{g}) = \mathrm{Var}(g(x))/T$; reduces with more samples. / 更多样本降低方差。</li>
+</ul>
+<h4>Bias-Variance Tradeoff / 偏差-方差权衡</h4>
+<ul>
+<li><strong>High bias (高偏差)</strong>: Underfitting (model too simple). / 欠拟合。</li>
+<li><strong>High variance (高方差)</strong>: Overfitting (model too complex). / 过拟合。</li>
+<li><strong>Regularization (正则化)</strong>: $\mathrm{objective} = \mathrm{loss} + R(M)$. / 目标函数加入正则项。</li>
+</ul>
+<hr />
+<h3>2.15 Latent Variable Models &amp; VAE / 潜变量模型与变分自编码器</h3>
+<h4>Latent Variable Models / 潜变量模型</h4>
+<ul>
+<li><strong>Generative process (生成过程)</strong>: $z \sim p(z)$, $x \sim p(x|z;\theta)$. / 先采样潜变量，再由其生成数据。</li>
+<li><strong>Marginal likelihood (边际似然)</strong>: $p(x;\theta) = \int p(x,z;\theta)\,dz$ --- often intractable. / 通常难以计算。</li>
+</ul>
+<h4>Mixture of Gaussians / 高斯混合模型</h4>
+<ul>
+<li>$z \sim \mathrm{Categorical}(1,...,K)$; $p(x|z{=}k) = \mathcal{N}(\mu_k, \Sigma_k)$. / 离散潜变量的混合模型。</li>
+</ul>
+<h4>VAE / 变分自编码器</h4>
+<ul>
+<li><strong>Infinite mixture (无限混合)</strong>: $z \sim \mathcal{N}(0,I)$; $p(x|z) = \mathcal{N}(\mu_\theta(z), \Sigma_\theta(z))$; $\mu_\theta$, $\Sigma_\theta$ are neural networks. / 连续潜变量的无限混合高斯。</li>
+</ul>
+<h4>ELBO / 证据下界</h4>
+<ul>
+<li><strong>Formula (公式)</strong>: $\log p(x;\theta) \geq \sum_z q(z;\varphi) \log p(z,x;\theta) + H(q) = L(x;\theta,\varphi)$</li>
+<li><strong>Equality condition (等号条件)</strong>: When q(z;\varphi) = p(z|x;\theta), i.e., $\mathrm{KL}(q|p(z|x))=0$. / 当变分分布等于真实后验时等号成立。</li>
+<li><strong>Decomposition (分解)</strong>: $\log p(x) = \mathrm{ELBO} + D_{\mathrm{KL}}(q(z;\varphi) | p(z|x;\theta))$</li>
+</ul>
+<h4>Autoencoder Perspective / 自编码器视角</h4>
+<ul>
+<li><strong>ELBO = Reconstruction term − KL term</strong>: 
+  $L = \mathbb{E}<em>{q</em>\varphi(z|x)}[\log p(x|z;\theta)] - D_{\mathrm{KL}}(q_\varphi(z|x) | p(z))$</li>
+<li><strong>Reconstruction (重建项)</strong>: Encourages $\hat{x} \approx x$. / 鼓励重建接近原始输入。</li>
+<li><strong>KL term (KL项)</strong>: Forces latent distribution close to prior p(z). / 迫使潜变量分布接近先验。</li>
+</ul>
+<h4>Reparameterization Trick / 重参数化技巧</h4>
+<ul>
+<li><strong>Key idea (核心思想)</strong>: Sample $\varepsilon \sim \mathcal{N}(0,I)$, then $z = \mu + \sigma\varepsilon$. / 将随机性转移到$\varepsilon$，使梯度可通过确定性函数传递。</li>
+<li><strong>Benefit (优势)</strong>: Enables gradient-based optimization; lower variance than REINFORCE. / 实现梯度优化，方差低于REINFORCE。</li>
+</ul>
+<h4>Amortized Inference / 摊销推断</h4>
+<ul>
+<li><strong>Idea (思想)</strong>: Learn $q_\varphi(z|x) = \mathrm{encoder}(x)$ to map each x to variational parameters. / 学习编码器网络将x映射到变分参数，避免逐点优化。</li>
+</ul>
+<hr />
+<h3>2.16 Normalizing Flow Models / 标准化流模型</h3>
+<h4>Core Idea / 核心思想</h4>
+<ul>
+<li>Make $x = f_\theta(z)$ <strong>deterministic and invertible</strong>; then p(x) is tractable via change of variables. / 使映射确定且可逆，通过变量替换公式计算似然。</li>
+</ul>
+<h4>Change of Variables / 变量替换公式</h4>
+<ul>
+<li><strong>1D</strong>: $p_X(x) = p_Z(h(x))|h'(x)|$, where $h = f^{-1}$. / 一维情况。</li>
+<li><strong>General</strong>: $p_X(x) = p_Z(f^{-1}(x)) \cdot |\det(\partial f^{-1}/\partial x)| = p_Z(z) \cdot |\det(\partial f/\partial z)|^{-1}$. / 一般情况。</li>
+</ul>
+<h4>Flow of Transformations / 变换流</h4>
+<ul>
+<li><strong>Composition (组合)</strong>: $z_0 \rightarrow f_1 \rightarrow z_1 \rightarrow f_2 \rightarrow \cdots \rightarrow f_M \rightarrow z_M = x$</li>
+<li><strong>Likelihood</strong>: $p_X(x) = p_Z(z_0) \cdot \prod_{m=1}^{M} |\det(\partial f_m / \partial z_m)|$</li>
+</ul>
+<h4>Triangular Jacobian / 三角雅可比矩阵</h4>
+<ul>
+<li><strong>Key insight (关键洞察)</strong>: If $x_i = f_i(z)$ depends only on $z_{\leq i}$, Jacobian is lower triangular; determinant = product of diagonals = O(n). / 三角矩阵的行列式为对角线元素之积，计算高效。</li>
+</ul>
+<h4>NICE / 非线性独立分量估计</h4>
+<ul>
+<li><strong>Additive coupling</strong>: $x_{1:d} = z_{1:d}$; $x_{d+1:n} = z_{d+1:n} + m_\theta(z_{1:d})$; $\det(J) = 1$ (volume-preserving). / 加性耦合层，体积保持。</li>
+</ul>
+<h4>Real-NVP / 实数值非体积保持</h4>
+<ul>
+<li><strong>Affine coupling</strong>: x_{1}:ᵈ = z_{1}:ᵈ; x_{d+1:n} = z_{d+1:n} \odot exp(\alpha\theta(z_{1}:ᵈ)) + \mu\theta(z_{1}:ᵈ); det(J) = exp(\Sigma\alpha). / 仿射耦合层，非体积保持。</li>
+</ul>
+<h4>MAF vs. IAF / 掩码自回归流 vs. 逆自回归流</h4>
+<table>
+<thead>
+<tr>
+<th>Model</th>
+<th>Forward (z→x)</th>
+<th>Inverse (x→z)</th>
+<th>Best for</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>MAF</td>
+<td>Sequential (slow)</td>
+<td>Parallel (fast)</td>
+<td>Density estimation / 密度估计</td>
+</tr>
+<tr>
+<td>IAF</td>
+<td>Parallel (fast)</td>
+<td>Sequential (slow)</td>
+<td>Generation / 生成</td>
+</tr>
+</tbody>
+</table>
+<h4>Parallel Wavenet / 并行Wavenet</h4>
+<ul>
+<li><strong>Teacher (MAF)</strong>: Trained via MLE for density estimation. / 教师模型用于密度估计。</li>
+<li><strong>Student (IAF)</strong>: Trained via KL(student||teacher) for fast generation. / 学生模型用于快速生成。</li>
+<li><strong>Result</strong>: $1000\times$ faster sampling than vanilla autoregressive. / 生成速度提升1000倍。</li>
+</ul>
+<h4>Gaussianization Flows / 高斯化流</h4>
+<ul>
+<li><strong>Step 1</strong>: Dimension-wise Gaussianization (inverse CDF trick). / 逐维度高斯化。</li>
+<li><strong>Step 2</strong>: Rotation (orthogonal Jacobian). / 旋转变换。</li>
+<li><strong>Repeat</strong>: Stack learnable Gaussian copula layers. / 堆叠可学习的高斯copula层。</li>
+</ul>
+<hr />
+<h3>2.17 Generative Adversarial Networks / 生成对抗网络</h3>
+<h4>GAN Framework / GAN框架</h4>
+<ul>
+<li><strong>Generator (生成器)</strong>: $z \sim p(z) \rightarrow G_\theta(z) = x$; defines implicit distribution $p_\theta(x)$. / 隐式定义数据分布。</li>
+<li><strong>Discriminator (判别器)</strong>: $D_\varphi(x)$ outputs probability of being real data. / 输出为真实数据的概率。</li>
+<li><strong>Objective (目标)</strong>: $\min_G \max_D V(D,G) = \mathbb{E}<em>{x \sim p</em>{\mathrm{data}}}[\log D(x)] + \mathbb{E}_{z \sim p_z}[\log(1-D(G(z)))]$. / 极小极大博弈。</li>
+</ul>
+<h4>Optimal Discriminator / 最优判别器</h4>
+<ul>
+<li><strong>$D^*(x) = \frac{p_{\mathrm{data}}(x)}{p_{\mathrm{data}}(x) + p_G(x)}$</strong></li>
+<li><strong>At optimum</strong>: $V(G^<em>, D^</em>) = 2 \cdot D_{\mathrm{JSD}}[p_{\mathrm{data}}, p_G] - \log 4$. / 最优时等价于Jensen-Shannon散度。</li>
+</ul>
+<h4>Jensen-Shannon Divergence / JS散度</h4>
+<ul>
+<li><strong>Properties</strong>: $D_{\mathrm{JSD}}[p,q] \geq 0$; $D_{\mathrm{JSD}}[p,q] = 0$ iff $p = q$; Symmetric. / 非负、零当且仅当相等、对称。</li>
+</ul>
+<h4>GAN Training Algorithm / GAN训练算法</h4>
+<ol>
+<li>Sample m real data points / 采样m个真实数据</li>
+<li>Sample m noise vectors / 采样m个噪声向量</li>
+<li>Update discriminator: ascend $\nabla_\varphi V$ / 更新判别器参数</li>
+<li>Update generator: descend $\nabla_\theta V$ / 更新生成器参数</li>
+</ol>
+<h4>GAN Challenges / GAN挑战</h4>
+<ul>
+<li><strong>Mode Collapse (模式坍缩)</strong>: Generator collapses to few modes. / 生成器坍缩到少数模式。</li>
+<li><strong>Unstable optimization (训练不稳定)</strong>: Loss oscillates; no robust stopping criteria. / 损失振荡，无可靠停止准则。</li>
+<li><strong>Evaluation (评估困难)</strong>: Sample quality $\neq$ likelihood. / 样本质量不等于似然。</li>
+</ul>
+<h4>Likelihood vs. Sample Quality / 似然与样本质量</h4>
+<ul>
+<li><strong>Case</strong>: Great likelihood, poor samples $\rightarrow$ noise mixture model. / 高似然但差样本。</li>
+<li><strong>Case</strong>: Great samples, poor likelihood $\rightarrow$ memorization. / 好样本但低似然。</li>
+<li><strong>Lesson</strong>: Likelihood and sample quality are not always correlated. / 似然与样本质量不一定相关。</li>
+</ul>
+<hr />
+<h3>2.18 f-Divergences &amp; f-GANs / f-散度与f-GAN</h3>
+<h4>f-Divergence / f-散度</h4>
+<ul>
+<li><strong>Definition (定义)</strong>: $D_f(p, q) = \mathbb{E}_{x \sim q}\left[f\left(\frac{p(x)}{q(x)}\right)\right]$, where $f$ is convex, lower-semicontinuous with $f(1)=0$. / 任意满足凸性、下半连续且$f(1)=0$的函数$f$定义的散度。</li>
+<li><strong>Key property (关键性质)</strong>: By Jensen's inequality, $D_f(p,q) \geq 0$; equality iff $p = q$. / 由Jensen不等式知非负，等号当且仅当两分布相同。</li>
+<li><strong>Examples (示例)</strong>:</li>
+<li>KL divergence: $f(u) = u \log u$ / KL散度</li>
+<li>Reverse KL: $f(u) = -\log u$ / 逆KL散度</li>
+<li>Jensen-Shannon: $f(u) = u\log u - (u+1)\log\frac{u+1}{2}$ / JS散度</li>
+<li>Total Variation: $f(u) = \frac{1}{2}|u-1|$ / 全变差距离</li>
+<li>Chi-squared: $f(u) = (u-1)^2$ / 卡方散度</li>
+</ul>
+<h4>Variational Representation of f-Divergence / f-散度的变分表示</h4>
+<ul>
+<li><strong>Fenchel Conjugate (Fenchel共轭)</strong>: $f(u) = \sup_{t \in \mathrm{dom}_{f^<em>}} {tu - f^</em>(t)}$, where $f^*$ is the convex conjugate. / 利用凸共轭函数表示。</li>
+<li><strong>Variational lower bound (变分下界)</strong>: $D_f(p,q) \geq \sup_{T} {\mathbb{E}<em>{x \sim p}[T(x)] - \mathbb{E}</em>{x \sim q}[f^*(T(x)))]}$, where $T: \mathcal{X} \rightarrow \mathbb{R}$ is any function. / 用任意函数$T$给出$f$-散度的下界。</li>
+<li><strong>Key insight (关键洞察)</strong>: The density ratio $p/q$ is unknown, but the variational form can be estimated from samples alone. / 密度比未知，但变分形式可仅从样本估计，实现似然自由训练。</li>
+</ul>
+<h4>f-GAN / f-GAN</h4>
+<ul>
+<li><strong>Objective (目标)</strong>: $\min_\theta D_f(p_{\mathrm{data}}, p_\theta) = \min_\theta \max_\varphi {\mathbb{E}<em>{x \sim p</em>{\mathrm{data}}}[T_\varphi(x)] - \mathbb{E}<em>{x \sim p</em>\theta}[f^*(T_\varphi(x))]}$. / 用变分下界替代$f$-散度，实现似然自由训练。</li>
+<li><strong>Training (训练)</strong>: Parameterize $T_\varphi$ as a neural network; optimize via min-max game. / 用神经网络参数化$T$，通过极小极大博弈优化。</li>
+<li><strong>Recovery of original GAN (还原原始GAN)</strong>: Choosing $f$ as JS divergence recovers the original GAN objective. / 选择JS散度时退化为原始GAN目标。</li>
+</ul>
+<hr />
+<h3>2.19 Wasserstein GAN (WGAN) / Wasserstein生成对抗网络</h3>
+<h4>Wasserstein Distance / Wasserstein距离</h4>
+<ul>
+<li><strong>Definition (定义)</strong>: $W(p_r, p_g) = \inf_{\gamma \in \Pi(p_r, p_g)} \mathbb{E}_{(x,y) \sim \gamma}[|x - y|]$, also called Earth Mover's Distance (EMD). / 也称推土机距离，衡量将一个分布"搬运"为另一分布的最小代价。</li>
+<li><strong>Properties (性质)</strong>: Meaningful distance even when distributions have non-overlapping supports; continuous and differentiable w.r.t. generator parameters. / 即使分布不重叠也有意义；关于生成器参数连续可微。</li>
+</ul>
+<h4>Kantorovich-Rubinstein Duality / Kantorovich-Rubinstein对偶</h4>
+<ul>
+<li><strong>Dual form (对偶形式)</strong>: $W(p_r, p_g) = \sup_{|f|<em>L \leq 1} {\mathbb{E}</em>{x \sim p_r}[f(x)] - \mathbb{E}_{x \sim p_g}[f(x)]}$, where $|f|_L \leq 1$ means $f$ is 1-Lipschitz. / 对偶形式将Wasserstein距离转化为1-Lipschitz函数空间上的优化。</li>
+<li><strong>Key advantage (关键优势)</strong>: Dual form can be estimated from samples; no need to know densities. / 对偶形式可从样本估计，无需知道密度。</li>
+</ul>
+<h4>WGAN Training / WGAN训练</h4>
+<ul>
+<li><strong>Objective (目标)</strong>: $\max_{|D|<em>L \leq 1} {\mathbb{E}</em>{x \sim p_{\mathrm{data}}}[D(x)] - \mathbb{E}_{z \sim p(z)}[D(G(z))]}$, discriminator is called "critic". / 判别器称为"评论家"，需满足1-Lipschitz约束。</li>
+<li><strong>Lipschitz constraint enforcement (Lipschitz约束实现)</strong>:</li>
+<li><strong>Weight clipping (权重裁剪)</strong>: Clamp weights to $[-c, c]$. Simple but can cause optimization issues. / 简单但可能导致优化问题。</li>
+<li><strong>Gradient penalty (梯度惩罚, WGAN-GP)</strong>: Add $\lambda \mathbb{E}<em>{\hat{x}}[(|\nabla</em>{\hat{x}} D(\hat{x})|_2 - 1)^2]$ to the objective. More stable. / 更稳定的梯度惩罚方法。</li>
+<li><strong>Advantages over original GAN (相比原始GAN的优势)</strong>:</li>
+<li>Loss correlates with sample quality / 损失与样本质量相关</li>
+<li>More stable training / 训练更稳定</li>
+<li>No mode collapse in practice / 实践中无模式坍缩</li>
+</ul>
+<hr />
+<h3>2.20 BiGAN / 双向生成对抗网络</h3>
+<h4>Bidirectional GAN (BiGAN) / 双向GAN</h4>
+<ul>
+<li><strong>Motivation (动机)</strong>: Standard GANs learn a generator $G: z \rightarrow x$ but cannot infer the latent representation $z$ given $x$. / 标准GAN只学到生成器，无法推断潜变量表示。</li>
+<li><strong>Architecture (架构)</strong>: Add an encoder $E: x \rightarrow z$ alongside the generator $G: z \rightarrow x$; discriminator $D$ takes $(x, z)$ pairs and distinguishes $(x, E(x))$ from $(G(z), z)$. / 增加编码器$E$，判别器在$(x,z)$对上区分编码对与生成对。</li>
+<li><strong>Objective (目标)</strong>: $\min_{G,E} \max_D V(D, E, G) = \mathbb{E}<em>{x \sim p</em>{\mathrm{data}}}[\log D(x, E(x))] + \mathbb{E}_{z \sim p(z)}[\log(1 - D(G(z), z))]$.</li>
+<li><strong>Result (结果)</strong>: At equilibrium, $E = G^{-1}$ (encoder inverts the generator). / 均衡时编码器为生成器的逆。</li>
+<li><strong>ALi (Adversarially Learned Inference)</strong>: Simultaneous proposal, equivalent to BiGAN. / 同时提出的等价方法。</li>
+</ul>
+<hr />
+<h3>2.21 CycleGAN / 循环生成对抗网络</h3>
+<h4>Image-to-Image Translation / 图像到图像翻译</h4>
+<ul>
+<li><strong>Problem (问题)</strong>: Given images from two domains $X$ and $Y$, learn to translate between them. / 给定两个域的图像，学习在域间翻译。</li>
+<li><strong>Paired vs. Unpaired (配对与非配对)</strong>: Paired examples are expensive; CycleGAN works with unpaired data. / 配对数据昂贵，CycleGAN使用非配对数据。</li>
+</ul>
+<h4>CycleGAN Architecture / CycleGAN架构</h4>
+<ul>
+<li><strong>Generators (生成器)</strong>: $G: X \rightarrow Y$ and $F: Y \rightarrow X$. / 双向生成器。</li>
+<li><strong>Discriminators (判别器)</strong>: $D_Y$ distinguishes real $Y$ from $G(X)$; $D_X$ distinguishes real $X$ from $F(Y)$. / 双判别器。</li>
+<li><strong>Adversarial loss (对抗损失)</strong>: $\mathcal{L}<em>{\mathrm{GAN}}(G, D_Y, X, Y) + \mathcal{L}</em>{\mathrm{GAN}}(F, D_X, X, Y)$. / 双向对抗损失。</li>
+<li><strong>Cycle consistency loss (循环一致性损失)</strong>: $\lambda(\mathbb{E}_X[|F(G(X)) - X|_1] + \mathbb{E}_Y[|G(F(Y)) - Y|_1])$. / 确保往返翻译一致。</li>
+<li><strong>Overall objective (总目标)</strong>: $\min_{F,G,D_X,D_Y} \mathcal{L}<em>{\mathrm{GAN}} + \lambda \cdot \mathcal{L}</em>{\mathrm{cyc}}$.</li>
+</ul>
+<h4>AlignFlow / 对齐流</h4>
+<ul>
+<li><strong>Key idea (核心思想)</strong>: If $G$ is a normalizing flow model, $F = G^{-1}$ is free; exactly cycle-consistent. / 若生成器为流模型，逆向自然可得，精确循环一致。</li>
+<li><strong>Training (训练)</strong>: Can train via MLE and/or adversarial learning. / 可通过MLE和/或对抗学习训练。</li>
+</ul>
+<h4>StarGAN / 星形GAN</h4>
+<ul>
+<li><strong>Extension (扩展)</strong>: Handles multiple domains with a single generator. / 单一生成器处理多个域的翻译。</li>
+</ul>
+<hr />
+<h3>2.22 Energy-Based Models / 基于能量的模型</h3>
+<h4>EBM Formulation / EBM公式</h4>
+<ul>
+<li><strong>Definition (定义)</strong>: $p_\theta(x) = \frac{\exp(f_\theta(x))}{Z(\theta)} = \frac{1}{Z(\theta)}\exp(f_\theta(x))$, where $f_\theta(x)$ is any function (e.g., neural network) and $Z(\theta) = \int \exp(f_\theta(x))dx$ is the partition function. / 任意函数取指数后归一化，分母为配分函数。</li>
+<li><strong>Key property (关键性质)</strong>: Very flexible architecture — $f_\theta$ can be any neural network (no invertibility, factorization, or latent variable constraints). / 架构极其灵活，$f_\theta$可为任意神经网络。</li>
+<li><strong>Partition function (配分函数)</strong>: $Z(\theta) = \int \exp(f_\theta(x))dx$ — generally intractable. / 通常不可计算。</li>
+</ul>
+<h4>Energy Function / 能量函数</h4>
+<ul>
+<li><strong>Interpretation (解释)</strong>: $-f_\theta(x)$ is the "energy"; low energy = high probability. / 负$f_\theta$为"能量"，低能量对应高概率。</li>
+<li><strong>Non-negativity trick (非负技巧)</strong>: Given any function $f_\theta$, ensure non-negativity via $g_\theta(x) = f_\theta(x)^2$, $\exp(f_\theta(x))$, $|f_\theta(x)|$, or $\log(1+\exp(f_\theta(x)))$. / 通过平方、指数、绝对值等保证非负。</li>
+</ul>
+<h4>Maximum Likelihood Training / 最大似然训练</h4>
+<ul>
+<li><strong>Log-likelihood (对数似然)</strong>: $\log p_\theta(x) = f_\theta(x) - \log Z(\theta)$. / 对数似然等于函数值减去配分函数对数。</li>
+<li><strong>Gradient (梯度)</strong>: $\nabla_\theta \log p_\theta(x_{\mathrm{train}}) = \nabla_\theta f_\theta(x_{\mathrm{train}}) - \mathbb{E}<em>{x \sim p</em>\theta}[\nabla_\theta f_\theta(x)]$. / 梯度=正相位（推高训练数据能量）减负相位（拉低模型采样能量）。</li>
+<li><strong>Positive phase vs. Negative phase (正相位与负相位)</strong>:</li>
+<li><strong>Positive phase (正相位)</strong>: $\nabla_\theta f_\theta(x_{\mathrm{train}})$ — increases probability of training data. / 提高训练数据概率。</li>
+<li><strong>Negative phase (负相位)</strong>: $\mathbb{E}<em>{x \sim p</em>\theta}[\nabla_\theta f_\theta(x)]$ — decreases probability of model samples. / 降低模型样本概率。</li>
+</ul>
+<h4>Contrastive Divergence / 对比散度</h4>
+<ul>
+<li><strong>Algorithm (算法)</strong>: Instead of computing $Z(\theta)$ exactly, use Monte Carlo estimate. / 用蒙特卡洛估计代替精确计算配分函数。</li>
+<li><strong>Update step (更新步骤)</strong>: $\nabla_\theta f_\theta(x_{\mathrm{train}}) - \nabla_\theta f_\theta(x_{\mathrm{sample}})$, where $x_{\mathrm{sample}} \sim p_\theta$. / 用模型采样的梯度近似负相位。</li>
+<li><strong>Key idea (核心思想)</strong>: Make training data more likely than typical samples from the model. / 使训练数据比模型典型样本概率更高。</li>
+</ul>
+<h4>Sampling from EBMs / 从EBM采样</h4>
+<ul>
+<li><strong>MCMC (马尔可夫链蒙特卡洛)</strong>:</li>
+<li>Initialize $x_0$ randomly / 随机初始化</li>
+<li>Propose $x' = x_t + \mathrm{noise}$ / 提议新样本</li>
+<li>If $f_\theta(x') &gt; f_\theta(x_t)$: accept; else accept with probability $\exp(f_\theta(x') - f_\theta(x_t))$ / 接受或以一定概率接受</li>
+<li>Converges to $p_\theta$, but can be slow / 收敛但可能很慢</li>
+<li><strong>Langevin MCMC (朗之万MCMC)</strong>: $x_{t+1} = x_t + \epsilon \nabla_x \log p_\theta(x_t) + \sqrt{2\epsilon} z_t$, where $z_t \sim \mathcal{N}(0, I)$. / 利用梯度信息加速采样的MCMC方法。</li>
+<li><strong>Score function (分数函数)</strong>: For EBMs, $\nabla_x \log p_\theta(x) = \nabla_x f_\theta(x)$ (since $\nabla_x \log Z(\theta) = 0$). / EBM的分数函数（对数密度对$x$的梯度）恰好等于$f_\theta$的梯度。</li>
+</ul>
+<h4>Score-Based Generative Modeling / 基于分数的生成模型</h4>
+<ul>
+<li><strong>Key idea (核心思想)</strong>: Directly estimate the score function $\nabla_x \log p(x)$ using a neural network $s_\theta(x) \approx \nabla_x \log p(x)$. / 直接用神经网络估计分数函数。</li>
+<li><strong>Score matching (分数匹配)</strong>: Train $s_\theta$ by minimizing $\mathbb{E}<em>{p</em>{\mathrm{data}}}[|s_\theta(x) - \nabla_x \log p_{\mathrm{data}}(x)|^2]$ (or variants avoiding $\nabla_x \log p_{\mathrm{data}}$). / 通过分数匹配目标训练。</li>
+<li><strong>Denoising Score Matching (去噪分数匹配)</strong>: Add noise $\sigma$ to data, then match the score of the perturbed distribution. / 对数据加噪后匹配扰动分布的分数。</li>
+<li><strong>Noise Conditional Score Network (NCSN)</strong>: Use multiple noise scales ${\sigma_1 &gt; \sigma_2 &gt; \cdots &gt; \sigma_L}$; train one network conditioned on noise level. / 使用多尺度噪声，训练条件分数网络。</li>
+<li><strong>Annealed Langevin Dynamics (退火朗之万动力学)</strong>: Sequentially sample with decreasing noise levels; each level initialized from previous. / 逐步降低噪声水平采样。</li>
+</ul>
+<h4>EBM vs. Other Generative Models / EBM与其他生成模型比较</h4>
+<ul>
+<li><strong>vs. Autoregressive/Flow/VAE</strong>: EBM has much more flexible architecture (no restrictions on $f_\theta$), but sampling is slower (requires MCMC). / EBM架构更灵活，但采样需要MCMC。</li>
+<li><strong>vs. GAN</strong>: EBM provides stable training and tractable (unnormalized) likelihood; GAN has fast sampling but unstable training and intractable likelihood. / EBM训练稳定，GAN采样快但训练不稳定。</li>
+<li><strong>Composability (可组合性)</strong>: $p_{\mathrm{combined}}(x) \propto \prod_i p_i(x)^{\alpha_i}$ — can combine multiple EBMs by multiplying their densities. / 多个EBM可乘性组合，适用于零样本组合推理。</li>
+</ul>
+<hr />
+<h2>3. Key Formulas &amp; Theorems / 重点公式与定理</h2>
+<h3>3.1 Convolution / 卷积</h3>
+<p><strong>Formula</strong>: $G[i,j] = \sum_m \sum_n H[m,n] \cdot F[i-m,j-n]$<br />
+<strong>Variables</strong>: H = kernel, F = input image, G = output image<br />
+<strong>Conditions</strong>: Kernel size determines neighborhood / 核大小决定邻域范围</p>
+<h3>3.2 Gaussian Filter / 高斯滤波</h3>
+<p><strong>Formula</strong>: $G_\sigma(x,y) = \frac{1}{2\pi\sigma^2} \exp!\left(-\frac{x^2+y^2}{2\sigma^2}\right)$<br />
+<strong>Variables</strong>: \sigma = standard deviation (scale) / 标准差（尺度）<br />
+<strong>Conditions</strong>: Larger $\sigma$ = more blurring / $\sigma$越大越模糊</p>
+<h3>3.3 Image Gradient / 图像梯度</h3>
+<p><strong>Formula</strong>: $\nabla f = [\partial f/\partial x,\, \partial f/\partial y]$; $|\nabla f| = \sqrt{(\partial f/\partial x)^2+(\partial f/\partial y)^2}$<br />
+<strong>Variables</strong>: \partialf/\partialx, \partialf/\partialy = partial derivatives / 偏导数<br />
+<strong>Conditions</strong>: Computed via finite differences or derivative of Gaussian / 通过有限差分或高斯导数计算</p>
+<h3>3.4 Harris Corner Response / Harris角点响应</h3>
+<p><strong>Formula</strong>: $R = \det(H) - \alpha \cdot \mathrm{trace}(H)^2 = \lambda_1 \lambda_2 - \alpha(\lambda_1+\lambda_2)^2$<br />
+<strong>Variables</strong>: $H$ = second moment matrix, $\alpha \in [0.04,0.06]$, $\lambda_1, \lambda_2$ = eigenvalues<br />
+<strong>Conditions</strong>: $R &gt; 0 \rightarrow$ corner; $R \approx 0 \rightarrow$ edge; $R &lt; 0 \rightarrow$ flat (using alternate sign convention)</p>
+<h3>3.5 Perspective Projection / 透视投影</h3>
+<p><strong>Formula</strong>: $(x,y,z) \rightarrow (fx/z + c_x,\, fy/z + c_y)$<br />
+<strong>Variables</strong>: f = focal length, (cx,cy) = principal point<br />
+<strong>Conditions</strong>: Pinhole camera model / 针孔相机模型</p>
+<h3>3.6 Stereo Depth / 立体深度</h3>
+<p><strong>Formula</strong>: $Z = f \cdot B / d$<br />
+<strong>Variables</strong>: Z = depth, f = focal length, B = baseline, d = disparity<br />
+<strong>Conditions</strong>: Rectified stereo pair / 校正后的立体对</p>
+<h3>3.7 RANSAC Iterations / RANSAC迭代次数</h3>
+<p><strong>Formula</strong>: $N = \frac{\log(1-p)}{\log(1-(1-e)^s)}$<br />
+<strong>Variables</strong>: p = success probability, e = outlier ratio, s = min sample size<br />
+<strong>Conditions</strong>: Assumes &lt; 50% outliers / 假设外点比例 &lt; 50%</p>
+<h3>3.8 ELBO / 证据下界</h3>
+<p><strong>Formula</strong>: $\log p(x;\theta) \geq \mathbb{E}<em>q[\log p(x,z;\theta)] - \mathbb{E}_q[\log q(z;\varphi)] = \mathbb{E}_q[\log p(x|z;\theta)] - D</em>{\mathrm{KL}}(q_\varphi(z|x) | p(z))$<br />
+<strong>Variables</strong>: $q$ = variational distribution, $\theta$ = model params, $\varphi$ = variational params<br />
+<strong>Conditions</strong>: Equality when q(z;\varphi) = p(z|x;\theta) / 当变分分布等于后验时等号成立</p>
+<h3>3.9 Change of Variables (Flow) / 变量替换（标准化流）</h3>
+<p><strong>Formula</strong>: $p_X(x) = p_Z(f^{-1}(x)) \cdot |\det(\partial f^{-1}/\partial x)|$<br />
+<strong>Variables</strong>: $f$ = invertible transformation, $x,z \in \mathbb{R}^n$ (same dimension)<br />
+<strong>Conditions</strong>: f must be invertible; x,z continuous / f必须可逆；x,z连续且同维</p>
+<h3>3.10 GAN Objective / GAN目标</h3>
+<p><strong>Formula</strong>: $\min_G \max_D \mathbb{E}<em>{x \sim p</em>{\mathrm{data}}}[\log D(x)] + \mathbb{E}_{z \sim p_z}[\log(1-D(G(z)))]$<br />
+<strong>Variables</strong>: $G$ = generator, $D$ = discriminator, $p_z$ = prior on $z$<br />
+<strong>Conditions</strong>: At optimum, equivalent to minimizing JSD / 最优时等价于最小化JS散度</p>
+<h3>3.11 Cross-Entropy Loss / 交叉熵损失</h3>
+<p><strong>Formula</strong>: $L_i = -\log(\exp(f_{y_i}) / \sum_j \exp(f_j))$<br />
+<strong>Variables</strong>: $f_j$ = score for class $j$, $y_i$ = true label<br />
+<strong>Conditions</strong>: Most common classification loss / 最常用的分类损失</p>
+<h3>3.12 Conv Output Size / 卷积输出尺寸</h3>
+<p><strong>Formula</strong>: $\mathrm{output} = \frac{N - F + 2P}{\mathrm{stride}} + 1$<br />
+<strong>Variables</strong>: N = input size, F = filter size, P = padding<br />
+<strong>Conditions</strong>: Must be integer / 必须为整数</p>
+<h3>3.13 f-Divergence / f-散度</h3>
+<p><strong>Formula</strong>: $D_f(p, q) = \mathbb{E}_{x \sim q}\left[f\left(\frac{p(x)}{q(x)}\right)\right]$, where $f$ is convex with $f(1)=0$<br />
+<strong>Variables</strong>: $p, q$ = probability distributions, $f$ = convex generator function<br />
+<strong>Conditions</strong>: $D_f(p,q) \geq 0$; equals 0 iff $p = q$ / 非负，等号当且仅当两分布相同</p>
+<h3>3.14 Wasserstein Distance / Wasserstein距离</h3>
+<p><strong>Formula</strong>: $W(p_r, p_g) = \sup_{|f|<em>L \leq 1} {\mathbb{E}</em>{x \sim p_r}[f(x)] - \mathbb{E}_{x \sim p_g}[f(x)]}$<br />
+<strong>Variables</strong>: $p_r, p_g$ = real and generated distributions, $f$ = 1-Lipschitz function<br />
+<strong>Conditions</strong>: Meaningful even for non-overlapping distributions / 即使分布不重叠也有意义</p>
+<h3>3.15 EBM Probability / EBM概率</h3>
+<p><strong>Formula</strong>: $p_\theta(x) = \frac{1}{Z(\theta)}\exp(f_\theta(x))$, where $Z(\theta) = \int \exp(f_\theta(x))dx$<br />
+<strong>Variables</strong>: $f_\theta(x)$ = any function (energy negative), $Z(\theta)$ = partition function<br />
+<strong>Conditions</strong>: $Z(\theta)$ generally intractable / 配分函数通常不可计算</p>
+<h3>3.16 EBM Log-Likelihood Gradient / EBM对数似然梯度</h3>
+<p><strong>Formula</strong>: $\nabla_\theta \log p_\theta(x_{\mathrm{train}}) = \nabla_\theta f_\theta(x_{\mathrm{train}}) - \mathbb{E}<em>{x \sim p</em>\theta}[\nabla_\theta f_\theta(x)]$<br />
+<strong>Variables</strong>: First term = positive phase, second term = negative phase<br />
+<strong>Conditions</strong>: Negative phase estimated via MCMC samples / 负相位通过MCMC样本估计</p>
+<h3>3.17 Langevin MCMC / 朗之万MCMC</h3>
+<p><strong>Formula</strong>: $x_{t+1} = x_t + \epsilon \nabla_x f_\theta(x_t) + \sqrt{2\epsilon} z_t$, where $z_t \sim \mathcal{N}(0, I)$<br />
+<strong>Variables</strong>: $\epsilon$ = step size, $\nabla_x f_\theta(x)$ = score function<br />
+<strong>Conditions</strong>: Converges to $p_\theta$ as $\epsilon \to 0$, $T \to \infty$ / 当步长趋于0、迭代次数趋于无穷时收敛</p>
+<hr />
+<h2>4. Typical Questions &amp; Solutions / 典型例题与解答</h2>
+<h3>Q1: Gaussian Filter Properties / 高斯滤波器性质</h3>
+<p><strong>Problem (问题)</strong>: If you convolve an image with a Gaussian of $\sigma_1$ and then with a Gaussian of $\sigma_2$, what is the effective $\sigma$?</p>
+<p><strong>Solution (解答)</strong>: $\sigma_{\mathrm{eff}} = \sqrt{\sigma_1^2 + \sigma_2^2}$. This follows from the property that convolution of two Gaussians is another Gaussian, and their variances add. / 两个高斯卷积仍为高斯，方差相加。</p>
+<hr />
+<h3>Q2: Nyquist Rate / 奈奎斯特率</h3>
+<p><strong>Problem (问题)</strong>: An image has maximum frequency 50 cycles/pixel. What is the minimum sampling rate to avoid aliasing?</p>
+<p><strong>Solution (解答)</strong>: Nyquist rate = $2 \times$ max frequency = 100 samples/pixel interval. Sampling rate must be $\geq 100$. / 采样率必须至少为最高频率的两倍。</p>
+<hr />
+<h3>Q3: Harris Corner Classification / Harris角点分类</h3>
+<p><strong>Problem (问题)</strong>: For a window where the second moment matrix H has eigenvalues $\lambda_1 = 5000$ and $\lambda_2 = 50$, what type of region is this?</p>
+<p><strong>Solution (解答)</strong>: $\lambda_1 \gg \lambda_2 \rightarrow$ This is an <strong>edge</strong> region. The intensity changes significantly in one direction but not the other. / 这是一个边缘区域，强度在一个方向变化大但在另一方向变化小。</p>
+<hr />
+<h3>Q4: Homography DOF / 单应变换自由度</h3>
+<p><strong>Problem (问题)</strong>: How many point correspondences are needed to solve for a homography?</p>
+<p><strong>Solution (解答)</strong>: A homography has 8 DOF ($3\times3$ matrix up to scale). Each point correspondence gives 2 equations. Therefore, minimum 4 point correspondences are needed. / 单应矩阵8个自由度，每对匹配提供2个方程，至少需4对。</p>
+<hr />
+<h3>Q5: RANSAC Rounds / RANSAC轮数计算</h3>
+<p><strong>Problem (问题)</strong>: For computing a homography (s=4) with 30% outliers and p=0.99, how many RANSAC rounds?</p>
+<p><strong>Solution (解答)</strong>: $N = \log(1-0.99)/\log(1-(1-0.3)^4) = \log(0.01)/\log(1-0.7^4) \approx 17$ rounds. / 约需17轮迭代。</p>
+<hr />
+<h3>Q6: Stereo Depth Calculation / 立体深度计算</h3>
+<p><strong>Problem (问题)</strong>: Given a stereo system with baseline B=0.2m, focal length f=500 pixels, and disparity d=50 pixels, what is the depth Z?</p>
+<p><strong>Solution (解答)</strong>: $Z = f \cdot B / d = 500 \times 0.2 / 50 = 2.0$ meters. / 深度为2米。</p>
+<hr />
+<h3>Q7: Conv Layer Output Size / 卷积层输出尺寸</h3>
+<p><strong>Problem (问题)</strong>: Input $32\times32\times3$, 10 filters of size $5\times5\times3$, stride 1, padding 0. What is the output size?</p>
+<p><strong>Solution (解答)</strong>: Output = (32−5+0)/1 + 1 = 28. So output size is $28\times28\times10$. / 输出尺寸为$28\times28\times10$。</p>
+<hr />
+<h3>Q8: VAE ELBO Decomposition / VAE的ELBO分解</h3>
+<p><strong>Problem (问题)</strong>: Write the ELBO in terms of reconstruction loss and KL divergence.</p>
+<p><strong>Solution (解答)</strong>: 
+$\mathrm{ELBO} = \mathbb{E}<em>{q</em>\varphi(z|x)}[\log p(x|z;\theta)] - D_{\mathrm{KL}}(q_\varphi(z|x) | p(z))$
+- First term: reconstruction loss (autoencoding) / 重建损失
+- Second term: KL divergence of approximate posterior from prior / 近似后验与先验的KL散度</p>
+<hr />
+<h3>Q9: Flow Model Likelihood / 标准化流似然计算</h3>
+<p><strong>Problem (问题)</strong>: In a normalizing flow with 3 invertible layers, write the log-likelihood.</p>
+<p><strong>Solution (解答)</strong>: 
+$\log p_X(x) = \log p_Z(f^{-1}(x)) + \sum_{m=1}^{3} \log|\det(\partial f_m / \partial z_m)|$
+where $z_0 = f^{-1}(x)$ and $z_m = f_m^{-1}(z_{m+1})$. / 对数似然等于先验对数概率加上各层雅可比行列式对数之和。</p>
+<hr />
+<h3>Q10: GAN Optimal Discriminator / GAN最优判别器</h3>
+<p><strong>Problem (问题)</strong>: Derive the optimal discriminator for fixed generator.</p>
+<p><strong>Solution (解答)</strong>: 
+$D^<em>(x) = \frac{p_{\mathrm{data}}(x)}{p_{\mathrm{data}}(x) + p_G(x)}$
+- When $p_G = p_{\mathrm{data}}$: $D^</em> = 1/2$ (cannot distinguish) / 无法区分真假
+- When $p_G \neq p_{\mathrm{data}}$: D* assigns higher probability to whichever distribution has higher density at x. / 判别器给密度更高的分布更高的概率。</p>
+<hr />
+<h3>Q11: Reparameterization Trick / 重参数化技巧</h3>
+<p><strong>Problem (问题)</strong>: Why can't we directly backpropagate through sampling z ∼ q(z;\varphi)?</p>
+<p><strong>Solution (解答)</strong>: 
+Sampling is a stochastic operation --- gradients cannot flow through random nodes. Reparameterization: $z = \mu + \sigma\varepsilon$ where $\varepsilon \sim \mathcal{N}(0,I)$. Now z is a deterministic function of \varphi and \varepsilon; gradients can flow through $\mu$ and $\sigma$. / 采样是随机操作，梯度无法通过。重参数化将随机性转移到$\varepsilon$，使梯度可通过确定函数$\mu$和$\sigma$传递。</p>
+<hr />
+<h3>Q12: Change of Variables (1D) / 变量替换(一维)</h3>
+<p><strong>Problem (问题)</strong>: If Z ∼ U[0,2] and X = 4Z, find pX(x).</p>
+<p><strong>Solution (解答)</strong>: 
+h(X) = X/4, h'(X) = 1/4
+$p_X(x) = p_Z(X/4) \times |1/4| = (1/2) \times (1/4) = 1/8$ for $x \in [0,8]$
+This is uniform on [0,8], as expected. / 结果为[0,8]上的均匀分布。</p>
+<hr />
+<h3>Q13: NICE vs Real-NVP / NICE与Real-NVP区别</h3>
+<p><strong>Problem (问题)</strong>: What is the key difference between NICE and Real-NVP coupling layers?</p>
+<p><strong>Solution (解答)</strong>: 
+- <strong>NICE</strong>: $x_{d+1:n} = z_{d+1:n} + m_\theta(z_{1:d})$; $\det(J) = 1$ (volume-preserving). / 加性耦合，体积保持。
+- <strong>Real-NVP</strong>: $x_{d+1:n} = z_{d+1:n} \odot \exp(\alpha_\theta(z_{1:d})) + \mu_\theta(z_{1:d})$; $\det(J) = \exp(\sum\alpha)$ (non-volume-preserving). / 仿射耦合，非体积保持，表达能力更强。</p>
+<hr />
+<h3>Q14: MAF vs IAF / 掩码自回归流与逆自回归流</h3>
+<p><strong>Problem (问题)</strong>: When would you choose MAF over IAF?</p>
+<p><strong>Solution (解答)</strong>: 
+Choose MAF when you need efficient <strong>density evaluation</strong> (training by MLE), since its inverse $(x \rightarrow z)$ is parallel. Choose IAF when you need efficient <strong>sampling</strong> (generation), since its forward $(z \rightarrow x)$ is parallel. / MAF适合训练（需密度估计），IAF适合生成（需快速采样）。</p>
+<hr />
+<h3>Q15: Camera Projection Matrix / 相机投影矩阵</h3>
+<p><strong>Problem (问题)</strong>: Write the full projection from world coordinates to pixel coordinates.</p>
+<p><strong>Solution (解答)</strong>: 
+$x_{\mathrm{pixel}} = K \left[R \mid t\right] X_{\mathrm{world}}$
+where $K = [[f, s, c_x],[0, \alpha f, c_y],[0, 0, 1]]$ (intrinsics), $R$ = $3\times3$ rotation, $t$ = $3\times1$ translation (extrinsics). / 内参矩阵K、旋转R和平移t组成完整投影。</p>
+<hr />
+<p><em>End of CS5187 Review Material / CS5187复习资料完</em></p>
+<hr />
+<h3>Q16: WGAN vs. Original GAN / WGAN与原始GAN对比</h3>
+<p><strong>Problem (问题)</strong>: Why is Wasserstein distance preferable to Jensen-Shannon divergence as a GAN training objective?</p>
+<p><strong>Solution (解答)</strong>:
+- <strong>Jensen-Shannon divergence</strong>: When $p_{\mathrm{data}}$ and $p_G$ have non-overlapping supports (common in high dimensions), $D_{\mathrm{JSD}} = \log 2$ is constant — gradient provides no useful learning signal. / 当分布不重叠时JS散度为常数，梯度为零，无法提供学习信号。
+- <strong>Wasserstein distance</strong>: Provides a meaningful, continuous gradient even when distributions don't overlap. The loss correlates with sample quality, enabling more stable training. / 即使分布不重叠也提供有意义的连续梯度，损失与样本质量相关。
+- <strong>Practical benefit</strong>: WGAN loss decreases as sample quality improves; can be used as a training monitor. / WGAN损失随样本质量提升而下降，可作为训练监控指标。</p>
+<hr />
+<h3>Q17: CycleGAN Cycle Consistency / CycleGAN循环一致性</h3>
+<p><strong>Problem (问题)</strong>: Why is cycle consistency necessary in CycleGAN? What happens without it?</p>
+<p><strong>Solution (解答)</strong>:
+- <strong>Without cycle consistency</strong>: The adversarial losses alone only ensure that $G(X)$ looks like domain $Y$ and $F(Y)$ looks like domain $X$, but there is no guarantee that $F(G(X)) \approx X$. The generators could map all inputs to a single mode in the target domain (mode collapse). / 仅靠对抗损失无法保证往返一致，生成器可能将所有输入映射到目标域的单一模式。
+- <strong>With cycle consistency</strong>: $F(G(X)) \approx X$ and $G(F(Y)) \approx Y$ enforce that the translation preserves information content — the round trip must recover the original. / 循环一致性迫使翻译保留信息内容，往返必须恢复原始输入。
+- <strong>Loss</strong>: $\mathcal{L}_{\mathrm{cyc}} = \mathbb{E}_X[|F(G(X)) - X|_1] + \mathbb{E}_Y[|G(F(Y)) - Y|_1]$. / 循环一致性损失用L1距离衡量往返差异。</p>
+<hr />
+<h3>Q18: EBM Gradient Interpretation / EBM梯度解释</h3>
+<p><strong>Problem (问题)</strong>: Explain the positive phase and negative phase in EBM maximum likelihood training.</p>
+<p><strong>Solution (解答)</strong>:
+$\nabla_\theta \log p_\theta(x_{\mathrm{train}}) = \underbrace{\nabla_\theta f_\theta(x_{\mathrm{train}})}<em>{\text{positive phase}} - \underbrace{\mathbb{E}</em>{x \sim p_\theta}[\nabla_\theta f_\theta(x)]}<em>{\text{negative phase}}$
+- <strong>Positive phase (正相位)</strong>: Pushes up $f</em>\theta$ at the training data location, making training data more probable. / 在训练数据位置推高$f_\theta$，提高训练数据概率。
+- <strong>Negative phase (负相位)</strong>: Pushes down $f_\theta$ at locations where the model currently assigns high probability (model samples), reducing probability of non-data regions. / 在模型当前高概率位置拉低$f_\theta$，降低非数据区域的概率。
+- <strong>Contrastive divergence</strong>: Approximates the negative phase with MCMC samples: $\nabla_\theta f_\theta(x_{\mathrm{train}}) - \nabla_\theta f_\theta(x_{\mathrm{sample}})$. / 用MCMC采样近似负相位。</p>
+<hr />
+<h3>Q19: Score Function in EBMs / EBM中的分数函数</h3>
+<p><strong>Problem (问题)</strong>: Why is the score function $\nabla_x \log p_\theta(x)$ tractable for EBMs?</p>
+<p><strong>Solution (解答)</strong>:
+$\nabla_x \log p_\theta(x) = \nabla_x [f_\theta(x) - \log Z(\theta)] = \nabla_x f_\theta(x) - 0 = \nabla_x f_\theta(x)$
+Since $Z(\theta) = \int \exp(f_\theta(x))dx$ does not depend on $x$, its gradient w.r.t. $x$ is zero. Therefore, the score function depends only on $f_\theta(x)$, which is easy to compute (just backprop through the network). / 配分函数不依赖于$x$，其对$x$的梯度为零，因此分数函数只依赖于$f_\theta(x)$，可通过神经网络反向传播轻松计算。</p>
+<hr />
+<h3>Q20: Score Matching vs MLE / 分数匹配 vs 最大似然</h3>
+<p><strong>Problem (问题)</strong>: Why is score matching preferred over MLE for training EBMs?</p>
+<p><strong>Solution (解答)</strong>:
+MLE requires computing $\log Z(\theta)$ and its gradient, which involves intractable integrals over high-dimensional spaces. Score matching sidesteps this by directly matching the score function $\nabla_x \log p_\theta(x) = \nabla_x f_\theta(x)$, which is independent of $Z(\theta)$. This avoids MCMC sampling during training. / MLE需计算不可解的配分函数，而分数匹配直接匹配分数函数（不依赖配分函数），避免了训练中的MCMC采样。</p>
+<hr />
+<h3>Q21: DDPM Sampling Process / DDPM采样过程</h3>
+<p><strong>Problem (问题)</strong>: Describe the generation process of a trained DDPM model.</p>
+<p><strong>Solution (解答)</strong>:
+1. Sample $x_T \sim \mathcal{N}(0,I)$ (pure noise) / 从标准高斯采样纯噪声
+2. For $t = T, T-1, \ldots, 1$: / 从T到1迭代：
+   - Predict noise: $\hat{\epsilon} = \epsilon_\theta(x_t, t)$ / 预测噪声
+   - Compute mean: $\mu = \frac{1}{\sqrt{1-\beta_t}}(x_t - \frac{\beta_t}{\sqrt{1-\bar{\alpha}<em>t}}\hat{\epsilon})$ / 计算均值
+   - Sample: $x</em>{t-1} = \mu + \sigma_t z$, where $z \sim \mathcal{N}(0,I)$ (except at $t=1$) / 采样
+3. Return $x_0$ / 返回最终结果</p>
+<hr />
+<h3>Q22: SDE vs ODE for Generation / SDE vs ODE生成</h3>
+<p><strong>Problem (问题)</strong>: Compare using the reverse SDE vs. the probability flow ODE for sampling.</p>
+<p><strong>Solution (解答)</strong>:
+- <strong>Reverse SDE</strong>: Stochastic; adds noise at each step; produces diverse samples; slower convergence. / 随机性；每步加噪；产生多样化样本；收敛较慢。
+- <strong>Probability Flow ODE</strong>: Deterministic; unique mapping from noise to data; enables exact likelihood computation; can use adaptive step-size ODE solvers for speed. / 确定性；噪声到数据的唯一映射；可精确计算似然；可用自适应步长ODE求解器加速。
+- Both have the same marginal distributions $p_t(x)$ at all times. / 两者在所有时间有相同的边际分布。</p>
+<hr />
+<h3>Q23: NCE vs Score Matching / NCE vs 分数匹配</h3>
+<p><strong>Problem (问题)</strong>: Compare NCE and Score Matching as training methods for EBMs.</p>
+<p><strong>Solution (解答)</strong>:</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>NCE</th>
+<th>Score Matching</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Approach / 方法</td>
+<td>Binary classification (data vs noise) / 二分类</td>
+<td>Minimize Fisher divergence / 最小化Fisher散度</td>
+</tr>
+<tr>
+<td>Requires / 需要</td>
+<td>Choice of noise distribution $p_n$ / 选择噪声分布</td>
+<td>Score function computation / 分数函数计算</td>
+</tr>
+<tr>
+<td>Partition function / 配分函数</td>
+<td>Learned as a parameter / 作为参数学习</td>
+<td>Not needed / 不需要</td>
+</tr>
+<tr>
+<td>Limitation / 限制</td>
+<td>Noise must cover data support / 噪声须覆盖数据支撑集</td>
+<td>Hessian trace (solved by DSM) / Hessian迹（DSM解决）</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2>Part V: Score Matching &amp; Diffusion Models / 分数匹配与扩散模型 (lecture12–16)</h2>
+<hr />
+<h3>2.21 Score Matching / 分数匹配</h3>
+<h4>Score Function / 分数函数</h4>
+<ul>
+<li><strong>Definition (定义)</strong>: $s_\theta(x) = \nabla_x \log p_\theta(x)$. For EBMs, $s_\theta(x) = \nabla_x f_\theta(x)$ since the partition function $Z(\theta)$ does not depend on $x$. / 对数概率密度对$x$的梯度。EBM中分数函数与配分函数无关。</li>
+<li><strong>Key Points (要点)</strong>: Does not require knowledge of $Z(\theta)$; enables training without computing normalizing constants. / 无需计算归一化常数即可训练。</li>
+</ul>
+<h4>Fisher Divergence / Fisher散度</h4>
+<ul>
+<li><strong>Formula (公式)</strong>: $D_F(p | q) = \frac{1}{2} \mathbb{E}_{x \sim p}[|s_p(x) - s_q(x)|^2]$</li>
+<li><strong>Key Points (要点)</strong>: Measures distance between two distributions via their score functions. / 通过分数函数度量两个分布的距离。</li>
+</ul>
+<h4>Score Matching Objective / 分数匹配目标</h4>
+<ul>
+<li><strong>Formula (公式)</strong>: $J(\theta) = \mathbb{E}<em>{x \sim p</em>{\mathrm{data}}}[\frac{1}{2}|s_\theta(x)|^2 + \mathrm{tr}(\nabla_x s_\theta(x))]$</li>
+<li><strong>Key Points (要点)</strong>: Equivalent to Fisher divergence up to a constant; requires computing Hessian trace (expensive for deep networks). / 等价于Fisher散度加常数；需计算Hessian迹。</li>
+</ul>
+<h4>Denoising Score Matching (DSM) / 去噪分数匹配</h4>
+<ul>
+<li><strong>Definition (定义)</strong>: Match score of noise-perturbed distribution: $q_\sigma(\tilde{x}) = \int p_{\mathrm{data}}(x) \mathcal{N}(\tilde{x}|x, \sigma^2 I)dx$. / 匹配噪声扰动分布的分数。</li>
+<li><strong>Formula (公式)</strong>: $J_{\mathrm{DSM}} = \mathbb{E}<em>{x, \tilde{x}}[|s</em>\theta(\tilde{x}) - (x-\tilde{x})/\sigma^2|^2]$</li>
+<li><strong>Key Points (要点)</strong>: No Hessian needed; target is simply $(x - \tilde{x})/\sigma^2$; equivalent to predicting noise. / 无需Hessian；等价于预测噪声。</li>
+</ul>
+<hr />
+<h3>2.22 Noise Contrastive Estimation (NCE) / 噪声对比估计</h3>
+<ul>
+<li><strong>Definition (定义)</strong>: Train discriminator to distinguish data from noise, implicitly learning the unnormalized density. / 训练判别器区分数据与噪声，隐式学习非归一化密度。</li>
+<li><strong>Discriminator (判别器)</strong>: $D_{\theta,Z}(x) = \frac{e^{f_\theta(x)}/Z}{e^{f_\theta(x)}/Z + p_n(x)}$</li>
+<li><strong>NCE vs GAN</strong>: Both use discriminator + cross-entropy. NCE explicitly learns density ratio; GAN uses a separate generator network. / NCE显式学习密度比；GAN使用独立生成网络。</li>
+</ul>
+<hr />
+<h3>2.23 Score-Based Generative Models (NCSN) / 基于分数的生成模型</h3>
+<h4>Score-Based Model / 分数模型</h4>
+<ul>
+<li><strong>Definition (定义)</strong>: Neural network $s_\theta(x)$ trained to approximate $\nabla_x \log p_{\mathrm{data}}(x)$, without modeling $p(x)$ itself. / 直接近似数据分数函数的神经网络。</li>
+<li><strong>Sampling</strong>: Langevin MCMC: $x_{t+1} = x_t + \epsilon s_\theta(x_t) + \sqrt{2\epsilon} z_t$. / 朗之万MCMC采样。</li>
+</ul>
+<h4>Multiple Noise Levels (NCSN) / 多噪声水平</h4>
+<ul>
+<li><strong>Idea (思想)</strong>: Train $s_\theta(x, \sigma)$ at geometric sequence of noise levels $\sigma_1 &gt; \cdots &gt; \sigma_L$. / 在几何递减的噪声序列上训练条件化分数网络。</li>
+<li><strong>Annealed Langevin Dynamics (退火朗之万)</strong>: Start sampling at $\sigma_1$, gradually decrease to $\sigma_L$. / 从大噪声开始采样逐步退火。</li>
+<li><strong>Key Points (要点)</strong>: Large noise fills low-density regions; small noise provides details. / 大噪声填充低密度区域；小噪声提供细节。</li>
+</ul>
+<hr />
+<h3>2.24 Diffusion Models (DDPM) / 扩散模型</h3>
+<h4>Forward Process / 前向过程</h4>
+<ul>
+<li><strong>Formula (公式)</strong>: $q(x_t|x_0) = \mathcal{N}(\sqrt{\bar{\alpha}<em>t} x_0, (1-\bar{\alpha}_t)I)$, $\bar{\alpha}_t = \prod</em>{s=1}^t (1-\beta_s)$</li>
+<li><strong>Key Points (要点)</strong>: Fixed, no learnable params; $x_T \approx \mathcal{N}(0,I)$ for large T. / 无可学习参数。</li>
+</ul>
+<h4>Reverse Process / 逆向过程</h4>
+<ul>
+<li><strong>Definition (定义)</strong>: $p_\theta(x_{t-1}|x_t) = \mathcal{N}(x_{t-1}; \mu_\theta(x_t, t), \sigma_t^2 I)$ / 可学习去噪。</li>
+<li><strong>Training loss (训练损失)</strong>: $L = \mathbb{E}<em>{t, x_0, \epsilon}[|\epsilon - \epsilon</em>\theta(x_t, t)|^2]$</li>
+</ul>
+<h4>DDPM as Hierarchical VAE / DDPM作为层次化VAE</h4>
+<ul>
+<li>Encoder = fixed forward process; Decoder = learned reverse process; ELBO reduces to denoising score matching. / 编码器=固定前向；解码器=可学习逆向；ELBO退化为去噪分数匹配。</li>
+</ul>
+<hr />
+<h3>2.25 SDE Framework / SDE框架</h3>
+<h4>Forward SDE / 前向SDE</h4>
+<ul>
+<li><strong>Formula (公式)</strong>: $dx = f(x,t)dt + g(t)dw$</li>
+</ul>
+<h4>Reverse-Time SDE / 逆时SDE</h4>
+<ul>
+<li><strong>Formula (公式)</strong>: $dx = [f(x,t) - g(t)^2 \nabla_x \log p_t(x)]dt + g(t)d\bar{w}$</li>
+</ul>
+<h4>Probability Flow ODE / 概率流ODE</h4>
+<ul>
+<li><strong>Formula (公式)</strong>: $dx = [f(x,t) - \frac{1}{2}g(t)^2 \nabla_x \log p_t(x)]dt$</li>
+<li><strong>Key Points (要点)</strong>: Deterministic; same marginals as SDE; enables exact likelihood; acts as continuous normalizing flow. / 确定性；与SDE同边际；可精确计算似然。</li>
+</ul>
+<h4>Predictor-Corrector Sampling / 预测-校正采样</h4>
+<ul>
+<li><strong>Predictor</strong>: Numerical SDE solver (Euler-Maruyama) / 数值SDE求解器</li>
+<li><strong>Corrector</strong>: Langevin MCMC step / 朗之万MCMC校正步</li>
+</ul>
+<h4>U-Net Architecture / U-Net架构</h4>
+<ul>
+<li>Encoder-decoder with skip connections; time $t$ injected via positional embeddings; attention at intermediate resolutions. / 带跳跃连接的编码器-解码器；时间通过位置编码注入。</li>
+</ul>
+<hr />
+<h2>Key Formulas (Supplement) / 补充公式</h2>
+<h3>Denoising Score Matching / 去噪分数匹配</h3>
+<p><strong>Formula</strong>: $J_{\mathrm{DSM}} = \mathbb{E}[|s_\theta(\tilde{x}) - (x-\tilde{x})/\sigma^2|^2]$<br />
+<strong>Variables</strong>: $x \sim p_{\mathrm{data}}$, $\tilde{x} = x + \sigma\epsilon$, $\epsilon \sim \mathcal{N}(0,I)$<br />
+<strong>Conditions</strong>: Small $\sigma$ for good approximation / 小$\sigma$保证近似质量</p>
+<h3>DDPM Forward / DDPM前向</h3>
+<p><strong>Formula</strong>: $q(x_t|x_0) = \mathcal{N}(\sqrt{\bar{\alpha}<em>t}x_0, (1-\bar{\alpha}_t)I)$<br />
+<strong>Variables</strong>: $\bar{\alpha}_t = \prod</em>{s=1}^t(1-\beta_s)$, $\beta_t \in [10^{-4}, 0.02]$ (linear schedule)<br />
+<strong>Conditions</strong>: $T \approx 1000$; $x_T \approx \mathcal{N}(0,I)$</p>
+<h3>DDPM Loss / DDPM损失</h3>
+<p><strong>Formula</strong>: $L = \mathbb{E}<em>{t,x_0,\epsilon}[|\epsilon - \epsilon</em>\theta(\sqrt{\bar{\alpha}<em>t}x_0 + \sqrt{1-\bar{\alpha}_t}\epsilon, t)|^2]$<br />
+<strong>Variables</strong>: $t \sim U{1,T}$, $\epsilon \sim \mathcal{N}(0,I)$, $\epsilon</em>\theta$ = U-Net<br />
+<strong>Conditions</strong>: MSE loss; equivalent to weighted ELBO / 等价于加权ELBO</p>
+<h3>Reverse SDE / 逆时SDE</h3>
+<p><strong>Formula</strong>: $dx = [f(x,t) - g(t)^2 s_\theta(x,t)]dt + g(t)d\bar{w}$<br />
+<strong>Variables</strong>: $s_\theta \approx \nabla_x \log p_t(x)$, trained via DSM<br />
+<strong>Conditions</strong>: Continuous-time; subsumes DDPM as discrete case / 连续时间；DDPM为其离散情况</p>
+</body>
+</html>
