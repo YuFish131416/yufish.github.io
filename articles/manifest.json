@@ -26,12 +26,6 @@
       ],
       "files": [
         {
-          "name": "CS5294_复习资料.html",
-          "displayName": "CS5294 Cheatpaper（双面可打印）",
-          "type": "HTML Cheatpaper",
-          "download": true
-        },
-        {
           "name": "CS5294_cheatpaper_3col.pdf",
           "displayName": "CS5294 Cheatpaper PDF（3列）",
           "type": "PDF Cheatpaper",
@@ -48,12 +42,6 @@
           "displayName": "CS5188 VR技术与应用 复习笔记",
           "type": "Markdown 笔记",
           "download": false
-        },
-        {
-          "name": "CS5293_复习资料.html",
-          "displayName": "CS5293 Cheatpaper（双面手写）",
-          "type": "HTML Cheatpaper",
-          "download": true
         },
         {
           "name": "CS5293_cheatpaper_3col.pdf",

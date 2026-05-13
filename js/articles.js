@@ -39,9 +39,25 @@
             var meta = articles.find(function (a) { return a.slug === slug; });
             if (!meta) throw new Error('Article not found in manifest');
 
-            // Resource articles: rendered dynamically from manifest metadata
+            // Resource articles: also try to load content.md/html alongside manifest metadata
             if (meta.kind === 'resource' && Array.isArray(meta.files) && meta.files.length > 0) {
-                var result = { meta: meta, content: '', isHtml: false, isResource: true };
+                var resourceContent = '';
+                var resourceIsHtml = false;
+                try {
+                    var resMdUrl = 'articles/' + encodeURIComponent(slug) + '/content.md';
+                    var resMdResp = await fetch(resMdUrl);
+                    if (resMdResp.ok) {
+                        resourceContent = await resMdResp.text();
+                    } else {
+                        var resHtmlUrl = 'articles/' + encodeURIComponent(slug) + '/content.html';
+                        var resHtmlResp = await fetch(resHtmlUrl);
+                        if (resHtmlResp.ok) {
+                            resourceContent = await resHtmlResp.text();
+                            resourceIsHtml = true;
+                        }
+                    }
+                } catch (e) { /* content is optional for resource articles */ }
+                var result = { meta: meta, content: resourceContent, isHtml: resourceIsHtml, isResource: true };
                 articleContentCache[slug] = result;
                 return result;
             }

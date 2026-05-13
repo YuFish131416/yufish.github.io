@@ -414,7 +414,12 @@
       // Determine article body content
       var contentHtml;
       if (data.isResource) {
-        contentHtml = renderResourceStory(meta);
+        // Resource articles: optional content.md on top + resource story below
+        var contentPart = '';
+        if (data.content) {
+          contentPart = data.isHtml ? data.content : marked.parse(data.content);
+        }
+        contentHtml = contentPart + renderResourceStory(meta);
       } else if (data.isHtml) {
         contentHtml = data.content;
       } else {
