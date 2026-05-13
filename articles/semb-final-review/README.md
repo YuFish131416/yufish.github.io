@@ -12,28 +12,32 @@ focus:
   - CS5293 和 CS5294 额外提供可打印的双面 cheatpaper（HTML 格式）。
   - 涵盖安全管理、VR、软件安全、视觉与图像、自然语言处理五大方向。
 files:
-  - name: "CS5294_复习资料.md"
-    displayName: "CS5294 信息安全技术管理 复习笔记"
-    type: "Markdown 笔记"
-    download: false
-  - name: "CS5294_复习资料.html"
-    displayName: "CS5294 Cheatpaper（双面可打印）"
-    type: "HTML Cheatpaper"
+  - name: "CS5294_cheatpaper_3col.pdf"
+    displayName: "CS5294 Cheatpaper PDF（3列）"
+    type: "PDF Cheatpaper"
     download: true
+  - name: "CS5294_cheatpaper_4col.pdf"
+    displayName: "CS5294 Cheatpaper PDF（4列）"
+    type: "PDF Cheatpaper"
+    download: true
+    - name: "CS5187_cheatpaper_3col.pdf"
+    displayName: "CS5187 Cheatpaper PDF（3列）"
+    type: "PDF Cheatpaper"
+    download: true
+  - name: "CS5187_cheatpaper_4col.pdf"
+    displayName: "CS5187 Cheatpaper PDF（4列）"
+    type: "PDF Cheatpaper"
+    download: true
+  - name: "CS5293_cheatpaper_3col.pdf"
+    displayName: "CS5293 Cheatpaper PDF（3列·手写风）"
+    type: "PDF Cheatpaper"
+    download: false
+  - name: "CS5293_cheatpaper_4col.pdf"
+    displayName: "CS5293 Cheatpaper PDF（4列·手写风）"
+    type: "PDF Cheatpaper"
+    download: false
   - name: "CS5188_复习资料.md"
     displayName: "CS5188 VR技术与应用 复习笔记"
-    type: "Markdown 笔记"
-    download: false
-  - name: "CS5293_复习资料.md"
-    displayName: "CS5293 软件安全 复习笔记"
-    type: "Markdown 笔记"
-    download: false
-  - name: "CS5293_复习资料.html"
-    displayName: "CS5293 Cheatpaper（双面手写）"
-    type: "HTML Cheatpaper"
-    download: true
-  - name: "CS5187_复习资料.md"
-    displayName: "CS5187 视觉与图像 复习笔记"
     type: "Markdown 笔记"
     download: false
   - name: "CS6493_复习资料.md"

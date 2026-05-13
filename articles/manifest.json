@@ -38,10 +38,16 @@
           "download": true
         },
         {
-          "name": "CS5188_复习资料.md",
-          "displayName": "CS5188 VR技术与应用 复习笔记",
-          "type": "Markdown 笔记",
-          "download": false
+          "name": "CS5187_cheatpaper_3col.pdf",
+          "displayName": "CS5187 Cheatpaper PDF（3列）",
+          "type": "PDF Cheatpaper",
+          "download": true
+        },
+        {
+          "name": "CS5187_cheatpaper_4col.pdf",
+          "displayName": "CS5187 Cheatpaper PDF（4列）",
+          "type": "PDF Cheatpaper",
+          "download": true
         },
         {
           "name": "CS5293_cheatpaper_3col.pdf",
@@ -56,16 +62,10 @@
           "download": false
         },
         {
-          "name": "CS5187_cheatpaper_3col.pdf",
-          "displayName": "CS5187 Cheatpaper PDF（3列）",
-          "type": "PDF Cheatpaper",
-          "download": true
-        },
-        {
-          "name": "CS5187_cheatpaper_4col.pdf",
-          "displayName": "CS5187 Cheatpaper PDF（4列）",
-          "type": "PDF Cheatpaper",
-          "download": true
+          "name": "CS5188_复习资料.md",
+          "displayName": "CS5188 VR技术与应用 复习笔记",
+          "type": "Markdown 笔记",
+          "download": false
         },
         {
           "name": "CS6493_复习资料.md",
