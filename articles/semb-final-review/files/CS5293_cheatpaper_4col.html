@@ -175,23 +175,6 @@ hr {
 }
 
 /* No break-inside for tables since they look like plain text now */
-
-/* MathML rendering */
-math {
-    font-size: 4.96875pt;
-    vertical-align: middle;
-}
-
-math[display="block"] {
-    display: block;
-    text-align: center;
-    margin: 1px 0;
-}
-
-.math-display {
-    text-align: center;
-    margin: 1px 0;
-}
 </style>
 </head>
 <body>
@@ -364,7 +347,7 @@ math[display="block"] {
 <h4>Certificate &amp; PKI（数字证书与公钥基础设施）</h4>
 <ul>
 <li><strong>Certificate</strong>: Binds public key to identity, signed by CA / 将公钥绑定到身份，由CA签名</li>
-<li><strong>Certificate Chain</strong>: Root CA <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mrow><mo>&#x02192;</mo></mrow></math> Intermediate CA <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mrow><mo>&#x02192;</mo></mrow></math> End-entity cert / 证书链：根CA→中间CA→终端证书</li>
+<li><strong>Certificate Chain</strong>: Root CA → Intermediate CA → End-entity cert / 证书链：根CA→中间CA→终端证书</li>
 <li><strong>Trust Store</strong>: OS/browser ships with trusted Root CA public keys / 信任库：操作系统/浏览器内置可信根CA公钥</li>
 </ul>
 <h4>TLS Handshake（TLS握手）</h4>
@@ -377,7 +360,7 @@ math[display="block"] {
 </ol>
 <h4>TLS Attacks（TLS攻击）</h4>
 <ul>
-<li><strong>SSL Stripping</strong>: Downgrade HTTPS<math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mrow><mo>&#x02192;</mo></mrow></math>HTTP (Moxie Marlinspike) / 降级HTTPS为HTTP</li>
+<li><strong>SSL Stripping</strong>: Downgrade HTTPS→HTTP (Moxie Marlinspike) / 降级HTTPS为HTTP</li>
 <li><strong>HSTS</strong>: HTTP Strict Transport Security; tells browser to always use HTTPS / HTTP严格传输安全；告诉浏览器始终使用HTTPS</li>
 <li><strong>HSTS limitation</strong>: First visit still vulnerable (no HSTS header received yet) / 首次访问仍有漏洞</li>
 <li><strong>BEAST/CRIME/Poodle</strong>: Protocol-level attacks on older TLS versions / 针对旧版TLS的协议级攻击</li>
@@ -594,7 +577,7 @@ Low Address
 <li><code>printf(user_input)</code>: User controls format string / 用户控制格式字符串</li>
 <li><strong>Reading memory</strong>: %x leaks stack values, %s reads pointer target / %x泄露栈值，%s读取指针目标</li>
 <li><strong>Writing memory</strong>: %n writes count of bytes printed so far / %n写入已打印的字节数</li>
-<li><strong>Direct parameter access</strong>: %7<math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mrow><mi>x</mi><mi>a</mi><mi>c</mi><mi>c</mi><mi>e</mi><mi>s</mi><mi>s</mi><mi>e</mi><mi>s</mi><mn>7</mn><mi>t</mi><mi>h</mi><mi>p</mi><mi>a</mi><mi>r</mi><mi>a</mi><mi>m</mi><mi>e</mi><mi>t</mi><mi>e</mi><mi>r</mi><mi>d</mi><mi>i</mi><mi>r</mi><mi>e</mi><mi>c</mi><mi>t</mi><mi>l</mi><mi>y</mi><mo>&#x0002F;</mo></mrow></math>x直接访问第7个参数</li>
+<li><strong>Direct parameter access</strong>: %7x accesses 7th parameter directly / %7x直接访问第7个参数</li>
 </ul>
 <h4>Modern Exploit Workflow（现代利用流程）</h4>
 <ol>
@@ -1035,26 +1018,26 @@ Low Address
 </ul>
 <h3>CBC Mode Encryption（CBC模式加密）</h3>
 <ul>
-<li><strong>Formula</strong>: <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mrow><msub><mi>C</mi><mi>i</mi></msub><mo>&#x0003D;</mo><mrow><mi mathvariant="normal">E</mi><mi mathvariant="normal">n</mi><mi mathvariant="normal">c</mi></mrow><mo stretchy="false">&#x00028;</mo><mi>K</mi><mo>&#x0002C;</mo><msub><mi>P</mi><mi>i</mi></msub><mo>&#x02295;</mo><msub><mi>C</mi><mrow><mi>i</mi><mo>&#x02212;</mo><mn>1</mn></mrow></msub><mo stretchy="false">&#x00029;</mo></mrow></math>; <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mrow><msub><mi>C</mi><mn>0</mn></msub><mo>&#x0003D;</mo><mrow><mi mathvariant="normal">I</mi><mi mathvariant="normal">V</mi></mrow></mrow></math></li>
+<li><strong>Formula</strong>: Cᵢ = Enc(K, Pᵢ ⊕ Cᵢ₋₁); C₀ = IV</li>
 <li><strong>Variables</strong>: IV = initialization vector (must be random and unpredictable) / IV=初始化向量（必须随机且不可预测）</li>
 <li><strong>Conditions</strong>: IV must never be reused with same key / IV不能与同一密钥重复使用</li>
 </ul>
 <h3>HMAC Construction（HMAC构造）</h3>
 <ul>
-<li><strong>Formula</strong>: <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mrow><mrow><mi mathvariant="normal">H</mi><mi mathvariant="normal">M</mi><mi mathvariant="normal">A</mi><mi mathvariant="normal">C</mi></mrow><mo stretchy="false">&#x00028;</mo><mi>K</mi><mo>&#x0002C;</mo><mi>m</mi><mo stretchy="false">&#x00029;</mo><mo>&#x0003D;</mo><mi>H</mi><mo stretchy="false">&#x00028;</mo><mo stretchy="false">&#x00028;</mo><mi>K</mi><mo>&#x02295;</mo><mrow><mi mathvariant="normal">o</mi><mi mathvariant="normal">p</mi><mi mathvariant="normal">a</mi><mi mathvariant="normal">d</mi></mrow><mo stretchy="false">&#x00029;</mo><mo fence="false" stretchy="false">&#x02016;</mo><mi>H</mi><mo stretchy="false">&#x00028;</mo><mo stretchy="false">&#x00028;</mo><mi>K</mi><mo>&#x02295;</mo><mrow><mi mathvariant="normal">i</mi><mi mathvariant="normal">p</mi><mi mathvariant="normal">a</mi><mi mathvariant="normal">d</mi></mrow><mo stretchy="false">&#x00029;</mo><mo fence="false" stretchy="false">&#x02016;</mo><mi>m</mi><mo stretchy="false">&#x00029;</mo><mo stretchy="false">&#x00029;</mo></mrow></math></li>
+<li><strong>Formula</strong>: HMAC(K, m) = H((K ⊕ opad) ‖ H((K ⊕ ipad) ‖ m))</li>
 <li><strong>Variables</strong>: K = key, m = message, H = hash function, ipad/opad = inner/outer padding constants / K=密钥, m=消息, H=哈希函数</li>
 <li><strong>Conditions</strong>: Key should be hash output length / 密钥应为哈希输出长度</li>
 </ul>
 <h3>Diffie-Hellman Key Exchange（DH密钥交换）</h3>
 <ul>
-<li><strong>Formula</strong>: <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mrow><mrow><mi mathvariant="normal">S</mi><mi mathvariant="normal">h</mi><mi mathvariant="normal">a</mi><mi mathvariant="normal">r</mi><mi mathvariant="normal">e</mi><mi mathvariant="normal">d</mi><mi mathvariant="normal">s</mi><mi mathvariant="normal">e</mi><mi mathvariant="normal">c</mi><mi mathvariant="normal">r</mi><mi mathvariant="normal">e</mi><mi mathvariant="normal">t</mi></mrow><mo>&#x0003D;</mo><mo stretchy="false">&#x00028;</mo><msup><mi>g</mi><mi>b</mi></msup><mo>mod</mo><mi>p</mi><msup><mo stretchy="false">&#x00029;</mo><mi>a</mi></msup><mo>mod</mo><mi>p</mi><mo>&#x0003D;</mo><mo stretchy="false">&#x00028;</mo><msup><mi>g</mi><mi>a</mi></msup><mo>mod</mo><mi>p</mi><msup><mo stretchy="false">&#x00029;</mo><mi>b</mi></msup><mo>mod</mo><mi>p</mi><mo>&#x0003D;</mo><msup><mi>g</mi><mrow><mi>a</mi><mi>b</mi></mrow></msup><mo>mod</mo><mi>p</mi></mrow></math></li>
+<li><strong>Formula</strong>: Shared secret = (gᵇ mod p)ᵃ mod p = (gᵃ mod p)ᵇ mod p = gᵃᵇ mod p</li>
 <li><strong>Variables</strong>: g = generator, p = prime, a/b = private values / g=生成元, p=素数, a/b=私有值</li>
 <li><strong>Conditions</strong>: Vulnerable to MITM without authentication / 无认证时易受中间人攻击</li>
 </ul>
 <h3>Buffer Overflow Offset（缓冲区溢出偏移）</h3>
 <ul>
 <li><strong>Formula</strong>: offset = distance from buffer start to saved return address</li>
-<li><strong>Variables</strong>: <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mrow><mrow><mi mathvariant="normal">o</mi><mi mathvariant="normal">f</mi><mi mathvariant="normal">f</mi><mi mathvariant="normal">s</mi><mi mathvariant="normal">e</mi><mi mathvariant="normal">t</mi></mrow><mo>&#x0003D;</mo><mrow><mi mathvariant="normal">b</mi><mi mathvariant="normal">u</mi><mi mathvariant="normal">f</mi><mi mathvariant="normal">&#x0005F;</mi><mi mathvariant="normal">s</mi><mi mathvariant="normal">t</mi><mi mathvariant="normal">a</mi><mi mathvariant="normal">r</mi><mi mathvariant="normal">t</mi></mrow><mo>&#x0002B;</mo><mrow><mi mathvariant="normal">b</mi><mi mathvariant="normal">u</mi><mi mathvariant="normal">f</mi><mi mathvariant="normal">f</mi><mi mathvariant="normal">e</mi><mi mathvariant="normal">r</mi><mi mathvariant="normal">&#x0005F;</mi><mi mathvariant="normal">s</mi><mi mathvariant="normal">i</mi><mi mathvariant="normal">z</mi><mi mathvariant="normal">e</mi></mrow><mo>&#x0002B;</mo><mrow><mi mathvariant="normal">p</mi><mi mathvariant="normal">a</mi><mi mathvariant="normal">d</mi><mi mathvariant="normal">d</mi><mi mathvariant="normal">i</mi><mi mathvariant="normal">n</mi><mi mathvariant="normal">g</mi></mrow><mo>&#x0002B;</mo><mrow><mi mathvariant="normal">s</mi><mi mathvariant="normal">a</mi><mi mathvariant="normal">v</mi><mi mathvariant="normal">e</mi><mi mathvariant="normal">d</mi><mi mathvariant="normal">&#x0005F;</mi><mi mathvariant="normal">E</mi><mi mathvariant="normal">B</mi><mi mathvariant="normal">P</mi><mi mathvariant="normal">&#x0005F;</mi><mi mathvariant="normal">s</mi><mi mathvariant="normal">i</mi><mi mathvariant="normal">z</mi><mi mathvariant="normal">e</mi></mrow></mrow></math> / 偏移=缓冲区起始+缓冲区大小+填充+保存的EBP大小</li>
+<li><strong>Variables</strong>: offset = buf\ₛtart + buffer\ₛize + padding + saved_(E)BP\ₛize / 偏移=缓冲区起始+缓冲区大小+填充+保存的EBP大小</li>
 <li><strong>Conditions</strong>: Alignment may add padding; verify with GDB / 对齐可能添加填充；用GDB验证</li>
 </ul>
 <h3>Format String %n Write（格式化字符串%n写入）</h3>
@@ -1069,10 +1052,10 @@ Low Address
 <p><strong>Problem</strong>: ECB mode encrypts each block independently with the same key. Explain why this is insecure and how CBC mode solves the problem.</p>
 <p><strong>Solution</strong>: 
 - ECB is insecure because identical plaintext blocks produce identical ciphertext blocks, revealing patterns in the data. An attacker can detect repetitions and even identify content from ciphertext patterns (e.g., encrypted images remain recognizable).
-- CBC solves this by XORing each plaintext block with the previous ciphertext block before encryption: <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mrow><msub><mi>C</mi><mi>i</mi></msub><mo>&#x0003D;</mo><mrow><mi mathvariant="normal">E</mi><mi mathvariant="normal">n</mi><mi mathvariant="normal">c</mi></mrow><mo stretchy="false">&#x00028;</mo><mi>K</mi><mo>&#x0002C;</mo><msub><mi>P</mi><mi>i</mi></msub><mo>&#x02295;</mo><msub><mi>C</mi><mrow><mi>i</mi><mo>&#x02212;</mo><mn>1</mn></mrow></msub><mo stretchy="false">&#x00029;</mo></mrow></math>. The first block uses a random IV. This ensures identical plaintext blocks produce different ciphertext blocks, eliminating pattern leakage.</p>
+- CBC solves this by XORing each plaintext block with the previous ciphertext block before encryption: Cᵢ = Enc(K, Pᵢ ⊕ Cᵢ₋₁). The first block uses a random IV. This ensures identical plaintext blocks produce different ciphertext blocks, eliminating pattern leakage.</p>
 <ul>
 <li>ECB不安全是因为相同的明文块产生相同的密文块，暴露数据模式。攻击者可以检测重复，甚至从密文模式识别内容。</li>
-<li>CBC通过对每个明文块在加密前与前一个密文块异或来解决：<math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mrow><msub><mi>C</mi><mi>i</mi></msub><mo>&#x0003D;</mo><mrow><mi mathvariant="normal">E</mi><mi mathvariant="normal">n</mi><mi mathvariant="normal">c</mi></mrow><mo stretchy="false">&#x00028;</mo><mi>K</mi><mo>&#x0002C;</mo><msub><mi>P</mi><mi>i</mi></msub><mo>&#x02295;</mo><msub><mi>C</mi><mrow><mi>i</mi><mo>&#x02212;</mo><mn>1</mn></mrow></msub><mo stretchy="false">&#x00029;</mo></mrow></math>。第一个块使用随机IV。这确保相同明文块产生不同密文块。</li>
+<li>CBC通过对每个明文块在加密前与前一个密文块异或来解决：Cᵢ = Enc(K, Pᵢ ⊕ Cᵢ₋₁)。第一个块使用随机IV。这确保相同明文块产生不同密文块。</li>
 </ul>
 <hr />
 <h3>Question 2: SSL Stripping &amp; HSTS（SSL剥离与HSTS）</h3>
@@ -1105,8 +1088,8 @@ Low Address
 <p><strong>Solution</strong>:
 <strong>(a)</strong> At Line A: RUID=1000 (alice), EUID=0 (root). After Line B (setuid(getuid())): RUID=1000, EUID=1000. Line B causes EUID to change because setuid(getuid()) drops root privileges by setting EUID to the real UID.</p>
 <p><strong>(b)</strong> Two vulnerabilities remain:
-1. <strong>File descriptor leak (Line A<math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mrow><mo>&#x02192;</mo></mrow></math>D)</strong>: fd to /etc/secret_notes is still open after privilege drop. Attacker can pass <code>/proc/self/fd/3</code> as argv[1] to read the protected file via the still-open descriptor.
-2. <strong>Command injection (Line C<math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mrow><mo>&#x02192;</mo></mrow></math>D)</strong>: system() executes user-supplied argv[1] through the shell. Attacker can pass <code>myfile.txt; cat /etc/secret_notes</code> or use shell metacharacters.</p>
+1. <strong>File descriptor leak (Line A→D)</strong>: fd to /etc/secret_notes is still open after privilege drop. Attacker can pass <code>/proc/self/fd/3</code> as argv[1] to read the protected file via the still-open descriptor.
+2. <strong>Command injection (Line C→D)</strong>: system() executes user-supplied argv[1] through the shell. Attacker can pass <code>myfile.txt; cat /etc/secret_notes</code> or use shell metacharacters.</p>
 <p><strong>(c)</strong> Fixes:
 1. For FD leak: Close the file descriptor before calling system(), or set FD_CLOEXEC flag so it's automatically closed on exec.
 2. For command injection: Replace system() with execvp() which does not invoke a shell, or use execve() with explicit argument arrays.</p>
@@ -1127,9 +1110,9 @@ Low Address
 <h3>Question 5: DNS Spoofing Required Fields（DNS欺骗必要字段）</h3>
 <p><strong>Problem</strong>: Which combination of fields must a remote attacker correctly guess to successfully spoof a DNS response?</p>
 <p><strong>Solution</strong>: 
-<strong>B</strong>: 16-bit Transaction ID + 16-bit source port. The attacker must match both the Transaction ID (to identify the correct query) and the source port (to direct the response to the correct resolver port). Older resolvers used fixed source port 53, making only Transaction ID guessing necessary (65,536 possibilities). Modern resolvers randomize source ports, increasing the search space to 2^32.</p>
+<strong>B</strong>: 16-bit Transaction ID + 16-bit source port. The attacker must match both the Transaction ID (to identify the correct query) and the source port (to direct the response to the correct resolver port). Older resolvers used fixed source port 53, making only Transaction ID guessing necessary (65,536 possibilities). Modern resolvers randomize source ports, increasing the search space to 2³².</p>
 <ul>
-<li>16位事务ID + 16位源端口。攻击者必须同时匹配事务ID和源端口。旧解析器使用固定源端口53，使事务ID猜测成为唯一障碍（65,536种可能）。现代解析器随机化源端口，将搜索空间增加到2^32。</li>
+<li>16位事务ID + 16位源端口。攻击者必须同时匹配事务ID和源端口。旧解析器使用固定源端口53，使事务ID猜测成为唯一障碍（65,536种可能）。现代解析器随机化源端口，将搜索空间增加到2³²。</li>
 </ul>
 <hr />
 <h3>Question 6: Stateful vs Stateless Firewall（有状态vs无状态防火墙）</h3>

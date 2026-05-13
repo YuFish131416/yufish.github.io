@@ -13,46 +13,210 @@ import sys
 import os
 import re
 import markdown
-import latex2mathml.converter
 from weasyprint import HTML, CSS
 from weasyprint.text.fonts import FontConfiguration
 
 FONT_PATH = os.path.join(os.path.dirname(os.path.abspath(__file__)), "fonts", "LXGWWenKai-Regular.ttf")
 
 
-def convert_latex_to_mathml(text):
-    """Convert $...$ (inline) and $$...$$ (block) LaTeX to MathML before markdown processing."""
+def _match_brace(s, start):
+    """Find matching } for { at position start. Returns index of } or -1."""
+    depth = 0
+    for i in range(start, len(s)):
+        if s[i] == '{':
+            depth += 1
+        elif s[i] == '}':
+            depth -= 1
+            if depth == 0:
+                return i
+    return -1
+
+
+def _replace_cmd(s, cmd, fmt):
+    """Replace \\cmd{content} with fmt(content), handling nested braces."""
+    while True:
+        idx = s.find(cmd + '{')
+        if idx == -1:
+            break
+        brace_start = idx + len(cmd)
+        brace_end = _match_brace(s, brace_start)
+        if brace_end == -1:
+            break
+        inner = s[brace_start + 1:brace_end]
+        s = s[:idx] + fmt(inner) + s[brace_end + 1:]
+    return s
+
+
+def _replace_cmd2(s, cmd, fmt):
+    """Replace \\cmd{arg1}{arg2} with fmt(arg1, arg2), handling nested braces."""
+    while True:
+        idx = s.find(cmd + '{')
+        if idx == -1:
+            break
+        b1_start = idx + len(cmd)
+        b1_end = _match_brace(s, b1_start)
+        if b1_end == -1:
+            break
+        arg1 = s[b1_start + 1:b1_end]
+        rest = s[b1_end + 1:]
+        if not rest.startswith('{'):
+            break
+        b2_end = _match_brace(rest, 0)
+        if b2_end == -1:
+            break
+        arg2 = rest[1:b2_end]
+        s = s[:idx] + fmt(arg1, arg2) + rest[b2_end + 1:]
+    return s
+
+
+def latex_to_unicode(latex, strict_braces=False):
+    """Convert a LaTeX expression to readable Unicode text.
+    If strict_braces=True, only match _{...} and ^{...} with explicit braces,
+    not bare _x or ^x (avoids mangling code identifiers in Pass 3)."""
+    s = latex
+
+    # Greek letters (do before other replacements that might conflict)
+    greeks = {
+        r'\alpha': 'α', r'\beta': 'β', r'\gamma': 'γ', r'\delta': 'δ',
+        r'\epsilon': 'ε', r'\varepsilon': 'ε', r'\zeta': 'ζ', r'\eta': 'η',
+        r'\theta': 'θ', r'\lambda': 'λ', r'\mu': 'μ', r'\nu': 'ν',
+        r'\pi': 'π', r'\rho': 'ρ', r'\sigma': 'σ', r'\tau': 'τ',
+        r'\phi': 'φ', r'\varphi': 'φ', r'\psi': 'ψ', r'\omega': 'ω',
+        r'\Sigma': 'Σ', r'\Pi': 'Π', r'\Omega': 'Ω', r'\Delta': 'Δ',
+        r'\Gamma': 'Γ', r'\Theta': 'Θ', r'\Lambda': 'Λ', r'\Phi': 'Φ',
+    }
+    for cmd, char in greeks.items():
+        s = s.replace(cmd, char)
+
+    # Operators and symbols
+    symbols = {
+        r'\rightarrow': '→', r'\leftarrow': '←', r'\Rightarrow': '⇒',
+        r'\Leftarrow': '⇐', r'\leftrightarrow': '↔',
+        r'\oplus': '⊕', r'\otimes': '⊗', r'\odot': '⊙', r'\times': '×', r'\cdot': '·',
+        r'\bmod': ' mod ', r'\mod': ' mod ',
+        r'\sum': '∑', r'\prod': '∏', r'\int': '∫',
+        r'\infty': '∞', r'\approx': '≈', r'\neq': '≠', r'\equiv': '≡',
+        r'\leq': '≤', r'\geq': '≥', r'\gg': '≫', r'\ll': '≪',
+        r'\sim': '∼', r'\in': '∈', r'\notin': '∉', r'\subset': '⊂',
+        r'\nabla': '∇', r'\partial': '∂', r'\forall': '∀', r'\exists': '∃',
+        r'\log': 'log', r'\det': 'det', r'\min': 'min', r'\max': 'max',
+        r'\arg': 'arg', r'\lim': 'lim', r'\exp': 'exp', r'\sin': 'sin',
+        r'\cos': 'cos', r'\tan': 'tan',
+        r'\mid': '|', r'\|': '‖', r'\vert': '|', r'\Vert': '‖',
+        r'\ldots': '…', r'\cdots': '⋯', r'\dots': '…',
+        r'\quad': '  ', r'\qquad': '    ', r'\,': ' ',
+    }
+    for cmd, char in symbols.items():
+        s = s.replace(cmd, char)
+
+    # \mathrm{...}, \text{...}, \textbf{...}, \mathbf{...} -> plain text
+    s = _replace_cmd(s, r'\mathrm', lambda x: x)
+    s = _replace_cmd(s, r'\text', lambda x: x)
+    s = _replace_cmd(s, r'\textbf', lambda x: x)
+    s = _replace_cmd(s, r'\mathbf', lambda x: x)
+    s = _replace_cmd(s, r'\mathcal', lambda x: x)
+    s = _replace_cmd(s, r'\mathbb', lambda x: x)
+    s = _replace_cmd(s, r'\operatorname', lambda x: x)
+    s = _replace_cmd(s, r'\boldsymbol', lambda x: x)
+
+    # \sqrt{...} -> √(...)
+    s = _replace_cmd(s, r'\sqrt', lambda x: '√(' + x + ')')
+
+    # \frac{a}{b} -> (a)/(b)
+    s = _replace_cmd2(s, r'\frac', lambda a, b: '(' + a + ')/(' + b + ')')
+
+    # \begin{bmatrix}...\end{bmatrix} -> [...]
+    s = re.sub(r'\\begin\{[bp]?matrix\}(.*?)\\end\{[bp]?matrix\}',
+               lambda m: '[' + m.group(1).replace('\\\\', '; ').replace('&', ', ') + ']',
+               s, flags=re.DOTALL)
+
+    # Superscripts: ^{...} or ^x
+    sup_map = {
+        '0': '⁰', '1': '¹', '2': '²', '3': '³', '4': '⁴', '5': '⁵',
+        '6': '⁶', '7': '⁷', '8': '⁸', '9': '⁹',
+        'n': 'ⁿ', 'i': 'ⁱ', 'j': 'ʲ', 'k': 'ᵏ',
+        'a': 'ᵃ', 'b': 'ᵇ', 'c': 'ᶜ', 'd': 'ᵈ', 'e': 'ᵉ',
+        'T': 'ᵀ', '+': '⁺', '-': '⁻', '*': '*',
+    }
+
+    def replace_sup(m):
+        content = m.group(1) if m.group(1) else m.group(2)
+        if all(c in sup_map for c in content):
+            return ''.join(sup_map[c] for c in content)
+        return '^(' + content + ')'
+    if strict_braces:
+        s = re.sub(r'\^\{([^}]*)\}', replace_sup, s)
+        # Also handle ^digits without braces (e.g. 2^32)
+        s = re.sub(r'\^([0-9]+)', replace_sup, s)
+    else:
+        s = re.sub(r'\^\{([^}]*)\}|\^([a-zA-Z0-9+\-])', replace_sup, s)
+
+    # Subscripts: _{...} or _x
+    sub_map = {
+        '0': '₀', '1': '₁', '2': '₂', '3': '₃', '4': '₄', '5': '₅',
+        '6': '₆', '7': '₇', '8': '₈', '9': '₉',
+        'i': 'ᵢ', 'j': 'ⱼ', 'k': 'ₖ', 'n': 'ₙ', 'm': 'ₘ',
+        'x': 'ₓ', 'a': 'ₐ', 'e': 'ₑ', 'o': 'ₒ', 'r': 'ᵣ',
+        'p': 'ₚ', 's': 'ₛ', 't': 'ₜ', 'u': 'ᵤ', 'v': 'ᵥ',
+        '+': '₊', '-': '₋',
+    }
+
+    def replace_sub(m):
+        content = m.group(1) if m.group(1) else m.group(2)
+        if all(c in sub_map for c in content):
+            return ''.join(sub_map[c] for c in content)
+        return '_(' + content + ')'
+    if strict_braces:
+        s = re.sub(r'_\{([^}]*)\}', replace_sub, s)
+    else:
+        s = re.sub(r'_\{([^}]*)\}|_([a-zA-Z0-9])', replace_sub, s)
+
+    # \left, \right -> just the bracket
+    s = re.sub(r'\\left\s*([(\[|{.])', r'\1', s)
+    s = re.sub(r'\\right\s*([)\]|}.])', r'\1', s)
+    s = s.replace(r'\left', '').replace(r'\right', '')
+
+    # Clean remaining backslash commands
+    s = re.sub(r'\\[a-zA-Z]+', '', s)
+
+    # Clean remaining braces (not part of readable text)
+    s = s.replace('{', '').replace('}', '')
+
+    # Clean multiple spaces
+    s = re.sub(r'  +', ' ', s).strip()
+
+    return s
+
+
+def convert_latex_in_text(text):
+    """Convert $...$ (inline) and $$...$$ (block) LaTeX to Unicode in markdown text."""
     # Block math: $$...$$
     def replace_block(m):
-        latex = m.group(1).strip()
-        try:
-            mathml = latex2mathml.converter.convert(latex)
-            # Change display="inline" to display="block"
-            mathml = mathml.replace('display="inline"', 'display="block"')
-            return '\n\n' + mathml + '\n\n'
-        except Exception:
-            return m.group(0)
+        return '\n\n' + latex_to_unicode(m.group(1)) + '\n\n'
 
-    # Inline math: $...$  (but not $$)
+    # Inline math: $...$
     def replace_inline(m):
-        latex = m.group(1).strip()
-        try:
-            return latex2mathml.converter.convert(latex)
-        except Exception:
-            return m.group(0)
+        return latex_to_unicode(m.group(1))
 
-    # Process block math first (greedy $$...$$)
+    # Process block math first
     text = re.sub(r'\$\$([\s\S]+?)\$\$', replace_block, text)
-    # Then inline math ($...$), avoiding empty matches
+    # Then inline math (not $$)
     text = re.sub(r'(?<!\$)\$([^\$\n]+?)\$(?!\$)', replace_inline, text)
 
-    # Also handle \rightarrow, \oplus etc. that appear outside of math delimiters
-    # These are sometimes used inline without $ wrappers in the source
-    text = re.sub(r'\\rightarrow', '→', text)
-    text = re.sub(r'\\leftarrow', '←', text)
-    text = re.sub(r'\\oplus', '⊕', text)
-    text = re.sub(r'\\times', '×', text)
-    text = re.sub(r'\\bmod', ' mod ', text)
+    # Pass 3: Handle bare LaTeX outside of $ delimiters
+    # Process line by line; skip code blocks
+    lines = text.split('\n')
+    in_code_block = False
+    for i, line in enumerate(lines):
+        if line.strip().startswith('```'):
+            in_code_block = not in_code_block
+            continue
+        if in_code_block:
+            continue
+        # Trigger on: \commands, _{...} with braces, ^{...} with braces, or ^digits
+        if re.search(r'\\[a-zA-Z]+|_\{[^}]+\}|\^\{[^}]+\}|\^[0-9]', line):
+            lines[i] = latex_to_unicode(line, strict_braces=True)
+    text = '\n'.join(lines)
 
     return text
 
@@ -61,8 +225,8 @@ def md_to_html_content(md_path):
     with open(md_path, 'r', encoding='utf-8') as f:
         content = f.read()
 
-    # Convert LaTeX math to MathML before markdown processing
-    content = convert_latex_to_mathml(content)
+    # Convert LaTeX math to Unicode before markdown processing
+    content = convert_latex_in_text(content)
 
     # Convert markdown to HTML with tables extension
     extensions = ['tables', 'fenced_code', 'codehilite']
@@ -246,23 +410,6 @@ table, pre, blockquote {{
 /* Remove the first h1 span-all if it causes issues */
 h1:first-child {{
     column-span: none;
-}}
-
-/* MathML rendering */
-math {{
-    font-size: {font_size_pt}pt;
-    vertical-align: middle;
-}}
-
-math[display="block"] {{
-    display: block;
-    text-align: center;
-    margin: 1px 0;
-}}
-
-.math-display {{
-    text-align: center;
-    margin: 1px 0;
 }}
 """
     return css
