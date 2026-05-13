@@ -23,7 +23,7 @@
 
 body {
     font-family: 'LXGWWenKai', 'Songti SC', serif;
-    font-size: 5.5pt;
+    font-size: 5.53125pt;
     line-height: 1.15;
     column-count: 4;
     column-gap: 6px;
@@ -34,7 +34,7 @@ body {
 }
 
 h1 {
-    font-size: 7.0pt;
+    font-size: 7.03125pt;
     color: #0056b3;
     font-weight: bold;
     margin: 2px 0 1px 0;
@@ -45,7 +45,7 @@ h1 {
 }
 
 h2 {
-    font-size: 6.5pt;
+    font-size: 6.53125pt;
     color: #0056b3;
     font-weight: bold;
     margin: 2px 0 1px 0;
@@ -56,7 +56,7 @@ h2 {
 }
 
 h3 {
-    font-size: 6.0pt;
+    font-size: 6.03125pt;
     color: #0056b3;
     font-weight: bold;
     margin: 1.5px 0 0.5px 0;
@@ -65,7 +65,7 @@ h3 {
 }
 
 h4 {
-    font-size: 5.5pt;
+    font-size: 5.53125pt;
     color: #0056b3;
     font-weight: bold;
     margin: 1px 0 0.5px 0;
@@ -74,7 +74,7 @@ h4 {
 }
 
 h5, h6 {
-    font-size: 5.5pt;
+    font-size: 5.53125pt;
     color: #0056b3;
     font-weight: bold;
     margin: 1px 0 0.5px 0;
@@ -110,7 +110,7 @@ table {
     width: 100%;
     border-collapse: collapse;
     margin: 1px 0;
-    font-size: 5.0pt;
+    font-size: 5.03125pt;
     break-inside: avoid;
 }
 
@@ -128,7 +128,7 @@ th {
 
 code {
     font-family: 'Menlo', 'Monaco', monospace;
-    font-size: 4.5pt;
+    font-size: 4.53125pt;
     background-color: #f5f5f5;
     padding: 0 1px;
     border-radius: 1px;
@@ -140,7 +140,7 @@ pre {
     margin: 1px 0;
     border-radius: 2px;
     overflow: hidden;
-    font-size: 4.0pt;
+    font-size: 4.03125pt;
     line-height: 1.1;
     white-space: pre-wrap;
     word-wrap: break-word;
@@ -156,7 +156,7 @@ blockquote {
     padding-left: 4px;
     margin: 1px 0;
     color: #333;
-    font-size: 5.2pt;
+    font-size: 5.23125pt;
 }
 
 hr {
@@ -173,6 +173,23 @@ table, pre, blockquote {
 /* Remove the first h1 span-all if it causes issues */
 h1:first-child {
     column-span: none;
+}
+
+/* MathML rendering */
+math {
+    font-size: 5.53125pt;
+    vertical-align: middle;
+}
+
+math[display="block"] {
+    display: block;
+    text-align: center;
+    margin: 1px 0;
+}
+
+.math-display {
+    text-align: center;
+    margin: 1px 0;
 }
 </style>
 </head>
@@ -356,7 +373,7 @@ h1:first-child {
 <h4>Digital Signatures（数字签名）</h4>
 <ul>
 <li><strong>Definition / 定义</strong>: Encrypted message digest that proves message integrity and sender authenticity / 证明消息完整性和发送者真实性的加密消息摘要</li>
-<li><strong>Process / 过程</strong>: Sender creates digest $\rightarrow$ encrypts with private key $\rightarrow$ receiver decrypts with sender's public key $\rightarrow$ compares digests / 发送方创建摘要\rightarrow用私钥加密\rightarrow接收方用发送方公钥解密\rightarrow比较摘要</li>
+<li><strong>Process / 过程</strong>: Sender creates digest <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mrow><mo>&#x02192;</mo></mrow></math> encrypts with private key <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mrow><mo>&#x02192;</mo></mrow></math> receiver decrypts with sender's public key <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mrow><mo>&#x02192;</mo></mrow></math> compares digests / 发送方创建摘要→用私钥加密→接收方用发送方公钥解密→比较摘要</li>
 </ul>
 <h4>Hybrid Systems（混合系统）</h4>
 <ul>
@@ -466,7 +483,7 @@ h1:first-child {
 </ul>
 <h4>Bull's-Eye Model（靶心模型）</h4>
 <ul>
-<li><strong>Layers from outside to inside / 从外到内的层次</strong>: Policies $\rightarrow$ Networks $\rightarrow$ Systems $\rightarrow$ Applications / 策略\rightarrow网络\rightarrow系统\rightarrow应用</li>
+<li><strong>Layers from outside to inside / 从外到内的层次</strong>: Policies <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mrow><mo>&#x02192;</mo></mrow></math> Networks <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mrow><mo>&#x02192;</mo></mrow></math> Systems <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mrow><mo>&#x02192;</mo></mrow></math> Applications / 策略→网络→系统→应用</li>
 <li>Policies are the first layer of defense / 策略是第一道防线</li>
 </ul>
 <h4>Policy, Standards, and Practices / 策略、标准与实践</h4>
@@ -490,7 +507,7 @@ h1:first-child {
 </ol>
 <h4>Policy Life Cycle / 策略生命周期</h4>
 <ul>
-<li>Development $\rightarrow$ Implementation $\rightarrow$ Enforcement $\rightarrow$ Review &amp; Modification $\rightarrow$ Maintenance / 开发\rightarrow实施\rightarrow执行\rightarrow审查与修改\rightarrow维护</li>
+<li>Development <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mrow><mo>&#x02192;</mo></mrow></math> Implementation <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mrow><mo>&#x02192;</mo></mrow></math> Enforcement <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mrow><mo>&#x02192;</mo></mrow></math> Review &amp; Modification <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mrow><mo>&#x02192;</mo></mrow></math> Maintenance / 开发→实施→执行→审查与修改→维护</li>
 <li>Policy should be reviewed at least annually / 策略应至少每年审查一次</li>
 </ul>
 <h4>Three Causes of Unethical/Illegal Behavior / 不道德/违法行为的三大原因</h4>
@@ -687,8 +704,11 @@ h1:first-child {
 <h2>3. Key Formulas &amp; Theorems / 重点公式与定理</h2>
 <h3>Annualized Loss Expectancy (ALE) / 年度损失期望</h3>
 <ul>
-<li><strong>Formula / 公式</strong>: 
-  $$\mathrm{ALE} = \mathrm{SLE} \times \mathrm{ARO}$$</li>
+<li><strong>Formula / 公式</strong>: </li>
+</ul>
+<math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><mrow><mrow><mi mathvariant="normal">A</mi><mi mathvariant="normal">L</mi><mi mathvariant="normal">E</mi></mrow><mo>&#x0003D;</mo><mrow><mi mathvariant="normal">S</mi><mi mathvariant="normal">L</mi><mi mathvariant="normal">E</mi></mrow><mi>&#x000D7;</mi><mrow><mi mathvariant="normal">A</mi><mi mathvariant="normal">R</mi><mi mathvariant="normal">O</mi></mrow></mrow></math>
+
+<ul>
 <li><strong>Variables / 变量说明</strong>:</li>
 <li><strong>ALE (Annualized Loss Expectancy) / 年度损失期望</strong>: Expected annual loss from a risk / 某风险的预期年度损失</li>
 <li><strong>SLE (Single Loss Expectancy) / 单次损失期望</strong>: Loss from a single occurrence / 单次发生的损失</li>
@@ -697,8 +717,11 @@ h1:first-child {
 </ul>
 <h3>Single Loss Expectancy (SLE) / 单次损失期望</h3>
 <ul>
-<li><strong>Formula / 公式</strong>: 
-  $$\mathrm{SLE} = \mathrm{AV} \times \mathrm{EF}$$</li>
+<li><strong>Formula / 公式</strong>: </li>
+</ul>
+<math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><mrow><mrow><mi mathvariant="normal">S</mi><mi mathvariant="normal">L</mi><mi mathvariant="normal">E</mi></mrow><mo>&#x0003D;</mo><mrow><mi mathvariant="normal">A</mi><mi mathvariant="normal">V</mi></mrow><mi>&#x000D7;</mi><mrow><mi mathvariant="normal">E</mi><mi mathvariant="normal">F</mi></mrow></mrow></math>
+
+<ul>
 <li><strong>Variables / 变量说明</strong>:</li>
 <li><strong>AV (Asset Value) / 资产价值</strong>: Value of the information asset / 信息资产的价值</li>
 <li><strong>EF (Exposure Factor) / 暴露系数</strong>: Percentage of asset lost in a single attack / 单次攻击中资产损失的百分比</li>
@@ -706,8 +729,11 @@ h1:first-child {
 </ul>
 <h3>Cost-Benefit Analysis (CBA) / 成本效益分析</h3>
 <ul>
-<li><strong>Formula / 公式</strong>: 
-  $$\mathrm{CBA} = \mathrm{ALE}<em>{\mathrm{precontrol}} - \mathrm{ALE}</em>{\mathrm{postcontrol}} - \mathrm{ACS}$$</li>
+<li><strong>Formula / 公式</strong>: </li>
+</ul>
+<math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><mrow><mrow><mi mathvariant="normal">C</mi><mi mathvariant="normal">B</mi><mi mathvariant="normal">A</mi></mrow><mo>&#x0003D;</mo><msub><mrow><mi mathvariant="normal">A</mi><mi mathvariant="normal">L</mi><mi mathvariant="normal">E</mi></mrow><mrow><mrow><mi mathvariant="normal">p</mi><mi mathvariant="normal">r</mi><mi mathvariant="normal">e</mi><mi mathvariant="normal">c</mi><mi mathvariant="normal">o</mi><mi mathvariant="normal">n</mi><mi mathvariant="normal">t</mi><mi mathvariant="normal">r</mi><mi mathvariant="normal">o</mi><mi mathvariant="normal">l</mi></mrow></mrow></msub><mo>&#x02212;</mo><msub><mrow><mi mathvariant="normal">A</mi><mi mathvariant="normal">L</mi><mi mathvariant="normal">E</mi></mrow><mrow><mrow><mi mathvariant="normal">p</mi><mi mathvariant="normal">o</mi><mi mathvariant="normal">s</mi><mi mathvariant="normal">t</mi><mi mathvariant="normal">c</mi><mi mathvariant="normal">o</mi><mi mathvariant="normal">n</mi><mi mathvariant="normal">t</mi><mi mathvariant="normal">r</mi><mi mathvariant="normal">o</mi><mi mathvariant="normal">l</mi></mrow></mrow></msub><mo>&#x02212;</mo><mrow><mi mathvariant="normal">A</mi><mi mathvariant="normal">C</mi><mi mathvariant="normal">S</mi></mrow></mrow></math>
+
+<ul>
 <li><strong>Variables / 变量说明</strong>:</li>
 <li><strong>ALE(precontrol) / 控制前ALE</strong>: ALE before implementing the control / 实施控制前的ALE</li>
 <li><strong>ALE(postcontrol) / 控制后ALE</strong>: ALE after the control has been in place / 实施控制后的ALE</li>
@@ -782,10 +808,10 @@ h1:first-child {
 <p><strong>Solution / 解答</strong>:
 - AV = $1,000,000
 - EF = 10% = 0.1
-- <strong>SLE = AV \times EF = $1,000,000 \times 0.1 = $100,000</strong>
+- <strong>SLE = AV × EF = <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mrow><mn>1</mn><mo>&#x0002C;</mo><mn>000</mn><mo>&#x0002C;</mo><mn>000</mn><mi>&#x000D7;</mi><mn>0.1</mn><mo>&#x0003D;</mo></mrow></math>100,000</strong>
 - ARO = once every 2 years = 0.5
-- <strong>ALE = SLE \times ARO = $100,000 \times 0.5 = $50,000</strong>
-- The organization expects to lose $50,000 per year from this risk / 组织预期每年损失$50,000</p>
+- <strong>ALE = SLE × ARO = <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mrow><mn>100</mn><mo>&#x0002C;</mo><mn>000</mn><mi>&#x000D7;</mi><mn>0.5</mn><mo>&#x0003D;</mo></mrow></math>50,000</strong>
+- The organization expects to lose <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mrow><mn>50</mn><mo>&#x0002C;</mo><mn>000</mn><mi>p</mi><mi>e</mi><mi>r</mi><mi>y</mi><mi>e</mi><mi>a</mi><mi>r</mi><mi>f</mi><mi>r</mi><mi>o</mi><mi>m</mi><mi>t</mi><mi>h</mi><mi>i</mi><mi>s</mi><mi>r</mi><mi>i</mi><mi>s</mi><mi>k</mi><mo>&#x0002F;</mo><mi>组</mi><mi>织</mi><mi>预</mi><mi>期</mi><mi>每</mi><mi>年</mi><mi>损</mi><mi>失</mi></mrow></math>50,000</p>
 <hr />
 <h3>Question 4: Bell-LaPadula vs. Biba Model Comparison / BLP与Biba模型对比</h3>
 <p><strong>Problem / 问题</strong>: Compare and contrast the Bell-LaPadula model and the Biba model.</p>
@@ -925,11 +951,11 @@ h1:first-child {
 </ol>
 <hr />
 <h3>Question 9: CBA Calculation / 成本效益分析计算</h3>
-<p><strong>Problem / 问题</strong>: If ALE before a control is $50,000, ALE after the control is $10,000, and the annual cost of the safeguard is $15,000, should the organization implement the control?</p>
+<p><strong>Problem / 问题</strong>: If ALE before a control is <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mrow><mn>50</mn><mo>&#x0002C;</mo><mn>000</mn><mo>&#x0002C;</mo><mi>A</mi><mi>L</mi><mi>E</mi><mi>a</mi><mi>f</mi><mi>t</mi><mi>e</mi><mi>r</mi><mi>t</mi><mi>h</mi><mi>e</mi><mi>c</mi><mi>o</mi><mi>n</mi><mi>t</mi><mi>r</mi><mi>o</mi><mi>l</mi><mi>i</mi><mi>s</mi></mrow></math>10,000, and the annual cost of the safeguard is $15,000, should the organization implement the control?</p>
 <p><strong>Solution / 解答</strong>:
 - CBA = ALE(precontrol) − ALE(postcontrol) − ACS
-- CBA = $50,000 − $10,000 − $15,000 = <strong>$25,000</strong>
-- Since CBA &gt; 0, the control is <strong>cost-effective</strong> and should be implemented / 由于CBA &gt; 0，该控制具有成本效益，应予实施</p>
+- CBA = <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mrow><mn>50</mn><mo>&#x0002C;</mo><mn>000</mn><mi>−</mi></mrow></math>10,000 − <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mrow><mn>15</mn><mo>&#x0002C;</mo><mn>000</mn><mo>&#x0003D;</mo><mo>&#x0002A;</mo><mo>&#x0002A;</mo></mrow></math>25,000<strong>
+- Since CBA &gt; 0, the control is </strong>cost-effective** and should be implemented / 由于CBA &gt; 0，该控制具有成本效益，应予实施</p>
 <hr />
 <h3>Question 10: Clark-Wilson Model Elements / Clark-Wilson模型要素</h3>
 <p><strong>Problem / 问题</strong>: Explain the key elements of the Clark-Wilson integrity model.</p>

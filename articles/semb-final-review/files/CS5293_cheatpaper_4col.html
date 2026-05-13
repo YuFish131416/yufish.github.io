@@ -23,7 +23,7 @@
 
 body {
     font-family: 'KoseFont', 'Hiragino Sans GB', sans-serif;
-    font-size: 4.9375pt;
+    font-size: 4.96875pt;
     line-height: 1.2;
     column-count: 4;
     column-gap: 6px;
@@ -36,7 +36,7 @@ body {
 /* === HEADINGS: Blue + Bold === */
 h1 {
     font-family: 'KoseFont', sans-serif;
-    font-size: 6.4375pt;
+    font-size: 6.46875pt;
     color: #0056b3;
     font-weight: bold;
     margin: 2px 0 1px 0;
@@ -45,7 +45,7 @@ h1 {
 
 h2 {
     font-family: 'KoseFont', sans-serif;
-    font-size: 5.9375pt;
+    font-size: 5.96875pt;
     color: #0056b3;
     font-weight: bold;
     margin: 2px 0 1px 0;
@@ -55,7 +55,7 @@ h2 {
 
 h3 {
     font-family: 'KoseFont', sans-serif;
-    font-size: 5.4375pt;
+    font-size: 5.46875pt;
     color: #0056b3;
     font-weight: bold;
     margin: 1.5px 0 0.5px 0;
@@ -65,7 +65,7 @@ h3 {
 
 h4 {
     font-family: 'KoseFont', sans-serif;
-    font-size: 4.9375pt;
+    font-size: 4.96875pt;
     color: #0056b3;
     font-weight: bold;
     margin: 1px 0 0.5px 0;
@@ -75,7 +75,7 @@ h4 {
 
 h5, h6 {
     font-family: 'KoseFont', sans-serif;
-    font-size: 4.9375pt;
+    font-size: 4.96875pt;
     color: #0056b3;
     font-weight: bold;
     margin: 1px 0 0.5px 0;
@@ -112,7 +112,7 @@ table {
     width: 100%;
     border-collapse: collapse;
     margin: 1px 0;
-    font-size: 4.9375pt;
+    font-size: 4.96875pt;
     border: none;
 }
 
@@ -133,7 +133,7 @@ th {
 /* === CODE: Same font, no background, no monospace === */
 code {
     font-family: 'KoseFont', sans-serif;
-    font-size: 4.9375pt;
+    font-size: 4.96875pt;
     background: none;
     padding: 0;
     border: none;
@@ -145,7 +145,7 @@ pre {
     padding: 1px 0;
     margin: 0.5px 0;
     border: none;
-    font-size: 4.9375pt;
+    font-size: 4.96875pt;
     line-height: 1.2;
     white-space: pre-wrap;
     word-wrap: break-word;
@@ -155,7 +155,7 @@ pre code {
     font-family: 'KoseFont', sans-serif;
     background: none;
     padding: 0;
-    font-size: 4.9375pt;
+    font-size: 4.96875pt;
 }
 
 /* === BLOCKQUOTE: No left border, just slight indent === */
@@ -164,7 +164,7 @@ blockquote {
     padding-left: 6px;
     margin: 0.5px 0;
     color: #333;
-    font-size: 4.9375pt;
+    font-size: 4.96875pt;
 }
 
 /* === HR: Very subtle or invisible === */
@@ -175,6 +175,23 @@ hr {
 }
 
 /* No break-inside for tables since they look like plain text now */
+
+/* MathML rendering */
+math {
+    font-size: 4.96875pt;
+    vertical-align: middle;
+}
+
+math[display="block"] {
+    display: block;
+    text-align: center;
+    margin: 1px 0;
+}
+
+.math-display {
+    text-align: center;
+    margin: 1px 0;
+}
 </style>
 </head>
 <body>
@@ -326,8 +343,8 @@ hr {
 </ul>
 <h4>MAC &amp; HMAC（消息认证码）</h4>
 <ul>
-<li><strong>MAC</strong>: Symmetric key + hash \rightarrow verify integrity AND authenticity / 对称密钥+哈希\rightarrow验证完整性和真实性</li>
-<li><strong>HMAC</strong>: Hash-based MAC; HMAC(K, m) = H((K\oplusopad) ‖ H((K\oplusipad) ‖ m))</li>
+<li><strong>MAC</strong>: Symmetric key + hash → verify integrity AND authenticity / 对称密钥+哈希→验证完整性和真实性</li>
+<li><strong>HMAC</strong>: Hash-based MAC; HMAC(K, m) = H((K⊕opad) ‖ H((K⊕ipad) ‖ m))</li>
 <li><strong>Key difference</strong>: Hash verifies integrity only; MAC also authenticates sender / 哈希仅验证完整性；MAC还认证发送者</li>
 </ul>
 <h4>Diffie-Hellman Key Exchange（Diffie-Hellman密钥交换）</h4>
@@ -347,7 +364,7 @@ hr {
 <h4>Certificate &amp; PKI（数字证书与公钥基础设施）</h4>
 <ul>
 <li><strong>Certificate</strong>: Binds public key to identity, signed by CA / 将公钥绑定到身份，由CA签名</li>
-<li><strong>Certificate Chain</strong>: Root CA $\rightarrow$ Intermediate CA $\rightarrow$ End-entity cert / 证书链：根CA\rightarrow中间CA\rightarrow终端证书</li>
+<li><strong>Certificate Chain</strong>: Root CA <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mrow><mo>&#x02192;</mo></mrow></math> Intermediate CA <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mrow><mo>&#x02192;</mo></mrow></math> End-entity cert / 证书链：根CA→中间CA→终端证书</li>
 <li><strong>Trust Store</strong>: OS/browser ships with trusted Root CA public keys / 信任库：操作系统/浏览器内置可信根CA公钥</li>
 </ul>
 <h4>TLS Handshake（TLS握手）</h4>
@@ -360,7 +377,7 @@ hr {
 </ol>
 <h4>TLS Attacks（TLS攻击）</h4>
 <ul>
-<li><strong>SSL Stripping</strong>: Downgrade HTTPS$\rightarrow$HTTP (Moxie Marlinspike) / 降级HTTPS为HTTP</li>
+<li><strong>SSL Stripping</strong>: Downgrade HTTPS<math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mrow><mo>&#x02192;</mo></mrow></math>HTTP (Moxie Marlinspike) / 降级HTTPS为HTTP</li>
 <li><strong>HSTS</strong>: HTTP Strict Transport Security; tells browser to always use HTTPS / HTTP严格传输安全；告诉浏览器始终使用HTTPS</li>
 <li><strong>HSTS limitation</strong>: First visit still vulnerable (no HSTS header received yet) / 首次访问仍有漏洞</li>
 <li><strong>BEAST/CRIME/Poodle</strong>: Protocol-level attacks on older TLS versions / 针对旧版TLS的协议级攻击</li>
@@ -506,7 +523,7 @@ Low Address
 </ul>
 <h4>Buffer Overflow（缓冲区溢出）</h4>
 <ul>
-<li>Writing past buffer boundary \rightarrow overwrite saved EBP, return address, local variables / 越界写入\rightarrow覆盖保存的EBP、返回地址、局部变量</li>
+<li>Writing past buffer boundary → overwrite saved EBP, return address, local variables / 越界写入→覆盖保存的EBP、返回地址、局部变量</li>
 <li><strong>No bounds checking</strong> in C: gets(), strcpy(), sprintf() / C语言无边界检查</li>
 </ul>
 <h4>Shellcode（Shell代码）</h4>
@@ -557,7 +574,7 @@ Low Address
 <ul>
 <li><strong>PLT</strong> (Procedure Linkage Table): Stub code for lazy resolution / 延迟解析的存根代码</li>
 <li><strong>GOT</strong> (Global Offset Table): Contains resolved function addresses / 包含已解析的函数地址</li>
-<li>Lazy binding: First call \rightarrow resolver fills GOT; subsequent calls use GOT directly / 懒绑定：首次调用\rightarrow解析器填充GOT；后续调用直接使用GOT</li>
+<li>Lazy binding: First call → resolver fills GOT; subsequent calls use GOT directly / 懒绑定：首次调用→解析器填充GOT；后续调用直接使用GOT</li>
 </ul>
 <h4>Ret2Libc（返回Libc攻击）</h4>
 <ul>
@@ -577,7 +594,7 @@ Low Address
 <li><code>printf(user_input)</code>: User controls format string / 用户控制格式字符串</li>
 <li><strong>Reading memory</strong>: %x leaks stack values, %s reads pointer target / %x泄露栈值，%s读取指针目标</li>
 <li><strong>Writing memory</strong>: %n writes count of bytes printed so far / %n写入已打印的字节数</li>
-<li><strong>Direct parameter access</strong>: %7$x accesses 7th parameter directly / %7$x直接访问第7个参数</li>
+<li><strong>Direct parameter access</strong>: %7<math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mrow><mi>x</mi><mi>a</mi><mi>c</mi><mi>c</mi><mi>e</mi><mi>s</mi><mi>s</mi><mi>e</mi><mi>s</mi><mn>7</mn><mi>t</mi><mi>h</mi><mi>p</mi><mi>a</mi><mi>r</mi><mi>a</mi><mi>m</mi><mi>e</mi><mi>t</mi><mi>e</mi><mi>r</mi><mi>d</mi><mi>i</mi><mi>r</mi><mi>e</mi><mi>c</mi><mi>t</mi><mi>l</mi><mi>y</mi><mo>&#x0002F;</mo></mrow></math>x直接访问第7个参数</li>
 </ul>
 <h4>Modern Exploit Workflow（现代利用流程）</h4>
 <ol>
@@ -594,7 +611,7 @@ Low Address
 <h3>2.6 DNS Security / DNS安全 (Week 7)</h3>
 <h4>DNS Infrastructure（DNS基础设施）</h4>
 <ul>
-<li><strong>Hierarchy</strong>: Root (.) \rightarrow TLD (.com) \rightarrow Second-level (example) \rightarrow Subdomain (www) / 层级结构</li>
+<li><strong>Hierarchy</strong>: Root (.) → TLD (.com) → Second-level (example) → Subdomain (www) / 层级结构</li>
 <li><strong>Root servers</strong>: 13 clusters (A--M), hundreds via anycast / 13个集群，通过任播扩展</li>
 <li><strong>DNS Zones</strong>: Delegation of authority / 权限委托</li>
 </ul>
@@ -635,14 +652,14 @@ Low Address
 </table>
 <h4>DNS Query Process（DNS查询过程）</h4>
 <ol>
-<li>Client \rightarrow Local resolver (stub) \rightarrow Recursive resolver \rightarrow Root \rightarrow TLD \rightarrow Authoritative</li>
+<li>Client → Local resolver (stub) → Recursive resolver → Root → TLD → Authoritative</li>
 <li><strong>Caching</strong>: Each level caches responses for TTL duration / 每级缓存响应直到TTL过期</li>
 <li><strong>Iterative vs Recursive</strong>: Resolver does iterative lookup on behalf of client / 解析器代表客户端做迭代查询</li>
 </ol>
 <h4>DNS Cache Poisoning（DNS缓存投毒）</h4>
 <ul>
 <li><strong>Local attack</strong>: Attacker on same LAN, forge DNS response / 同一局域网，伪造DNS响应</li>
-<li><strong>Remote attack (Kaminsky)</strong>: Query random subdomains \rightarrow never cached \rightarrow unlimited attempts / 查询随机子域名\rightarrow永不缓存\rightarrow无限尝试</li>
+<li><strong>Remote attack (Kaminsky)</strong>: Query random subdomains → never cached → unlimited attempts / 查询随机子域名→永不缓存→无限尝试</li>
 <li><strong>Key insight of Kaminsky</strong>: Random subdomains bypass caching, giving unlimited fresh attempts / 随机子域名绕过缓存，获得无限新鲜尝试</li>
 <li><strong>Required fields to spoof</strong>: Source port + Transaction ID (16-bit each) / 源端口+事务ID</li>
 </ul>
@@ -676,7 +693,7 @@ Low Address
 <h4>DNSSEC（DNS安全扩展）</h4>
 <ul>
 <li>Signs DNS records with digital signatures / 用数字签名签署DNS记录</li>
-<li><strong>Chain of trust</strong>: Root KSK \rightarrow ZSK \rightarrow Zone signatures / 信任链：根KSK\rightarrowZSK\rightarrow区域签名</li>
+<li><strong>Chain of trust</strong>: Root KSK → ZSK → Zone signatures / 信任链：根KSK→ZSK→区域签名</li>
 <li><strong>DS record</strong>: Links parent zone to child zone's KSK / DS记录将父区域链接到子区域的KSK</li>
 <li><strong>Does NOT encrypt</strong> DNS data; only provides authenticity and integrity / 不加密DNS数据；仅提供真实性和完整性</li>
 </ul>
@@ -719,7 +736,7 @@ Low Address
 <ul>
 <li><strong>Tables</strong>: filter (default), nat, mangle / filter（默认）、nat、mangle</li>
 <li><strong>Chains</strong>: INPUT, OUTPUT, FORWARD / INPUT、OUTPUT、FORWARD</li>
-<li><strong>Rules</strong>: Match criteria \rightarrow target (ACCEPT, DROP, REJECT) / 匹配条件\rightarrow目标</li>
+<li><strong>Rules</strong>: Match criteria → target (ACCEPT, DROP, REJECT) / 匹配条件→目标</li>
 <li><strong>Connection tracking</strong>: ESTABLISHED, RELATED states allow return traffic / ESTABLISHED、RELATED状态允许返回流量</li>
 </ul>
 <h4>Stateful vs Stateless Filtering（有状态vs无状态过滤）</h4>
@@ -813,7 +830,7 @@ Low Address
 <li>Steal cookies (if not HttpOnly) / 窃取Cookie</li>
 <li>Bypass CSRF tokens (XSS can read page content) / 绕过CSRF令牌</li>
 <li>Keylogging, phishing, worm propagation / 键盘记录、钓鱼、蠕虫传播</li>
-<li><strong>Key insight</strong>: XSS injects code into trusted origin \rightarrow full access to victim's session / XSS在可信源中注入代码\rightarrow完全访问受害者会话</li>
+<li><strong>Key insight</strong>: XSS injects code into trusted origin → full access to victim's session / XSS在可信源中注入代码→完全访问受害者会话</li>
 </ul>
 <h4>XSS Defenses（XSS防御）</h4>
 <table>
@@ -1018,26 +1035,26 @@ Low Address
 </ul>
 <h3>CBC Mode Encryption（CBC模式加密）</h3>
 <ul>
-<li><strong>Formula</strong>: $C_i = \mathrm{Enc}(K, P_i \oplus C_{i-1})$; $C_0 = \mathrm{IV}$</li>
+<li><strong>Formula</strong>: <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mrow><msub><mi>C</mi><mi>i</mi></msub><mo>&#x0003D;</mo><mrow><mi mathvariant="normal">E</mi><mi mathvariant="normal">n</mi><mi mathvariant="normal">c</mi></mrow><mo stretchy="false">&#x00028;</mo><mi>K</mi><mo>&#x0002C;</mo><msub><mi>P</mi><mi>i</mi></msub><mo>&#x02295;</mo><msub><mi>C</mi><mrow><mi>i</mi><mo>&#x02212;</mo><mn>1</mn></mrow></msub><mo stretchy="false">&#x00029;</mo></mrow></math>; <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mrow><msub><mi>C</mi><mn>0</mn></msub><mo>&#x0003D;</mo><mrow><mi mathvariant="normal">I</mi><mi mathvariant="normal">V</mi></mrow></mrow></math></li>
 <li><strong>Variables</strong>: IV = initialization vector (must be random and unpredictable) / IV=初始化向量（必须随机且不可预测）</li>
 <li><strong>Conditions</strong>: IV must never be reused with same key / IV不能与同一密钥重复使用</li>
 </ul>
 <h3>HMAC Construction（HMAC构造）</h3>
 <ul>
-<li><strong>Formula</strong>: $\mathrm{HMAC}(K, m) = H((K \oplus \mathrm{opad}) | H((K \oplus \mathrm{ipad}) | m))$</li>
+<li><strong>Formula</strong>: <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mrow><mrow><mi mathvariant="normal">H</mi><mi mathvariant="normal">M</mi><mi mathvariant="normal">A</mi><mi mathvariant="normal">C</mi></mrow><mo stretchy="false">&#x00028;</mo><mi>K</mi><mo>&#x0002C;</mo><mi>m</mi><mo stretchy="false">&#x00029;</mo><mo>&#x0003D;</mo><mi>H</mi><mo stretchy="false">&#x00028;</mo><mo stretchy="false">&#x00028;</mo><mi>K</mi><mo>&#x02295;</mo><mrow><mi mathvariant="normal">o</mi><mi mathvariant="normal">p</mi><mi mathvariant="normal">a</mi><mi mathvariant="normal">d</mi></mrow><mo stretchy="false">&#x00029;</mo><mo fence="false" stretchy="false">&#x02016;</mo><mi>H</mi><mo stretchy="false">&#x00028;</mo><mo stretchy="false">&#x00028;</mo><mi>K</mi><mo>&#x02295;</mo><mrow><mi mathvariant="normal">i</mi><mi mathvariant="normal">p</mi><mi mathvariant="normal">a</mi><mi mathvariant="normal">d</mi></mrow><mo stretchy="false">&#x00029;</mo><mo fence="false" stretchy="false">&#x02016;</mo><mi>m</mi><mo stretchy="false">&#x00029;</mo><mo stretchy="false">&#x00029;</mo></mrow></math></li>
 <li><strong>Variables</strong>: K = key, m = message, H = hash function, ipad/opad = inner/outer padding constants / K=密钥, m=消息, H=哈希函数</li>
 <li><strong>Conditions</strong>: Key should be hash output length / 密钥应为哈希输出长度</li>
 </ul>
 <h3>Diffie-Hellman Key Exchange（DH密钥交换）</h3>
 <ul>
-<li><strong>Formula</strong>: $\mathrm{Shared secret} = (g^b \bmod p)^a \bmod p = (g^a \bmod p)^b \bmod p = g^{ab} \bmod p$</li>
+<li><strong>Formula</strong>: <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mrow><mrow><mi mathvariant="normal">S</mi><mi mathvariant="normal">h</mi><mi mathvariant="normal">a</mi><mi mathvariant="normal">r</mi><mi mathvariant="normal">e</mi><mi mathvariant="normal">d</mi><mi mathvariant="normal">s</mi><mi mathvariant="normal">e</mi><mi mathvariant="normal">c</mi><mi mathvariant="normal">r</mi><mi mathvariant="normal">e</mi><mi mathvariant="normal">t</mi></mrow><mo>&#x0003D;</mo><mo stretchy="false">&#x00028;</mo><msup><mi>g</mi><mi>b</mi></msup><mo>mod</mo><mi>p</mi><msup><mo stretchy="false">&#x00029;</mo><mi>a</mi></msup><mo>mod</mo><mi>p</mi><mo>&#x0003D;</mo><mo stretchy="false">&#x00028;</mo><msup><mi>g</mi><mi>a</mi></msup><mo>mod</mo><mi>p</mi><msup><mo stretchy="false">&#x00029;</mo><mi>b</mi></msup><mo>mod</mo><mi>p</mi><mo>&#x0003D;</mo><msup><mi>g</mi><mrow><mi>a</mi><mi>b</mi></mrow></msup><mo>mod</mo><mi>p</mi></mrow></math></li>
 <li><strong>Variables</strong>: g = generator, p = prime, a/b = private values / g=生成元, p=素数, a/b=私有值</li>
 <li><strong>Conditions</strong>: Vulnerable to MITM without authentication / 无认证时易受中间人攻击</li>
 </ul>
 <h3>Buffer Overflow Offset（缓冲区溢出偏移）</h3>
 <ul>
 <li><strong>Formula</strong>: offset = distance from buffer start to saved return address</li>
-<li><strong>Variables</strong>: $\mathrm{offset} = \mathrm{buf_start} + \mathrm{buffer_size} + \mathrm{padding} + \mathrm{saved_EBP_size}$ / 偏移=缓冲区起始+缓冲区大小+填充+保存的EBP大小</li>
+<li><strong>Variables</strong>: <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mrow><mrow><mi mathvariant="normal">o</mi><mi mathvariant="normal">f</mi><mi mathvariant="normal">f</mi><mi mathvariant="normal">s</mi><mi mathvariant="normal">e</mi><mi mathvariant="normal">t</mi></mrow><mo>&#x0003D;</mo><mrow><mi mathvariant="normal">b</mi><mi mathvariant="normal">u</mi><mi mathvariant="normal">f</mi><mi mathvariant="normal">&#x0005F;</mi><mi mathvariant="normal">s</mi><mi mathvariant="normal">t</mi><mi mathvariant="normal">a</mi><mi mathvariant="normal">r</mi><mi mathvariant="normal">t</mi></mrow><mo>&#x0002B;</mo><mrow><mi mathvariant="normal">b</mi><mi mathvariant="normal">u</mi><mi mathvariant="normal">f</mi><mi mathvariant="normal">f</mi><mi mathvariant="normal">e</mi><mi mathvariant="normal">r</mi><mi mathvariant="normal">&#x0005F;</mi><mi mathvariant="normal">s</mi><mi mathvariant="normal">i</mi><mi mathvariant="normal">z</mi><mi mathvariant="normal">e</mi></mrow><mo>&#x0002B;</mo><mrow><mi mathvariant="normal">p</mi><mi mathvariant="normal">a</mi><mi mathvariant="normal">d</mi><mi mathvariant="normal">d</mi><mi mathvariant="normal">i</mi><mi mathvariant="normal">n</mi><mi mathvariant="normal">g</mi></mrow><mo>&#x0002B;</mo><mrow><mi mathvariant="normal">s</mi><mi mathvariant="normal">a</mi><mi mathvariant="normal">v</mi><mi mathvariant="normal">e</mi><mi mathvariant="normal">d</mi><mi mathvariant="normal">&#x0005F;</mi><mi mathvariant="normal">E</mi><mi mathvariant="normal">B</mi><mi mathvariant="normal">P</mi><mi mathvariant="normal">&#x0005F;</mi><mi mathvariant="normal">s</mi><mi mathvariant="normal">i</mi><mi mathvariant="normal">z</mi><mi mathvariant="normal">e</mi></mrow></mrow></math> / 偏移=缓冲区起始+缓冲区大小+填充+保存的EBP大小</li>
 <li><strong>Conditions</strong>: Alignment may add padding; verify with GDB / 对齐可能添加填充；用GDB验证</li>
 </ul>
 <h3>Format String %n Write（格式化字符串%n写入）</h3>
@@ -1052,10 +1069,10 @@ Low Address
 <p><strong>Problem</strong>: ECB mode encrypts each block independently with the same key. Explain why this is insecure and how CBC mode solves the problem.</p>
 <p><strong>Solution</strong>: 
 - ECB is insecure because identical plaintext blocks produce identical ciphertext blocks, revealing patterns in the data. An attacker can detect repetitions and even identify content from ciphertext patterns (e.g., encrypted images remain recognizable).
-- CBC solves this by XORing each plaintext block with the previous ciphertext block before encryption: $C_i = \mathrm{Enc}(K, P_i \oplus C_{i-1})$. The first block uses a random IV. This ensures identical plaintext blocks produce different ciphertext blocks, eliminating pattern leakage.</p>
+- CBC solves this by XORing each plaintext block with the previous ciphertext block before encryption: <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mrow><msub><mi>C</mi><mi>i</mi></msub><mo>&#x0003D;</mo><mrow><mi mathvariant="normal">E</mi><mi mathvariant="normal">n</mi><mi mathvariant="normal">c</mi></mrow><mo stretchy="false">&#x00028;</mo><mi>K</mi><mo>&#x0002C;</mo><msub><mi>P</mi><mi>i</mi></msub><mo>&#x02295;</mo><msub><mi>C</mi><mrow><mi>i</mi><mo>&#x02212;</mo><mn>1</mn></mrow></msub><mo stretchy="false">&#x00029;</mo></mrow></math>. The first block uses a random IV. This ensures identical plaintext blocks produce different ciphertext blocks, eliminating pattern leakage.</p>
 <ul>
 <li>ECB不安全是因为相同的明文块产生相同的密文块，暴露数据模式。攻击者可以检测重复，甚至从密文模式识别内容。</li>
-<li>CBC通过对每个明文块在加密前与前一个密文块异或来解决：$C_i = \mathrm{Enc}(K, P_i \oplus C_{i-1})$。第一个块使用随机IV。这确保相同明文块产生不同密文块。</li>
+<li>CBC通过对每个明文块在加密前与前一个密文块异或来解决：<math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mrow><msub><mi>C</mi><mi>i</mi></msub><mo>&#x0003D;</mo><mrow><mi mathvariant="normal">E</mi><mi mathvariant="normal">n</mi><mi mathvariant="normal">c</mi></mrow><mo stretchy="false">&#x00028;</mo><mi>K</mi><mo>&#x0002C;</mo><msub><mi>P</mi><mi>i</mi></msub><mo>&#x02295;</mo><msub><mi>C</mi><mrow><mi>i</mi><mo>&#x02212;</mo><mn>1</mn></mrow></msub><mo stretchy="false">&#x00029;</mo></mrow></math>。第一个块使用随机IV。这确保相同明文块产生不同密文块。</li>
 </ul>
 <hr />
 <h3>Question 2: SSL Stripping &amp; HSTS（SSL剥离与HSTS）</h3>
@@ -1088,8 +1105,8 @@ Low Address
 <p><strong>Solution</strong>:
 <strong>(a)</strong> At Line A: RUID=1000 (alice), EUID=0 (root). After Line B (setuid(getuid())): RUID=1000, EUID=1000. Line B causes EUID to change because setuid(getuid()) drops root privileges by setting EUID to the real UID.</p>
 <p><strong>(b)</strong> Two vulnerabilities remain:
-1. <strong>File descriptor leak (Line A$\rightarrow$D)</strong>: fd to /etc/secret_notes is still open after privilege drop. Attacker can pass <code>/proc/self/fd/3</code> as argv[1] to read the protected file via the still-open descriptor.
-2. <strong>Command injection (Line C$\rightarrow$D)</strong>: system() executes user-supplied argv[1] through the shell. Attacker can pass <code>myfile.txt; cat /etc/secret_notes</code> or use shell metacharacters.</p>
+1. <strong>File descriptor leak (Line A<math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mrow><mo>&#x02192;</mo></mrow></math>D)</strong>: fd to /etc/secret_notes is still open after privilege drop. Attacker can pass <code>/proc/self/fd/3</code> as argv[1] to read the protected file via the still-open descriptor.
+2. <strong>Command injection (Line C<math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mrow><mo>&#x02192;</mo></mrow></math>D)</strong>: system() executes user-supplied argv[1] through the shell. Attacker can pass <code>myfile.txt; cat /etc/secret_notes</code> or use shell metacharacters.</p>
 <p><strong>(c)</strong> Fixes:
 1. For FD leak: Close the file descriptor before calling system(), or set FD_CLOEXEC flag so it's automatically closed on exec.
 2. For command injection: Replace system() with execvp() which does not invoke a shell, or use execve() with explicit argument arrays.</p>
@@ -1157,7 +1174,7 @@ TUN (Layer 3, IP packets only) is preferred for most site-to-site routing becaus
 <p><strong>Problem</strong>: Compare XSS and CSRF: which is more powerful and why?</p>
 <p><strong>Solution</strong>:
 XSS is more powerful because:
-- XSS code runs in the victim's origin \rightarrow can both SEND requests AND READ responses
+- XSS code runs in the victim's origin → can both SEND requests AND READ responses
 - CSRF can only SEND requests; cannot READ responses (blocked by SOP)
 - XSS can bypass CSRF tokens by reading them from the page DOM
 - XSS can steal cookies (if not HttpOnly), perform actions as the victim, and propagate as a worm</p>
@@ -1188,7 +1205,7 @@ XSS is more powerful because:
 </tbody>
 </table>
 <ul>
-<li>XSS更强大：XSS代码在受害者源中运行\rightarrow可以发送请求并读取响应。CSRF只能发送请求，不能读取响应（被SOP阻止）。XSS可以通过从页面DOM读取来绕过CSRF令牌。</li>
+<li>XSS更强大：XSS代码在受害者源中运行→可以发送请求并读取响应。CSRF只能发送请求，不能读取响应（被SOP阻止）。XSS可以通过从页面DOM读取来绕过CSRF令牌。</li>
 </ul>
 <hr />
 <h3>Question 11: SQL Injection Prevention（SQL注入防御）</h3>

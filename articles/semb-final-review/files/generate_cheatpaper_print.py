@@ -13,15 +13,56 @@ import sys
 import os
 import re
 import markdown
+import latex2mathml.converter
 from weasyprint import HTML, CSS
 from weasyprint.text.fonts import FontConfiguration
 
 FONT_PATH = os.path.join(os.path.dirname(os.path.abspath(__file__)), "fonts", "LXGWWenKai-Regular.ttf")
 
+
+def convert_latex_to_mathml(text):
+    """Convert $...$ (inline) and $$...$$ (block) LaTeX to MathML before markdown processing."""
+    # Block math: $$...$$
+    def replace_block(m):
+        latex = m.group(1).strip()
+        try:
+            mathml = latex2mathml.converter.convert(latex)
+            # Change display="inline" to display="block"
+            mathml = mathml.replace('display="inline"', 'display="block"')
+            return '\n\n' + mathml + '\n\n'
+        except Exception:
+            return m.group(0)
+
+    # Inline math: $...$  (but not $$)
+    def replace_inline(m):
+        latex = m.group(1).strip()
+        try:
+            return latex2mathml.converter.convert(latex)
+        except Exception:
+            return m.group(0)
+
+    # Process block math first (greedy $$...$$)
+    text = re.sub(r'\$\$([\s\S]+?)\$\$', replace_block, text)
+    # Then inline math ($...$), avoiding empty matches
+    text = re.sub(r'(?<!\$)\$([^\$\n]+?)\$(?!\$)', replace_inline, text)
+
+    # Also handle \rightarrow, \oplus etc. that appear outside of math delimiters
+    # These are sometimes used inline without $ wrappers in the source
+    text = re.sub(r'\\rightarrow', '→', text)
+    text = re.sub(r'\\leftarrow', '←', text)
+    text = re.sub(r'\\oplus', '⊕', text)
+    text = re.sub(r'\\times', '×', text)
+    text = re.sub(r'\\bmod', ' mod ', text)
+
+    return text
+
 def md_to_html_content(md_path):
     """Read markdown file and convert to HTML, stripping unnecessary sections."""
     with open(md_path, 'r', encoding='utf-8') as f:
         content = f.read()
+
+    # Convert LaTeX math to MathML before markdown processing
+    content = convert_latex_to_mathml(content)
 
     # Convert markdown to HTML with tables extension
     extensions = ['tables', 'fenced_code', 'codehilite']
@@ -205,6 +246,23 @@ table, pre, blockquote {{
 /* Remove the first h1 span-all if it causes issues */
 h1:first-child {{
     column-span: none;
+}}
+
+/* MathML rendering */
+math {{
+    font-size: {font_size_pt}pt;
+    vertical-align: middle;
+}}
+
+math[display="block"] {{
+    display: block;
+    text-align: center;
+    margin: 1px 0;
+}}
+
+.math-display {{
+    text-align: center;
+    margin: 1px 0;
 }}
 """
     return css
