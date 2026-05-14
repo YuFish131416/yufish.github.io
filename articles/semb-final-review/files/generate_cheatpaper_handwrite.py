@@ -244,11 +244,11 @@ body {{
     color: #1a1a1a;
 }}
 
-/* === HEADINGS: Blue + Bold === */
+/* === HEADINGS: Black + Bold === */
 h1 {{
     font-family: 'KoseFont', sans-serif;
     font-size: {font_size_pt + 1.5}pt;
-    color: #0056b3;
+    color: #1a1a1a;
     font-weight: bold;
     margin: 2px 0 1px 0;
     line-height: 1.3;
@@ -257,7 +257,7 @@ h1 {{
 h2 {{
     font-family: 'KoseFont', sans-serif;
     font-size: {font_size_pt + 1}pt;
-    color: #0056b3;
+    color: #1a1a1a;
     font-weight: bold;
     margin: 2px 0 1px 0;
     line-height: 1.2;
@@ -267,7 +267,7 @@ h2 {{
 h3 {{
     font-family: 'KoseFont', sans-serif;
     font-size: {font_size_pt + 0.5}pt;
-    color: #0056b3;
+    color: #1a1a1a;
     font-weight: bold;
     margin: 1.5px 0 0.5px 0;
     line-height: 1.2;
@@ -277,7 +277,7 @@ h3 {{
 h4 {{
     font-family: 'KoseFont', sans-serif;
     font-size: {font_size_pt}pt;
-    color: #0056b3;
+    color: #1a1a1a;
     font-weight: bold;
     margin: 1px 0 0.5px 0;
     line-height: 1.2;
@@ -287,7 +287,7 @@ h4 {{
 h5, h6 {{
     font-family: 'KoseFont', sans-serif;
     font-size: {font_size_pt}pt;
-    color: #0056b3;
+    color: #1a1a1a;
     font-weight: bold;
     margin: 1px 0 0.5px 0;
     line-height: 1.2;
