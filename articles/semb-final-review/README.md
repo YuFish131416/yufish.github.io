@@ -24,8 +24,8 @@ files:
     displayName: "CS5187 Cheatpaper PDF（3列）"
     type: "PDF Cheatpaper"
     download: true
-  - name: "CS5187_cheatpaper_4col.pdf"
-    displayName: "CS5187 Cheatpaper PDF（4列）"
+  - name: "CS5187_开卷详细资料.pdf"
+    displayName: "CS5187 开卷详细资料"
     type: "PDF Cheatpaper"
     download: true
   - name: "CS5293_cheatpaper_3col.pdf"
