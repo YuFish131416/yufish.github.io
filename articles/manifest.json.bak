@@ -18,6 +18,7 @@
         "cheatpaper"
       ],
       "summary": "Semester B 期末五连考复习资料合集，涵盖信息安全技术管理、VR技术、软件安全、计算机视觉与NLP，附两份可打印 cheatpaper。",
+      "math": true,
       "focus": [
         "五门课按考试时间排序，每门附完整复习笔记。",
         "CS5293 和 CS5294 额外提供可打印的双面 cheatpaper（HTML 格式）。",

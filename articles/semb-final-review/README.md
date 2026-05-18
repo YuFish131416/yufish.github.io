@@ -20,7 +20,7 @@ files:
     displayName: "CS5294 Cheatpaper PDF（4列）"
     type: "PDF Cheatpaper"
     download: true
-    - name: "CS5187_cheatpaper_3col.pdf"
+  - name: "CS5187_cheatpaper_3col.pdf"
     displayName: "CS5187 Cheatpaper PDF（3列）"
     type: "PDF Cheatpaper"
     download: true

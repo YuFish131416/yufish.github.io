@@ -488,6 +488,7 @@
     var readerTitle = document.getElementById('subReaderTitle');
     var closeBtn = document.getElementById('subReaderClose');
     var mainContent = app.querySelector('.article-content');
+    var articleHeader = app.querySelector('.article-header');
 
     if (!links.length || !reader) return;
 
@@ -519,6 +520,7 @@
 
           readerTitle.textContent = filename.replace(/\.[^.]+$/, '');
           readerContent.innerHTML = rendered;
+          if (articleHeader) articleHeader.style.display = 'none';
           mainContent.style.display = 'none';
           reader.style.display = 'block';
           window.scrollTo(0, 0);
@@ -530,6 +532,7 @@
           initIcons();
         } catch (err) {
           readerContent.innerHTML = '<p style="color:var(--c-text-3)">无法加载文件：' + esc(filename) + '</p>';
+          if (articleHeader) articleHeader.style.display = 'none';
           mainContent.style.display = 'none';
           reader.style.display = 'block';
         }
@@ -539,6 +542,7 @@
     if (closeBtn) {
       closeBtn.addEventListener('click', function () {
         reader.style.display = 'none';
+        if (articleHeader) articleHeader.style.display = '';
         mainContent.style.display = '';
         window.scrollTo(0, 0);
       });
