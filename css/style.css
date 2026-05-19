@@ -32,7 +32,7 @@
   --ease: cubic-bezier(0.25, 0.1, 0.25, 1);
   --duration: 0.3s;
 
-  --container: 1080px;
+  --container: min(1200px, 85vw);
   --nav-height: 64px;
   --radius-sm: 6px;
   --radius: 10px;
@@ -54,6 +54,7 @@ body {
   color: var(--c-text);
   background: var(--c-bg);
   min-height: 100vh;
+  overflow-x: hidden;
 }
 h1, h2, h3, h4, h5, h6 {
   font-family: var(--font-display);
@@ -548,7 +549,6 @@ button { font-family: var(--font-body); }
    ARTICLE DETAIL
    =============================== */
 .article-header {
-  max-width: 720px;
   margin: 0 auto var(--space-2xl);
 }
 .article-back {
@@ -597,7 +597,7 @@ button { font-family: var(--font-body); }
 .article-detail-meta svg { width: 14px; height: 14px; }
 
 /* Article Content Prose */
-.article-content { max-width: 720px; margin: 0 auto; }
+.article-content { margin: 0 auto; overflow-x: hidden; }
 .article-content h1, .article-content h2, .article-content h3, .article-content h4 {
   margin-top: var(--space-2xl);
   margin-bottom: var(--space-md);
@@ -1116,7 +1116,7 @@ button { font-family: var(--font-body); }
 /* ===============================
    SUB-FILE READER
    =============================== */
-.sub-file-reader { max-width: 720px; margin: 0 auto; }
+.sub-file-reader { margin: 0 auto; }
 .sub-reader-header {
   display: flex;
   align-items: center;
