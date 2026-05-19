@@ -1117,13 +1117,28 @@ button { font-family: var(--font-body); }
    SUB-FILE READER
    =============================== */
 .sub-file-reader { margin: 0 auto; }
+.sub-reader-sentinel { height: 0; width: 100%; pointer-events: none; }
 .sub-reader-header {
+  position: sticky;
+  top: var(--nav-height);
   display: flex;
   align-items: center;
   gap: var(--space-md);
-  padding-bottom: var(--space-lg);
+  padding: var(--space-md) var(--space-lg);
   margin-bottom: var(--space-xl);
+  background: var(--c-bg);
   border-bottom: 1px solid var(--c-border);
+  z-index: 50;
+  transition: padding var(--duration) var(--ease),
+              background var(--duration) var(--ease),
+              box-shadow var(--duration) var(--ease);
+}
+.sub-reader-header.stuck {
+  padding: var(--space-xs) var(--space-lg);
+  background: rgba(250, 250, 248, 0.92);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  box-shadow: var(--shadow-sm);
 }
 .sub-reader-close {
   display: inline-flex;
@@ -1135,11 +1150,17 @@ button { font-family: var(--font-body); }
   border: none;
   cursor: pointer;
   padding: var(--space-sm) 0;
-  transition: color var(--duration) var(--ease);
+  transition: color var(--duration) var(--ease), font-size var(--duration) var(--ease);
   font-family: var(--font-body);
+  white-space: nowrap;
+}
+.sub-reader-header.stuck .sub-reader-close {
+  font-size: 13px;
+  gap: 4px;
 }
 .sub-reader-close:hover { color: var(--c-accent); }
-.sub-reader-close svg { width: 16px; height: 16px; }
+.sub-reader-close svg { width: 16px; height: 16px; transition: width var(--duration), height var(--duration); }
+.sub-reader-header.stuck .sub-reader-close svg { width: 14px; height: 14px; }
 .sub-reader-title {
   font-size: 14px;
   font-weight: 600;
@@ -1149,6 +1170,12 @@ button { font-family: var(--font-body); }
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+  transition: font-size var(--duration) var(--ease);
+}
+.sub-reader-header.stuck .sub-reader-title {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--c-text-3);
 }
 .sub-reader-iframe {
   width: 100%;

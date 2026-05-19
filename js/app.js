@@ -446,9 +446,10 @@
             contentHtml +
           '</div>' +
           '<div class="sub-file-reader" id="subFileReader" style="display:none">' +
-            '<div class="sub-reader-header">' +
+            '<div class="sub-reader-sentinel" id="subReaderSentinel"></div>' +
+            '<div class="sub-reader-header" id="subReaderHeader">' +
               '<button class="sub-reader-close" id="subReaderClose">' +
-                '<i data-lucide="arrow-left"></i><span>返回目录</span>' +
+                '<i data-lucide="arrow-left"></i><span>返回「' + esc(meta.title) + '」</span>' +
               '</button>' +
               '<span class="sub-reader-title" id="subReaderTitle"></span>' +
             '</div>' +
@@ -489,8 +490,39 @@
     var closeBtn = document.getElementById('subReaderClose');
     var mainContent = app.querySelector('.article-content');
     var articleHeader = app.querySelector('.article-header');
+    var stickyObserver = null;
 
     if (!links.length || !reader) return;
+
+    function setupStickyObserver() {
+      var sentinel = document.getElementById('subReaderSentinel');
+      var header = document.getElementById('subReaderHeader');
+      if (!sentinel || !header) return;
+
+      // Get nav height for rootMargin offset
+      var navH = parseInt(getComputedStyle(document.documentElement).getPropertyValue('--nav-height')) || 64;
+
+      if (stickyObserver) stickyObserver.disconnect();
+      stickyObserver = new IntersectionObserver(function (entries) {
+        entries.forEach(function (entry) {
+          // When sentinel scrolls out of view (above viewport), header is stuck
+          if (!entry.isIntersecting) {
+            header.classList.add('stuck');
+          } else {
+            header.classList.remove('stuck');
+          }
+        });
+      }, { rootMargin: '-' + navH + 'px 0px 0px 0px', threshold: 0 });
+
+      stickyObserver.observe(sentinel);
+    }
+
+    function teardownStickyObserver() {
+      if (stickyObserver) {
+        stickyObserver.disconnect();
+        stickyObserver = null;
+      }
+    }
 
     links.forEach(function (link) {
       link.addEventListener('click', async function (e) {
@@ -525,6 +557,8 @@
           reader.style.display = 'block';
           window.scrollTo(0, 0);
 
+          setupStickyObserver();
+
           if (typeof Prism !== 'undefined') {
             Prism.highlightAllUnder(readerContent);
             setTimeout(function () { Prism.highlightAllUnder(readerContent); }, 200);
@@ -541,6 +575,7 @@
 
     if (closeBtn) {
       closeBtn.addEventListener('click', function () {
+        teardownStickyObserver();
         reader.style.display = 'none';
         if (articleHeader) articleHeader.style.display = '';
         mainContent.style.display = '';
