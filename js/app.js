@@ -595,30 +595,29 @@
           '<section class="about-hero">' +
             '<div class="about-avatar"><i data-lucide="terminal"></i></div>' +
             '<h1 class="about-name">拾雪掩碧空</h1>' +
-            '<p class="about-tagline">Full-Stack Developer · Security &amp; Distributed Systems</p>' +
+            '<p class="about-tagline">Full-Stack Developer · Security &amp; AI Engineering</p>' +
+            '<p class="about-status">2026.4 至今 · 腾讯 · 后台开发 &amp; AI 工程</p>' +
             '<p class="about-bio">' +
               '信息竞赛起步，从密码学到微服务，从 Redis 到 AI Agent——在后端工程与安全系统设计之间穿行。' +
-              '擅长把碎片化的技术知识压缩成可复用的工程判断，关注 AI、Web3 与分布式体系的交叉地带。' +
+              '擅长把碎片化的技术知识压缩成可复用的工程判断，关注 AI 工程化、安全攻防与分布式体系的交叉地带。' +
+              '现专注于 AI Agent 工程化落地与云原生微服务体系的后台开发与提效。' +
             '</p>' +
           '</section>' +
 
-          /* Engineering Profile */
-          '<section class="about-section reveal">' +
-            '<h2 class="about-section-title">Engineering Profile</h2>' +
-            '<div class="skills-grid">' +
-              skillCard('shield', '安全系统', 'AES · ECC · RSA · PBKDF2 · DPAPI — 离线多介质令牌安全系统设计') +
-              skillCard('server', '后端架构', 'Spring Boot · Redis · Docker · 微服务 · 分布式锁 · 消息队列') +
-              skillCard('code', '编程语言', 'C++ (OI竞赛) · Java · Python · Go · JavaScript · Lua') +
-              skillCard('database', '数据层', 'MySQL · Redis 集群（主从/哨兵/Cluster）· RDB/AOF 持久化') +
-              skillCard('smartphone', '前端 & 小程序', '微信小程序 · HTML/CSS/JS · 蓝牙防代签系统') +
-              skillCard('git-branch', '工程实践', '敏捷开发 · Docker 部署 · Postman · 容灾与高可用设计') +
-            '</div>' +
-          '</section>' +
-
-          /* AI Tech Stack */
+          /* AI Tech Stack — placed first */
           '<section class="about-section reveal">' +
             '<h2 class="about-section-title">AI Tech Stack</h2>' +
             '<div class="ai-stack-grid">' +
+              aiCard(
+                'Skill / Context Engineering',
+                '将提示词演进为分层智能体组件——CLI 主控 + Workflow 步进 + Gate 门禁 + 磁盘状态持久化，让 Agent 在精密轨道上执行确定性流程，万行级 Skill 工程落地实践。',
+                ['Workflow 引擎', 'Gate 门禁', '步进式披露', '状态持久化']
+              ) +
+              aiCard(
+                'Agent 智能体架构',
+                '多 Agent 协作架构设计与工程落地，涵盖工具调用、记忆管理、规划决策与反馈循环。主导微服务接口自动化测试 Agent 的全链路设计与实现。',
+                ['Tool Use', 'Memory', 'Multi-Agent', 'MCP']
+              ) +
               aiCard(
                 'Prompt Engineering',
                 '从零样本到思维链（CoT），系统掌握提示词工程方法论，能针对不同 LLM 特性设计高效 Prompt，实现精准任务控制与输出稳定性。',
@@ -626,7 +625,7 @@
               ) +
               aiCard(
                 'RAG（检索增强生成）',
-                '构建基于向量检索的知识增强管线，结合 Embedding 模型与向量数据库实现私域数据问答，降低幻觉、提升回答可信度。',
+                '构建基于向量检索的知识增强管线，结合 Embedding 模型与向量数据库实现私域数据问答，降低幻觉、提升回答可信度。索引注入 + 按需读取的轻量级 Skill-RAG 架构。',
                 ['向量检索', 'Embedding', 'Chunk 策略', 'Rerank']
               ) +
               aiCard(
@@ -640,14 +639,9 @@
                 ['LoRA', 'QLoRA', 'SFT', 'RLHF', 'DPO']
               ) +
               aiCard(
-                'Agent 智能体',
-                '多 Agent 协作架构设计，涵盖工具调用、记忆管理、规划决策与反馈循环，探索 AI Agent 在工程自动化中的落地实践。',
-                ['Tool Use', 'Memory', 'Planning', 'Multi-Agent']
-              ) +
-              aiCard(
                 '模型能力边界',
-                '关注 LLM 的能力边界与局限性——幻觉控制、上下文窗口、推理瓶颈与安全对齐，在工程中做出务实的技术判断。',
-                ['幻觉控制', '上下文窗口', '安全对齐', '评估基准']
+                '关注 LLM 的能力边界与局限性——幻觉控制、上下文窗口、推理瓶颈与安全对齐，结合论文研究在工程中做出务实的技术判断。',
+                ['幻觉控制', '上下文窗口', '安全对齐', '零退化率']
               ) +
               aiCard(
                 '机器学习基础',
@@ -655,10 +649,60 @@
                 ['神经网络', '概率模型', '搜索算法', '深度学习']
               ) +
               aiCard(
-                'AI 辅助开发 (VibeCoding)',
-                '以架构师角色主导 AI 协作：确定方案 → AI 写样例代码测试 → 通过后写入项目 → AI 自测 → 人工 Git Review。',
-                ['Cursor', 'GitHub Copilot', 'Codex']
+                'AI Coding',
+                '以架构师角色主导 AI 协作：确定方案 → AI 写样例代码测试 → 通过后写入项目 → AI 自测 → 人工 Git Review。日常深度使用 Claude Code、CodeBuddy 与 Cursor 进行全流程工程开发。',
+                ['Claude Code', 'CodeBuddy', 'Cursor', 'Codex']
               ) +
+            '</div>' +
+          '</section>' +
+
+          /* Security Profile */
+          '<section class="about-section reveal">' +
+            '<h2 class="about-section-title">Security Profile</h2>' +
+            '<div class="ai-stack-grid">' +
+              aiCard(
+                '密码学工程',
+                '从算法原理到系统落地——AES/ECC/RSA/PBKDF2/DPAPI 全链路实现，离线多介质令牌安全系统设计，签名验签性能调优与密钥生命周期管理。',
+                ['AES-256', 'ECC 签名', 'RSA', 'PBKDF2', 'DPAPI']
+              ) +
+              aiCard(
+                'CGI & 域名安全',
+                '熟悉 CGI 网关层攻击面：路径穿越、参数注入、域名劫持与 DNS Rebinding 防御，掌握域名解析链路安全加固与 HTTPS 证书钉扎策略。',
+                ['路径穿越', '参数注入', 'DNS Rebinding', 'HSTS']
+              ) +
+              aiCard(
+                'Web 渗透与防御',
+                '掌握 OWASP Top 10 攻击向量：SQL 注入、XSS、CSRF、SSRF、XXE——从漏洞复现到防御方案设计，以白帽视角审视系统安全边界。',
+                ['SQL 注入', 'XSS/CSRF', 'SSRF', 'XXE']
+              ) +
+              aiCard(
+                '二进制安全',
+                '通过 SEED Lab 系统实践缓冲区溢出、Return-to-libc、格式化字符串攻击与环境变量提权，理解从用户态到内核态的信任边界。',
+                ['Buffer Overflow', 'Ret2libc', 'Format String', '提权']
+              ) +
+              aiCard(
+                '认证与鉴权体系',
+                '设计并实现多层认证链路——HMAC-SHA256 签名校验、RSA/MD5 混合签名，JWT/OAuth2.0 鉴权方案与 Session 安全管理。',
+                ['签名校验', 'JWT', 'OAuth2.0', 'Token 管理']
+              ) +
+              aiCard(
+                '安全开发生命周期',
+                '在微服务架构中嵌入安全实践：代码审计、依赖漏洞扫描、敏感数据脱敏、接口鉴权拦截器设计与安全编码规范制定。',
+                ['代码审计', '依赖扫描', '数据脱敏', '安全编码']
+              ) +
+            '</div>' +
+          '</section>' +
+
+          /* Engineering Profile */
+          '<section class="about-section reveal">' +
+            '<h2 class="about-section-title">Engineering Profile</h2>' +
+            '<div class="skills-grid">' +
+              skillCard('server', '后端架构', 'Spring Boot · Go · Redis · Docker · 微服务 · 分布式锁 · 消息队列') +
+              skillCard('code', '编程语言', 'C++ (OI竞赛) · Java · Python · Go · JavaScript · Lua · Bash') +
+              skillCard('database', '数据层', 'MySQL · Redis 集群（主从/哨兵/Cluster）· RDB/AOF 持久化') +
+              skillCard('smartphone', '前端 & 小程序', '微信小程序 · HTML/CSS/JS · 蓝牙防代签系统') +
+              skillCard('git-branch', '工程实践', '敏捷开发 · Docker 部署 · CI/CD · 服务发现与注册 · 容灾与高可用') +
+              skillCard('network', '网络与协议', 'TCP/IP · HTTP/HTTPS · DNS · RPC · gRPC · Protobuf') +
             '</div>' +
           '</section>' +
 
