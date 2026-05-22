@@ -79,6 +79,9 @@
     } else if (route === '/about') {
       currentPage = 'about';
       renderAbout();
+    } else if (route === '/links') {
+      currentPage = 'links';
+      renderLinks();
     } else {
       currentPage = 'home';
       renderHome();
@@ -582,6 +585,35 @@
         window.scrollTo(0, 0);
       });
     }
+  }
+
+  /* ============================================================
+     LINKS (友链)
+     ============================================================ */
+  function renderLinks() {
+    var links = [
+      { name: "Cauchy's Blog", url: 'https://cauchyoooo.github.io/', desc: '' }
+    ];
+
+    var html =
+      '<div class="container">' +
+        '<header class="links-header page-enter">' +
+          '<h1 class="links-title">友链</h1>' +
+          '<p class="links-subtitle">志同道合的朋友们</p>' +
+        '</header>' +
+        '<section class="links-grid reveal">' +
+          links.map(function (link) {
+            return '<a class="link-card" href="' + escAttr(link.url) + '" target="_blank" rel="noopener">' +
+              '<div class="link-card-icon"><i data-lucide="globe"></i></div>' +
+              '<h3 class="link-card-name">' + esc(link.name) + '</h3>' +
+              (link.desc ? '<p class="link-card-desc">' + esc(link.desc) + '</p>' : '') +
+              '<span class="link-card-url">' + esc(link.url.replace(/^https?:\/\//, '').replace(/\/$/, '')) + '</span>' +
+            '</a>';
+          }).join('') +
+        '</section>' +
+      '</div>';
+
+    setContent(html);
   }
 
   /* ============================================================
